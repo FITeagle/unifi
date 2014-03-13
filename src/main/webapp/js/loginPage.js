@@ -77,7 +77,7 @@ function(require, Validation, Registration, Utils, Messages) {
 	  * @see https://github.com/carhartl/jquery-cookie
      */ 
 	Login.getRememberedUsername = function(){
-		var username;
+		var username="";
 		var cookie = $.cookie('fiteagle_user_cookie');
 		if(cookie){
 			var cookieVal = atob(cookie);
