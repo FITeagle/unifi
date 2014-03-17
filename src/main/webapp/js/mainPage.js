@@ -329,7 +329,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server){
 	**/
 	Main.signOut = function(){
 		Utils.resetUser();
-		history.pushState('', "page ", "/unifi"); 
+		history.pushState('', "page ", "/"); 
 		require('loginPage').load();
 	};
 	
