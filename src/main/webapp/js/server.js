@@ -509,6 +509,36 @@ function(require,Utils){
 		
 		return message;
 	};
+	
+	Server.getAllUsers = function(){
+		var usersFromServer = null;
+		$.ajax({
+			cache: false,
+			type: "GET",
+			async: false,
+			url: "/native/api/user/",
+			beforeSend: function(xhr){
+				
+			},
+			success: function(users,status,xhr){
+				usersFromServer = users;
+			},
+			error: function(xhr,status,thrown){
+				console.log("Response " + xhr.responseText);
+				console.log(status);
+				console.log(thrown);
+			},
+			statusCode:{			
+				403: function(){
+					console.log("Unathorized access. To be signed out");	
+					require('mainPage').signOut();
+				}
+			},	
+		});
+		
+		return usersFromServer;
+	};
+	
 		
 	return Server;
 

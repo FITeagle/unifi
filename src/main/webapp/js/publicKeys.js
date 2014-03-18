@@ -53,7 +53,7 @@ function(require,Utils,Server,Validation,Messages){
 		$('#uploadNewPublicKey').on('click',function(){
 			clearPublicKeysErrors();
 			var isKeyDescrValid = isKeyDescriptionValid();
-			var isKeyValValid = isKeyValueValid()
+			var isKeyValValid = isKeyValueValid();
 			if( isKeyDescrValid && isKeyValValid ){
 				//clearPublicKeysErrors();
 				var description = $("#inputKeyDescription").val();
@@ -65,7 +65,7 @@ function(require,Utils,Server,Validation,Messages){
 					if(message)
 						$('#newUserKeyErrors').append(message);
 					updatePublicKeyRelatedForms();
-				},100)
+				},100);
 
 			}
 		}).tooltip({title: Messages.uploadNewPublicKey});
@@ -125,7 +125,7 @@ function(require,Utils,Server,Validation,Messages){
 			window.FileList && window.Blob)?
 				isAvailable = true
 					:
-				isAvailable = false
+				isAvailable = false;
 
 		return isAvailable;
 	};
@@ -191,7 +191,7 @@ function(require,Utils,Server,Validation,Messages){
 										handleFileSelect(event);
 										setTimeout(function(){
 											initSelectFileInput();
-										},200)
+										},200);
 								});
 			inputFileContainer.append(fileSelect);
 	};
@@ -265,7 +265,7 @@ function(require,Utils,Server,Validation,Messages){
 	*/
 	PublicKeys.updateExistingPublicKeyForm = function(){
 		var userFromServer = Server.getUser(Utils.getCurrentUser().username);
-		initExistingPublicKeysForm(userFromServer)
+		initExistingPublicKeysForm(userFromServer);
 	};
 	
 	
@@ -342,7 +342,7 @@ function(require,Utils,Server,Validation,Messages){
 			});
 		label.on('click',function(e){
 			var oldKey = $(this).find('.keyDescriptionSpan').text();
-			onPublicKeyLabelClick(keyLabelID)
+			onPublicKeyLabelClick(keyLabelID);
 		});
 		
 		return label;
@@ -418,7 +418,7 @@ function(require,Utils,Server,Validation,Messages){
 			)
 		);
 		return Utils.createConfirmModal('changePublicKeyDescriptionModal',submitBtnID,'Submit','Cancel',modBody); 
-	}
+	};
 	
 	
 	/**
@@ -461,7 +461,7 @@ function(require,Utils,Server,Validation,Messages){
 		updatePublicKeyRelatedForms();
 		Certificates.initPublicKeySelect();
 		Utils.hideModal('#deleteKeyConfirmation');
-	}
+	};
 	
 	
 	/**
@@ -517,7 +517,7 @@ function(require,Utils,Server,Validation,Messages){
 			var checked = checkPublicKeyFile(f);
 			setTimeout(function(){
 				if(checked)output = readFile(f); // correct file selected
-			},100)
+			},100);
 		}
 	};
 	
@@ -555,7 +555,7 @@ function(require,Utils,Server,Validation,Messages){
 			var fileInfo = $('#currentFileInfo');
 			fileInfo.children().remove();
 			setTimeout(function(){
-				fileInfo.append('<span class="alert alert-info centered span12">Currently selected: '+ output.join('')+'</span>')
+				fileInfo.append('<span class="alert alert-info centered span12">Currently selected: '+ output.join('')+'</span>');
 			},50);
 		}
 	};
@@ -572,7 +572,7 @@ function(require,Utils,Server,Validation,Messages){
 		$('#publicKeyFromFile').find('textarea').val("");
 		$('#currentFileName').html('No file selected.');
 		$('#inputKeyDescription').val('');
-	}
+	};
 	
 	
 	/**
@@ -628,12 +628,12 @@ function(require,Utils,Server,Validation,Messages){
   	setPublicKeyFromFile = function(text){
 	  var container = $("#publicKeyFromFile textarea");
 	 // console.log(container);
-	  container.html(text)
+	  container.html(text);
 	};
 	
 	initTooltipForPublicKeyFromFile =function(){
 		$('#publicKeyFromFile textarea').tooltip({trigger: 'focus', title: Messages.keyValueHint});
-	}
+	};
 	
 	return PublicKeys;
 

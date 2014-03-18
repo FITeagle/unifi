@@ -1,8 +1,8 @@
-define(['require','utils','profile','publicKeys', 'certificates','server','index'],
+define(['require','utils','profile','publicKeys','certificates','server','users'],
 /**
  * @lends MainPage
  */ 
-function(require,Utils,Profile,PublicKeys,Certificates,Server){
+function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	
 //	console.log("mainPage.js is loaded");
 	 /** 
@@ -91,51 +91,64 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server){
 		Profile.initForm();
 		PublicKeys.initForm();
 		Certificates.initForm();
-		removeUnusedElements();
 		checkForStoredHashTags();
+		
+		switch(Utils.getCurrentUser().role){
+		case "ADMIN":
+			$("#task").remove();
+			$("#userAside").remove();
+			$("#tbownerAside").remove();
+			$("#usertaskaside").remove();
+			$("#usertasksaside").remove();
+			
+			Users.initForm();
+			
+			break;
+		default:
+		}
 		
 		require(["jsPlumb"], function(jsPlumb) {
 			initResourceButtons();
 		});
 	};
 	
-	removeUnusedElements = function(){
-		switch(Utils.getCurrentUser().role){
-		case "ADMIN":
-			$("#task").remove();
-			$("#usercourse").remove();
-			$("#addcourse").remove();
-			$("#userAside").remove();
-			$("#tbownerAside").remove();
-			$("#usertaskaside").remove();
-			$("#usertasksaside").remove();
-			$("#openepcqosuser").remove();
-			break;
-		case "TBOWNER":
-			$("#task").remove();
-			$("#usercourse").remove();
-			$("#addcourse").remove();
-			$("#createtestbed").remove();
-			$("#userAside").remove();
-			$("#adminAside").remove();
-			$("#usertaskaside").remove();
-			$("#usertasksaside").remove();
-			$("#openepcqosuser").remove();
-			break;
-		default:
-			$("#course").remove();
-			$("#testbed").remove();
-			$("#newtask").remove();
-			$("#createtestbed").remove();
-			$("#createcourse").remove();
-			$("#taskaside").remove();
-			$("#tasksaside").remove();
-			$("#adminAside").remove();
-			$("#tbownerAside").remove();
-			$("#openepcqos").remove();
-			$("#fusecoplayground").remove();
-		}
-	};
+//	removeUnusedElements = function(){
+//		switch(Utils.getCurrentUser().role){
+//		case "ADMIN":
+//			$("#task").remove();
+//			$("#usercourse").remove();
+//			$("#addcourse").remove();
+//			$("#userAside").remove();
+//			$("#tbownerAside").remove();
+//			$("#usertaskaside").remove();
+//			$("#usertasksaside").remove();
+//			$("#openepcqosuser").remove();
+//			break;
+//		case "TBOWNER":
+//			$("#task").remove();
+//			$("#usercourse").remove();
+//			$("#addcourse").remove();
+//			$("#createtestbed").remove();
+//			$("#userAside").remove();
+//			$("#adminAside").remove();
+//			$("#usertaskaside").remove();
+//			$("#usertasksaside").remove();
+//			$("#openepcqosuser").remove();
+//			break;
+//		default:
+//			$("#course").remove();
+//			$("#testbed").remove();
+//			$("#newtask").remove();
+//			$("#createtestbed").remove();
+//			$("#createcourse").remove();
+//			$("#taskaside").remove();
+//			$("#tasksaside").remove();
+//			$("#adminAside").remove();
+//			$("#tbownerAside").remove();
+//			$("#openepcqos").remove();
+//			$("#fusecoplayground").remove();
+//		}
+//	};
 	
 	/**
       * Initiates user info panel located in the main page header section. Defines the behaviour for clicking on the panel items: 

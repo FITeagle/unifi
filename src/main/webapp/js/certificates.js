@@ -9,7 +9,7 @@ function(Validation, Utils,Messages,Server){
      * @constructor
      * @return Certificates object
      */
-	Certificates = {}
+	Certificates = {};
 	
 	/**
 	* Creates a certificate textarea container and adds it to the DOM within a container identified by the "#generatedCertificate" selector.

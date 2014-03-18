@@ -10,7 +10,7 @@ requirejs.config({
 
 define(['jquery','bootstrap','loginPage','mainPage', 'utils', 'history', 'ajaxify','fileSaver'], 
 
-function($,Bootstrap,LoginPage,MainPage,StatusPage,Utils, UnifiPage, UnifiLogin){
+function($,Bootstrap,LoginPage,MainPage,StatusPage,Utils){
 	
 //	console.log("index.js is called");
 					

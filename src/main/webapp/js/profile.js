@@ -18,9 +18,9 @@ function(require,Utils,Server){
 	* @memberOf Profile#
 	*/
 	afterDeleteFunction = function(){	
-		Utils.showSuccessModal(Messages.userDeleted,'userDeletedBtn')
+		Utils.showSuccessModal(Messages.userDeleted,'userDeletedBtn');
 		$('#userDeletedBtn').on('click',function(){
-			Utils.hideModal('#deleteUserProfileModal')
+			Utils.hideModal('#deleteUserProfileModal');
 			require('mainPage').signOut();
 		});
 		modalFooter.append(okBtn);
