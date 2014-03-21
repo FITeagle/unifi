@@ -181,7 +181,7 @@ function(require,Utils,Server){
 			Utils.showModal('#deleteUserProfileModal');
 			$('#deleteUserConfirmedBtn').on('click',function(){
 				Utils.hideModal('#deleteUserProfileModal');
-				Server.deleteUser(afterDeleteFunction);	
+				Server.deleteUser(Utils.getCurrentUser().username, afterDeleteFunction);	
 			});
 		});
 	};

@@ -128,12 +128,10 @@ function(require,Utils){
 	* Sends the request to the server API for getting user profile object for the specified username.
 	* In case there was an unauthorized request attempt (meaning the user is not logged on the server side) the function and currently shown page is a FITeagle main page,
 	* the function triggers the sing out procedure, it is done for security reasons and other use cases.
-	* If the response is a successful one the function sets the received user as a current FITeagle clien user. 
 	* In case the error code is responded the information about the event is written to the browser's console.
 	* @param {String} username to get the user profile object for.
 	* @return {Object} user profile object containing the entire information about the user.
 	* @see Main#signOut for sign out procedure.
-	* @see Utils#setCurrentUser for setting a user as a current FITeagle client user.
 	* @public
 	* @name Server#getUser
 	* @function
@@ -149,7 +147,6 @@ function(require,Utils){
 			},
 			success: function(user,status,xhr){
 				userFromServer = user;
-				Utils.setCurrentUser(userFromServer);
 			},
 			error: function(xhr,status,thrown){
 				console.log("Response " + xhr.responseText);
@@ -403,7 +400,7 @@ function(require,Utils){
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
+//				console.log(status);
 			},
 			statusCode:{			
 				200: function(){
@@ -447,8 +444,8 @@ function(require,Utils){
                 //"Basic " + Utils.getCredentials()); // TODO Base64 support
 			},
 			success: function(data,status){
-				console.log(data);
-				console.log(status);
+//				console.log(data);
+//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
@@ -469,18 +466,7 @@ function(require,Utils){
 		return message;
 	};
 	
-	/**
-	* Sends an AJAX request to the FITeagle REST API for deleting a user profile of the user logged on the server.
-	* @param {Function} afterDeleteFunction - is a function to be called after the user profile has been successfully deleted.
-	* @return {Object} message object. The message object is either alert-error or alert-success twitter bootstrap alert span 
-	* accordingly on the server response. 
-	* @public
-	* @name Server#deleteUser
-	* @function
-	*/	
-	Server.deleteUser = function(afterDeleteFunction){
-		var user = Utils.getCurrentUser();
-		var username = user.username;
+	Server.deleteUser = function(username, afterDeleteFunction){
 		var message=0;
 		$.ajax({
 			cache: false,
@@ -491,9 +477,7 @@ function(require,Utils){
 				
 			},
 			success: function(data,status){
-				console.log(data);
-				console.log(status);
-				message = Utils.createSuccessMessage('Current User has been successfully deleted');
+				message = Utils.createSuccessMessage('The user has been successfully deleted');
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
@@ -537,6 +521,33 @@ function(require,Utils){
 		});
 		
 		return usersFromServer;
+	};
+	
+	Server.setRole = function(username, role){
+		var message=0;
+		$.ajax({
+			cache: false,
+			type: "POST",
+			async: false,
+			url: "/native/api/user/"+username+'/role/'+role,
+			beforeSend: function(xhr){
+				
+			},
+			success: function(data,status){
+//				console.log(status);
+				message = status;
+			},
+			error: function(xhl,status){
+				message = Utils.createErrorMessage(xhl.responseText);
+				console.log(status);
+			},
+			statusCode:{			
+				200: function(){
+				}
+			},
+		});
+		
+		return message;
 	};
 	
 		

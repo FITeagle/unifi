@@ -11,14 +11,53 @@ function(Utils,Server){
 		var users = Server.getAllUsers();
 		
 		$.each(users, function(i, user) {
-			var tr = $("<tr>").append("<td>"+user.username+"</td");
-			tr.append("<td><a href='#' class='margin3 btn btn-inverse' onclick='return false;'>Details</a></td>");
-			tr.append("<td><a href='#' class='margin3 btn btn-inverse' onclick='return false;'>Delete</a></td>");
-//			$('<a>').attr("tabindex",-1).on('click',function(){
-//			});
-			tr.append("<td><div class='dropdown'><button class='margin3 btn btn-inverse dropdown-toggle' type='button' id='roleDropdown' data-toggle='dropdown'>"+
-                    user.role+"</button><ul class='dropdown-menu'><li><a tabindex='-1' href='#' onclick='return false;'>USER</a></li><li><a tabindex='-1' href='#' onclick='return false;'>TBOWNER</a></li><li><a tabindex='-1' href='#' onclick='return false;'>ADMIN</a></li></ul></div></td>");
-			$("#fiteagleusersusers").append(tr);
+			var userRow = $("<tr>").append("<td>"+user.username+"</td");
+			
+			var getUser = $('<a>').addClass("margin3 btn btn-inverse").html("Details").on("click", function(){
+				alert(Server.getUser(user.username));
+			});
+			userRow.append($('<td>').append(getUser));
+			
+			var deleteUser = $('<a>').addClass("margin3 btn btn-inverse").html("Delete").on("click", function(){
+				after = function(){
+					userRow.remove();
+				};
+				Server.deleteUser(user.username, after);
+				
+			});
+			userRow.append($('<td>').append(deleteUser));
+			
+			
+			var dropdown = $('<div>').addClass("dropdown");
+			dropdown.append("<button class='margin3 btn btn-inverse dropdown-toggle' type='button' id='roleDropdown"+user.username+"' data-toggle='dropdown'>"+user.role+"</button>");
+						
+			var setRoleUSER = $('<a>').attr("tabindex",-1).html("USER").on('click',function(){
+				if(Server.setRole(user.username, "USER") == "success"){
+					$(document.getElementById("roleDropdown"+user.username)).html("USER");
+				}
+			});
+			var setRoleTBOWNER = $('<a>').attr("tabindex",-1).html("TBOWNER").on('click',function(){
+				if(Server.setRole(user.username, "TBOWNER") == "success"){
+					$(document.getElementById("roleDropdown"+user.username)).html("TBOWNER");
+				}
+			});
+			var setRoleADMIN = $('<a>').attr("tabindex",-1).html("ADMIN").on('click',function(){
+				if(Server.setRole(user.username, "ADMIN") == "success"){
+					$(document.getElementById("roleDropdown"+user.username)).html("ADMIN");
+				}
+			});
+			var dropdownOptionUSER = $('<li>').append(setRoleUSER);
+			var dropdownOptionTBOWNER = $('<li>').append(setRoleTBOWNER);
+			var dropdownOptionADMIN = $('<li>').append(setRoleADMIN);
+			var ul = $('<ul>').addClass("dropdown-menu");
+			ul.append(dropdownOptionUSER);
+			ul.append(dropdownOptionTBOWNER);
+			ul.append(dropdownOptionADMIN);
+			dropdown.append(ul);
+			
+			userRow.append($('<td>').append(dropdown));
+			
+			$("#fiteagleusersusers").append(userRow);
 		});
 	};
 
