@@ -1,3 +1,4 @@
+var Registration;
 define(['validation','utils','mainPage','messages'],
 function(Validation, Utils, MainPage,Messages){
 
@@ -210,7 +211,7 @@ function(Validation, Utils, MainPage,Messages){
 		var isPwd = checkRegPassword();
 		var isConfPwd = checkConfirmPassword();
 		if(isPwd & isConfPwd){
-			var areValid = arePasswordInputsConsist();
+			areValid = arePasswordInputsConsist();
 		}
 		return areValid;
 	};
@@ -223,7 +224,6 @@ function(Validation, Utils, MainPage,Messages){
 	* @returns true is all of the field values are valid and false otherwise.
 	*/
 	checkRequiredUserEntries = function(){
-		
 		var allEntriesValid = 
 					checkRegUsername()     &
 					checkEmail()        &

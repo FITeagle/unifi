@@ -119,7 +119,7 @@ function(){
 		var keyLength = keyValue.length;
 		if( 100 < keyLength && keyLength < 500 ) isValid = true;
 		return isValid;
-	}
+	};
 	
 	
 	/**

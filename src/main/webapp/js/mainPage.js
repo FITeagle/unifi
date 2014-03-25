@@ -1,3 +1,4 @@
+var Main;
 define(['require','utils','profile','publicKeys','certificates','server','users'],
 /**
  * @lends MainPage

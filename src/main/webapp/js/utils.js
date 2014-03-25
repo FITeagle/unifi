@@ -1,3 +1,4 @@
+var Utils;
 define([],
 /**
  * @lends Utils
@@ -312,14 +313,14 @@ function(){
 	* @function
 	*/
 	Utils.checkInputField = function(inputFieldSelector,errorFieldSelector,validationFunction,emptyFieldMsg,validationErrorMessage){
-		
+		var isValid = false;
 		var inputFieldValue = $(inputFieldSelector).val();
 		
 		if(Validation._isEmpty(inputFieldValue)){		
 			Utils.highlightField(inputFieldSelector,true);
 			Utils.addErrorMessageTo(errorFieldSelector,emptyFieldMsg);
 		}else{
-			var isValid = validationFunction(inputFieldValue);
+			isValid = validationFunction(inputFieldValue);
 			if(!isValid){
 				Utils.addErrorMessageTo(errorFieldSelector,validationErrorMessage);
 				Utils.highlightField(inputFieldSelector,true);	

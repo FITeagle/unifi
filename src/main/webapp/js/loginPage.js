@@ -1,3 +1,4 @@
+var Login;
 define([ 'require', 'validation', 'registration', 'utils', 'messages',
 		'history', 'ajaxify', 'prettyCheckable' ],
 

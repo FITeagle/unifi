@@ -1,3 +1,4 @@
+var PublicKeys;
 define(['require','utils','server','validation','messages','fileSaver'],
 /**
  * @lends MainPage

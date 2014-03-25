@@ -1,3 +1,4 @@
+var Profile;
 define(['require','utils','server'], 
 function(require,Utils,Server){
 	
