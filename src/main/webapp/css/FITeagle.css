@@ -61,7 +61,7 @@ p{text-align:justify}
 }
 
 table {
-	font-weight:bold;
+/* 	font-weight:bold; */
 	font-size: 14px;
 }
 
@@ -207,6 +207,25 @@ input.search-query{height:24px !important;}
   background-image: -o-linear-gradient(top,#f09030,#d07010);
   background-image: linear-gradient(to bottom,#f09030,#d07010);
 }
+
+#fiteagleusers .dropdown-menu>li>a:focus{
+	background-color: #d07010;
+  background-image: -moz-linear-gradient(top,#f09030,#d07010);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#f09030),to(#d07010));
+  background-image: -webkit-linear-gradient(top,#f09030,#d07010);
+  background-image: -o-linear-gradient(top,#f09030,#d07010);
+  background-image: linear-gradient(to bottom,#f09030,#d07010);
+}
+#fiteagleusers .dropdown-menu>li>a:hover{
+	color: #fff;
+  background-color: #d07010;
+  background-image: -moz-linear-gradient(top,#f09030,#d07010);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#f09030),to(#d07010));
+  background-image: -webkit-linear-gradient(top,#f09030,#d07010);
+  background-image: -o-linear-gradient(top,#f09030,#d07010);
+  background-image: linear-gradient(to bottom,#f09030,#d07010);
+}
+
 #userInfoDropdown li a{padding-top:10px; padding-bottom: 10px}
 
 #toolbar .btn-navbar{margin: 0 2% 0 2%}
@@ -653,6 +672,11 @@ input.search-query{height:24px !important;}
 #task {
 	margin-top: 10px;
 }
+
+#createtask {
+  margin-top: 10px;
+}
+
 
 #task .pull-right{
     cursor: pointer;

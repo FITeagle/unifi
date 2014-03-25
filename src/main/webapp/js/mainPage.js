@@ -65,7 +65,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	};
 	
 	/**
-	* Defines the behaviour for clicking on "back" or "next" browser buttons aka browser history.
+	* Defines the behavior for clicking on "back" or "next" browser buttons aka browser history.
 	* The function opens the appropriate form views.
 	* @private
 	* @memberOf Main#
@@ -85,7 +85,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	* @memberOf Main#
 	*/
 	initMainPage = function(){
-		$('#fiteagle').addClass('mainWindow'); // class in order to distinguish between main and login pages
 		performScreenAdjustments();	
 		initUserInfoPanel();		
 		Profile.initForm();
@@ -93,62 +92,11 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 		Certificates.initForm();
 		checkForStoredHashTags();
 		
-		switch(Utils.getCurrentUser().role){
-		case "ADMIN":
-			$("#task").remove();
-			$("#userAside").remove();
-			$("#tbownerAside").remove();
-			$("#usertaskaside").remove();
-			$("#usertasksaside").remove();
-			
-			Users.initForm();
-			
-			break;
-		default:
-		}
-		
 		require(["jsPlumb"], function(jsPlumb) {
 			initResourceButtons();
 		});
 	};
 	
-//	removeUnusedElements = function(){
-//		switch(Utils.getCurrentUser().role){
-//		case "ADMIN":
-//			$("#task").remove();
-//			$("#usercourse").remove();
-//			$("#addcourse").remove();
-//			$("#userAside").remove();
-//			$("#tbownerAside").remove();
-//			$("#usertaskaside").remove();
-//			$("#usertasksaside").remove();
-//			$("#openepcqosuser").remove();
-//			break;
-//		case "TBOWNER":
-//			$("#task").remove();
-//			$("#usercourse").remove();
-//			$("#addcourse").remove();
-//			$("#createtestbed").remove();
-//			$("#userAside").remove();
-//			$("#adminAside").remove();
-//			$("#usertaskaside").remove();
-//			$("#usertasksaside").remove();
-//			$("#openepcqosuser").remove();
-//			break;
-//		default:
-//			$("#course").remove();
-//			$("#testbed").remove();
-//			$("#newtask").remove();
-//			$("#createtestbed").remove();
-//			$("#createcourse").remove();
-//			$("#taskaside").remove();
-//			$("#tasksaside").remove();
-//			$("#adminAside").remove();
-//			$("#tbownerAside").remove();
-//			$("#openepcqos").remove();
-//			$("#fusecoplayground").remove();
-//		}
-//	};
 	
 	/**
       * Initiates user info panel located in the main page header section. Defines the behaviour for clicking on the panel items: 
@@ -161,54 +109,31 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	initUserInfoPanel = function(){		
 		var navLinks = $(".navigationLink a");
 		navLinks.off();
-		navLinks.not('#signOut').on('click',function(e){
+		navLinks.not('#signOut, #tasksToggle').on('click',function(e){
 			e.preventDefault();
-//			$("#taskAsides").addClass("hidden");
-//			$("#homeAsides").removeClass("hidden");
 			
 			var t = $(this);
 			var linkHref = t.attr('href');
 			//TODO: for non-collapseHeaders
 			//initScrollToForm(linkHref+' h4.collapseHeader');
 			var hash = linkHref.toLowerCase();
+			
+			if(hash == "unifi/#task" || hash == "unifi/#createtask"){
+				$("#homeAside").fadeOut(200, function(){
+					$("#taskAsides").fadeIn(200);
+				});
+			}
+			
 			history.pushState(linkHref, "page "+linkHref, "/"+hash);
 			openDesktopTab(hash);
 			
-			if($(this.parentNode).hasClass("taskLink")){
-				$("#tasksAsides").addClass("hidden");
-				$("#taskAsides").removeClass("hidden");
-			}
-			
 		});
 		
-		var courseLinks = $(".courseLink a");
-		courseLinks.off();
-		courseLinks.on('click',function(e){
+		$(".toHomeAsideLink").on('click',function(e){
 			e.preventDefault();
-//			var t = $(this);
-//			var linkHref = t.attr('href');
-//			var hash = linkHref.toLowerCase();
-//			
-//			var course = $(hash);
-//			if(course != null){
-//				course.removeClass("hidden");
-//			}
-			$("#homeAsides").addClass("hidden");
-			$("#tasksAsides").removeClass("hidden");
-		});
-		
-		$(".allCoursesLink").on('click',function(e){
-			e.preventDefault();
-			$("#tasksAsides").addClass("hidden");
-			$("#homeAsides").removeClass("hidden");
-		});
-		
-		$(".allTasksLink").on('click',function(e){
-			e.preventDefault();
-			$("#taskAsides").addClass("hidden");
-			$("#tasksAsides").removeClass("hidden");			
-//			var courseAside = this.parentNode.id.replace("task","tasks");
-//			$("#"+courseAside).removeClass("hidden");
+			$("#taskAsides").fadeOut(200, function(){
+				$("#homeAside").fadeIn(200);
+			});
 		});
 		
 		Utils.updateUserInfoPanel();
@@ -230,7 +155,32 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			function(){
 				$("#main").load(url + " #mainArea",
 					function(){
-						initMainPage();
+						switch(Utils.getCurrentUser().role){
+						case "ADMIN":
+							$("#homeAside").load("mainContent.html #adminAside", function(){
+								$("#desktop").load("mainContent.html #manage,#certificates,#keys,#fiteagleusers,#testbeds",function(){
+									Users.initForm();
+									initMainPage();
+								});
+							});
+							break;
+							
+						case "TBOWNER":
+							$("#homeAside").load("mainContent.html #tbownerAside", function(){
+								$("#desktop").load("mainContent.html #manage,#certificates,#keys,#createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
+									initMainPage();
+								});
+							});
+							break;
+							
+						default:
+							$("#homeAside").load("mainContent.html #userAside", function(){
+								$("#desktop").load("mainContent.html #manage,#certificates,#keys,#task",function(){
+									initMainPage();
+								});
+							});
+						}
+						
 					});
 			}
 		);
@@ -273,11 +223,11 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	performScreenAdjustments = function(){
 		Utils.unhideBody();
 		initCollapseHeaders();
-		if(Utils.isSmallScreen()){
-			initForSmallScreens();
-		}else{
-			initForLargeScreens();
-		}
+//		if(Utils.isSmallScreen()){
+//			initForSmallScreens();
+//		}else{
+//			initForLargeScreens();
+//		}
 	};
 	
 	
@@ -287,39 +237,22 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
     * @private
 	* @memberOf Main#
 	*/
-	initForLargeScreens = function(){
-		//collapseAsideSections(false);	
-		Utils.hideElement('#toolbar .btn-navbar');
-	};
-	
+//	initForLargeScreens = function(){
+//		//collapseAsideSections(false);	
+//		Utils.hideElement('#toolbar .btn-navbar');
+//	};
+//	
 	/**
 	* Defines the behaviour for the small size devises. Collapses Aside sections for better representation on the narrow window screen.
 	* Unhides small screen navigation toolbar.
     * @private
 	* @memberOf Main#
 	*/
-	initForSmallScreens = function(){
-		//collapseAsideSections(true);	
-		Utils.unhideElement('#toolbar .btn-navbar');		
-	};
+//	initForSmallScreens = function(){
+//		//collapseAsideSections(true);	
+//		Utils.unhideElement('#toolbar .btn-navbar');		
+//	};
 	
-	//	/**
-	//	* Initializes scrolling for small screen devices to the container specified by a selector. 
-	//	* The scrolling lasts one second and has an offset of navigation menu height.
-	//	* @param selector - container selector to scroll to
-	// 	* @private
-	//	* @memberOf Main#
-	//	*/
-	//	initScrollToForm = function(selector){
-	//		var scrollTo = $(selector);
-	//		if(Utils.isSmallScreen()){
-	//			setTimeout(function(){
-	//				$('html, body').animate({
-	//					 scrollTop: scrollTo.offset().top-15-$('#navigation').height()
-	//				}, 1000);
-	//			},100);
-	//		}	
-	//	};
 	
 	/**
      * Defines the behaviour after clicking on the singOut button: Cookie invalidation on the server and singing out of the current user. 

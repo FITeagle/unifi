@@ -119,7 +119,7 @@ function(require){
 		
 		
 		var idCount = 0;
-		var lis = $("#fusecoResources li, #userFusecoResources li");
+		var lis = $("#fusecoResources li");
 		lis.on('click',function(event){
 			event.preventDefault();
 			var type = event.target.innerText;

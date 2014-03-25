@@ -13,12 +13,12 @@ function(Utils,Server){
 		$.each(users, function(i, user) {
 			var userRow = $("<tr>").append("<td>"+user.username+"</td");
 			
-			var getUser = $('<a>').addClass("margin3 btn btn-inverse").html("Details").on("click", function(){
+			var getUser = $('<a>').addClass("margin3 btn").html("Details").on("click", function(){
 				alert(JSON.stringify(Server.getUser(user.username)));
 			});
 			userRow.append($('<td>').append(getUser));
 			
-			var deleteUser = $('<a>').addClass("margin3 btn btn-inverse").html("Delete").on("click", function(){
+			var deleteUser = $('<a>').addClass("margin3 btn").html("Delete").on("click", function(){
 				deleteRow = function(){
 					userRow.remove();
 				};
@@ -29,7 +29,7 @@ function(Utils,Server){
 			
 			
 			var dropdown = $('<div>').addClass("dropdown");
-			dropdown.append("<button class='margin3 btn btn-inverse dropdown-toggle' type='button' id='roleDropdown"+user.username+"' data-toggle='dropdown'>"+user.role+"</button>");
+			dropdown.append("<button class='margin3 btn dropdown-toggle' type='button' id='roleDropdown"+user.username+"' data-toggle='dropdown'>"+user.role+"</button>");
 						
 			var setRoleUSER = $('<a>').attr("tabindex",-1).html("USER").on('click',function(){
 				if(Server.setRole(user.username, "USER") == "success"){

@@ -176,10 +176,10 @@ function(require,Utils){
 	*/
 	Server.updateUser = function(updateInformation){
 		//console.log("credentials" + Utils.getCredentials());
-		console.log("Updating user on the server...");
+//		console.log("Updating user on the server...");
 		var data = JSON.stringify(updateInformation);
 		var user = Utils.getCurrentUser(); 
-		console.log(user);
+//		console.log(user);
 		var message=0;
 		$.ajax({
 			cache: false,
@@ -191,8 +191,8 @@ function(require,Utils){
 			beforeSend: function(xhr){
 			},
 			success: function(data,status){
-				console.log("UPDATING DATA " + data);
-				console.log(status);
+//				console.log("UPDATING DATA " + data);
+//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
@@ -238,8 +238,8 @@ function(require,Utils){
 				Utils.unhideElement(uploadingSign);
 			},
 			success: function(data,status){
-				console.log(data);
-				console.log(status);
+//				console.log(data);
+//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
@@ -394,8 +394,8 @@ function(require,Utils){
                 //"Basic " + Utils.getCredentials()); // TODO Base64 support
 			},
 			success: function(data,status){
-				console.log(data);
-				console.log(status);
+//				console.log(data);
+//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
