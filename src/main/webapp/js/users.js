@@ -14,15 +14,15 @@ function(Utils,Server){
 			var userRow = $("<tr>").append("<td>"+user.username+"</td");
 			
 			var getUser = $('<a>').addClass("margin3 btn btn-inverse").html("Details").on("click", function(){
-				alert(Server.getUser(user.username));
+				alert(JSON.stringify(Server.getUser(user.username)));
 			});
 			userRow.append($('<td>').append(getUser));
 			
 			var deleteUser = $('<a>').addClass("margin3 btn btn-inverse").html("Delete").on("click", function(){
-				after = function(){
+				deleteRow = function(){
 					userRow.remove();
 				};
-				Server.deleteUser(user.username, after);
+				Server.deleteUser(user.username, deleteRow);
 				
 			});
 			userRow.append($('<td>').append(deleteUser));
