@@ -24,8 +24,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 		if(tag && tag.length > 1){
 			openDesktopTab(tag); // trying to open a tab for the tag
 		}else{
-			window.location.hash = "#manage";
-			openDesktopTab('#manage');
+			window.location.hash = "#home";
+			openDesktopTab('#home');
 		}
 	};
 		
@@ -133,6 +133,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
+				history.pushState("#home", "page #home", "#home");
+				openDesktopTab("#home");
 			});
 		});
 		
@@ -158,7 +160,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 						switch(Utils.getCurrentUser().role){
 						case "ADMIN":
 							$("#homeAside").load("mainContent.html #adminAside", function(){
-								$("#desktop").load("mainContent.html #manage,#certificates,#keys,#fiteagleusers,#testbeds",function(){
+								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#fiteagleusers,#testbeds",function(){
 									Users.initForm();
 									initMainPage();
 								});
@@ -167,7 +169,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 							
 						case "TBOWNER":
 							$("#homeAside").load("mainContent.html #tbownerAside", function(){
-								$("#desktop").load("mainContent.html #manage,#certificates,#keys,#createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
+								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
 									initMainPage();
 								});
 							});
@@ -175,7 +177,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 							
 						default:
 							$("#homeAside").load("mainContent.html #userAside", function(){
-								$("#desktop").load("mainContent.html #manage,#certificates,#keys,#task",function(){
+								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#task",function(){
 									initMainPage();
 								});
 							});
