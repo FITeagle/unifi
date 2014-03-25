@@ -55,12 +55,11 @@ function(require, Validation, Registration, Utils, Messages) {
 			e.preventDefault();
 			var t = $(this);
 			var href = t.attr('href');
-			if(href == "#home"){href = "";}
 			history.pushState(href, "page "+href, "/"+href);
 			(href == '')?
 				$('[href$=#home]').tab('show')
 					:
-				$('[href$='+href+']').tab('show');
+				$('[href$='+href.replace("unifi/", "")+']').tab('show');
 		});
 		$(window).on(' hashchange', function(event) {
 			redirectToUrl();

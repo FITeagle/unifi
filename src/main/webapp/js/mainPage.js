@@ -252,7 +252,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			var navLinks = $(".navigationLink li");
 			navLinks.removeClass("active");
 			
-			var a = $('.navigationLink [href$='+hash+']');
+			var a = $('.navigationLink [href$='+hash.replace("unifi/", "")+']');
 			if(a.length != 0){
 				a.tab('show'); // if found show the tab
 				Utils.storeHashTag(hash);
@@ -342,7 +342,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	**/
 	Main.signOut = function(){
 		Utils.resetUser();
-		history.pushState('', "page ", "/"); 
+		history.pushState('', "page ", "/unifi/"); 
 		require('loginPage').load();
 	};
 	
