@@ -187,7 +187,6 @@ function(require, Validation, Registration, Utils, Messages) {
 	  * @see Login#initLoginPage function
      */  
 	Login.load = function(){
-//	console.log("loading Login Page...");
 	var url = "login.html";
 	$("#navigation").load(url + " #navs",function(){
 		$("#main").load(url + " #loginPages",
@@ -208,10 +207,8 @@ function(require, Validation, Registration, Utils, Messages) {
 	  */
 	initLoginForm = function(){
 		Utils.changeFocusOnEnterClick("#username","#password");
-//		Utils.addOnEnterClickEvent("#password","#signIn");
 		$('#username').focus();
 		$('#rememberMeCheckbox').prettyCheckable({color:'gray'});
-//		initLoginFormHints();
 	};
 	
 
@@ -232,8 +229,7 @@ function(require, Validation, Registration, Utils, Messages) {
 			var tab = $('#navigation [href$=' + href + ']');
 			(tab.length) ? tab.tab('show') :
 			// if this hashtag is not found on this page
-			Utils.storeHashTag(href); // store the hashtag to try open it on
-										// main page
+			Utils.storeHashTag(href); // store the hashtag to try open it on main page
 		}
 	};
 
@@ -254,7 +250,6 @@ function(require, Validation, Registration, Utils, Messages) {
 	};
 
 	Login.initLogin = function() {
-//		alert("unifi login init unifi page is called!");
 		initSignInBtn();
 	};
 

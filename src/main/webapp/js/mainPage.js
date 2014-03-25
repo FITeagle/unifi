@@ -4,7 +4,6 @@ define(['require','utils','profile','publicKeys','certificates','server','users'
  */ 
 function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	
-//	console.log("mainPage.js is loaded");
 	 /** 
 	 * The FITeagle main page class contains functions required for initialization of the 
 	 * main page forms and elements located on the page.
@@ -22,7 +21,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	checkForStoredHashTags = function(){
 		var tag = Utils.getStoredHashTag();
 		if(tag && tag.length > 1){
-			openDesktopTab(tag); // trying to open a tab for the tag
+			openDesktopTab(tag);
 		}else{
 			window.location.hash = "#home";
 			openDesktopTab('#home');
@@ -85,7 +84,9 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	* @memberOf Main#
 	*/
 	initMainPage = function(){
-		performScreenAdjustments();	
+		Utils.unhideBody();
+		initCollapseHeaders();
+		
 		initUserInfoPanel();		
 		Profile.initForm();
 		PublicKeys.initForm();
@@ -111,13 +112,9 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 		navLinks.off();
 		navLinks.not('#signOut, #tasksToggle').on('click',function(e){
 			e.preventDefault();
-			
 			var t = $(this);
 			var linkHref = t.attr('href');
-			//TODO: for non-collapseHeaders
-			//initScrollToForm(linkHref+' h4.collapseHeader');
 			var hash = linkHref.toLowerCase();
-			
 			if(hash == "unifi/#task" || hash == "unifi/#createtask"){
 				$("#homeAside").fadeOut(200, function(){
 					$("#taskAsides").fadeIn(200);
@@ -126,7 +123,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			
 			history.pushState(linkHref, "page "+linkHref, "/"+hash);
 			openDesktopTab(hash);
-			
 		});
 		
 		$(".toHomeAsideLink").on('click',function(e){
@@ -192,7 +188,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	* Opens the appropriate tab from the user info dropdown menu on the main page according to the
 	* hash tag entered in the browser's url field. The function searches within a "user info dropdown" menu
 	* for a link with the reference showing to the specified container.
-	* If no tab is found for a hash tag then "manage profile" tab is opened per default.
+	* If no tab is found for a hash tag then the home tab is opened per default.
 	* @see Twitter Bootstrap tab documentation for more information.
 	* @param {String} hash - tag to opening a form for.
 	* @example openTab('#keys') tries to open a tab identified by a "#keys" selector
@@ -206,55 +202,14 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			
 			var a = $('.navigationLink [href$='+hash.replace("unifi/", "")+']');
 			if(a.length != 0){
-				a.tab('show'); // if found show the tab
+				a.tab('show');
 				Utils.storeHashTag(hash);
 			}
 			else{
-//				$('[href$=#task]').tab('show'); // if not found show task tab
+				$('[href$=#home]').tab('show'); 
 			}
 		}
 	};
-	
-	
-	/**
-	* Triggers functions for adjusting the site view for better representing depending on the current screen size such as:
-	* collapsing of the opened sections for small screen devices and opening for a large ones and other related tasks.
-    * @private
-	* @memberOf Main#
-	*/
-	performScreenAdjustments = function(){
-		Utils.unhideBody();
-		initCollapseHeaders();
-//		if(Utils.isSmallScreen()){
-//			initForSmallScreens();
-//		}else{
-//			initForLargeScreens();
-//		}
-	};
-	
-	
-	/**
-	* Defines the behaviour for the large size devises. Opens Aside sections for better representation on the wide window screen.
-	* Hides small screen navigation toolbar.
-    * @private
-	* @memberOf Main#
-	*/
-//	initForLargeScreens = function(){
-//		//collapseAsideSections(false);	
-//		Utils.hideElement('#toolbar .btn-navbar');
-//	};
-//	
-	/**
-	* Defines the behaviour for the small size devises. Collapses Aside sections for better representation on the narrow window screen.
-	* Unhides small screen navigation toolbar.
-    * @private
-	* @memberOf Main#
-	*/
-//	initForSmallScreens = function(){
-//		//collapseAsideSections(true);	
-//		Utils.unhideElement('#toolbar .btn-navbar');		
-//	};
-	
 	
 	/**
      * Defines the behaviour after clicking on the singOut button: Cookie invalidation on the server and singing out of the current user. 
