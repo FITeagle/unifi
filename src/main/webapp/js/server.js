@@ -48,7 +48,8 @@ function(require,Utils){
 				xhr.setRequestHeader("Authorization",
                 "Basic " + btoa(username + ":" + password)); // TODO Base64 support
 			},
-			success: function(user,status,xhr){		
+			success: function(user,status,xhr){
+				user.username = user.username.split("@")[0];
 				Utils.setCurrentUser(user);
 				require('mainPage').load();
 			},
@@ -109,11 +110,8 @@ function(require,Utils){
 				console.log(status);
 			},
 			statusCode:{				
-				200: function(){
-//					console.log("New user is successfully registered");		
-				},			
 				201: function(){
-					console.log("New user: "+ newUser.firstName +" "+newUser.lastName+ " has been successfully created.");				
+//					console.log("New user: "+ newUser.firstName +" "+newUser.lastName+ " has been successfully created.");				
 					newUser.username = newUsername;
 					Utils.setCurrentUser(newUser);
 					Server.loginUser(newUser.username, newUser.password,false,successFunction);
@@ -147,6 +145,7 @@ function(require,Utils){
 			},
 			success: function(user,status,xhr){
 				userFromServer = user;
+				userFromServer.username = userFromServer.username.split("@")[0];
 			},
 			error: function(xhr,status,thrown){
 				console.log("Response " + xhr.responseText);
@@ -505,7 +504,10 @@ function(require,Utils){
 				
 			},
 			success: function(users,status,xhr){
-				usersFromServer = users;
+				$.each(users, function(i, user) {
+					user.username = user.username.split("@")[0];
+				});
+				usersFromServer = users;				
 			},
 			error: function(xhr,status,thrown){
 				console.log("Response " + xhr.responseText);
