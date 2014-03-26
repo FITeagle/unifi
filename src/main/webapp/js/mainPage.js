@@ -174,7 +174,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 							
 						default:
 							$("#homeAside").load("mainContent.html #userAside", function(){
-								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#task",function(){
+								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#task,#addcourse",function(){
 									initMainPage();
 								});
 							});
@@ -204,7 +204,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			var a = $('.navigationLink [href$='+hash.replace("unifi/", "")+']');
 			if(a.length != 0){
 				a.tab('show');
-				Utils.storeHashTag(hash);
+//				Utils.storeHashTag(hash);
 			}
 			else{
 				$('[href$=#home]').tab('show'); 
