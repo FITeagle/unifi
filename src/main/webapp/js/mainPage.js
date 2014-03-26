@@ -38,7 +38,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	initCollapseHeaders = function(){
 		$('.collapseHeader').click(function(event){
 			var header = event.currentTarget;
-			var icon = header.previousElementSibling;
+			var icon = header.childNodes[1].childNodes[0]; //header.previousElementSibling;
 			window.setTimeout(function(){
 				switchCollapseSignFor($(icon));
 			},100);
@@ -53,7 +53,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	* @memberOf Main#
 	*/
 	switchCollapseSignFor = function(icon_object){
-		var selector = $(icon_object[0].nextElementSibling).attr("data-target");
+		var selector = $(icon_object[0].parentNode.parentNode).attr("data-target");
 		var isOpen  = $(selector).hasClass('in');
 			if(isOpen){
 				icon_object.attr('class','');
