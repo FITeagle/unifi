@@ -417,17 +417,10 @@ input.search-query{height:24px !important;}
 	
 	.alert{ text-align:center !important}
 	
-	.mainWindow  #navigation{
-		position: fixed;
-		z-index: 100;
-		top: 0;
-		}
-		
 	#fancyLogins{
 		margin-top:30px;
 	}
 		
-	.mainWindow  #header{padding-top:52px;}
 	#publicKeysList .publicKey{margin-top:20px}
 
 	#fancyLoginList ul{margin:0}
