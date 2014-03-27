@@ -16,7 +16,6 @@ function(require, Validation, Registration, Utils, Messages) {
 	Login = {};
 
 	Login.initLoginPage = function() {
-		 $('#fiteagle').removeClass('mainWindow');
 		 toggleNavigationBtn();
 		 redirectToUrl();
 		 Utils.unhideBody();
