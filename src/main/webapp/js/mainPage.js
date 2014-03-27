@@ -1,9 +1,9 @@
 var Main;
-define(['require','utils','profile','publicKeys','certificates','server','users'],
+define(['require','utils','profile','publicKeys','certificates','server','users','courses'],
 /**
  * @lends MainPage
  */ 
-function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
+function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 	
 	 /** 
 	 * The FITeagle main page class contains functions required for initialization of the 
@@ -88,7 +88,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 		Utils.unhideBody();
 		initCollapseHeaders();
 		
-		initUserInfoPanel();		
+		initUserInfoPanel();	
+		Courses.init();
 		Profile.initForm();
 		PublicKeys.initForm();
 		Certificates.initForm();

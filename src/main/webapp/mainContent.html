@@ -353,28 +353,20 @@
 			</div>
 
 			<div class="row-fluid">
-				<label class="span2" for="tbdropdown">Testbeds</label>
-				<div id="tbdropdown" class="span8">
-					<div class="dropdown">
-						<button class="nomargin btn dropdown-toggle sr-only" type="button"
-							id="dropdownMenu1" data-toggle="dropdown">
+				<label class="span2" for="addedTestbeds">Testbeds</label>
+				<div id="addedTestbeds" class="span4"></div>
+				<div class="span4">
+					<div class="dropdown pull-right">
+						<button class="nomargin btn dropdown-toggle sr-only" type="button" data-toggle="dropdown">
 							Available Testbeds <span class="caret"></span>
 						</button>
-						<ul class="dropdown-menu">
-							<li><a tabindex="-1" href="#" onclick="return false;">Testbed
-									1</a></li>
-							<li><a tabindex="-1" href="#" onclick="return false;">Testbed
-									2</a></li>
-							<li><a tabindex="-1" href="#" onclick="return false;">Testbed
-									3</a></li>
-							<li><a tabindex="-1" href="#" onclick="return false;">Testbed
-									4</a></li>
-						</ul>
+						<ul id="availableTestbeds" class="dropdown-menu"></ul>
 					</div>
 				</div>
+				
 			</div>
 			<div class="row-fluid">
-				<a class="btn">Create</a>
+				<a id="createCourseBtn" class="btn">Create</a>
 			</div>
 		</div>
 	</div>
