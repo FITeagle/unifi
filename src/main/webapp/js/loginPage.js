@@ -4,8 +4,6 @@ define([ 'require', 'validation', 'registration', 'utils', 'messages',
 
 function(require, Validation, Registration, Utils, Messages) {
 
-//	console.log("loginPage.js is loaded");
-
 	/**
 	 * The Login class contains functions required for initialization of the
 	 * forms and elements located on the login page.
@@ -150,15 +148,11 @@ function(require, Validation, Registration, Utils, Messages) {
      */ 
 	Login.loginUser = function(){
 		Utils.clearErrorMessagesFrom("#loginErrors");
-//		if(checkUsername() & checkPassword()){
-//			console.log("username and password are correct");
-		
-			var rememberMe = $("#rememberMeCheckbox").is(":checked");
-			var username = $('#username').val();
-			var pswd = $('#password').val();
-			var errorMessage = Server.loginUser(username,pswd,rememberMe);
-			if(errorMessage)Utils.addErrorMessageTo("#loginErrors",errorMessage);	
-//		}
+		var rememberMe = $("#rememberMeCheckbox").is(":checked");
+		var username = $('#username').val();
+		var pswd = $('#password').val();
+		var errorMessage = Server.loginUser(username,pswd,rememberMe);
+		if(errorMessage)Utils.addErrorMessageTo("#loginErrors",errorMessage);	
 	};
 	
 

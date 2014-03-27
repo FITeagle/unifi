@@ -148,14 +148,13 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	* @function
 	**/
 	Main.load = function(){
-		var url = "main.html";
-		
-		$("#mainPage").load(url + " #navigation,#main",
+		$("#mainPage").load("main.html #navigation,#main",
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "ADMIN":
 					$("#homeAside").load("mainContent.html #adminAside", function(){
-						$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#fiteagleusers,#testbeds",function(){
+						$("<div>").load("mainContent.html #fiteagleusers,#testbeds",function(){
+							$("#desktop").append(this.childNodes);
 							Users.initForm();
 							initMainPage();
 						});
@@ -164,7 +163,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 					
 				case "TBOWNER":
 					$("#homeAside").load("mainContent.html #tbownerAside", function(){
-						$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
+						$("<div>").load("mainContent.html #createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
+							$("#desktop").append(this.childNodes);
 							initMainPage();
 						});
 					});
@@ -172,7 +172,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 					
 				default:
 					$("#homeAside").load("mainContent.html #userAside", function(){
-						$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#task,#addcourse",function(){
+						$("<div>").load("mainContent.html #task,#addcourse",function(){
+							$("#desktop").append(this.childNodes);
 							initMainPage();
 						});
 					});
@@ -201,7 +202,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 			var a = $('.navigationLink [href$='+hash.replace("unifi/", "")+']');
 			if(a.length != 0){
 				a.tab('show');
-//				Utils.storeHashTag(hash);
 			}
 			else{
 				$('[href$=#home]').tab('show'); 
