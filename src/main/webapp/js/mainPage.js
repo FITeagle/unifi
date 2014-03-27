@@ -150,37 +150,34 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users){
 	Main.load = function(){
 		var url = "main.html";
 		
-		$("#navigation").load(url + " #toolbar",
+		$("#mainPage").load(url + " #navigation,#main",
 			function(){
-				$("#main").load(url + " #mainArea",
-					function(){
-						switch(Utils.getCurrentUser().role){
-						case "ADMIN":
-							$("#homeAside").load("mainContent.html #adminAside", function(){
-								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#fiteagleusers,#testbeds",function(){
-									Users.initForm();
-									initMainPage();
-								});
-							});
-							break;
-							
-						case "TBOWNER":
-							$("#homeAside").load("mainContent.html #tbownerAside", function(){
-								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
-									initMainPage();
-								});
-							});
-							break;
-							
-						default:
-							$("#homeAside").load("mainContent.html #userAside", function(){
-								$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#task,#addcourse",function(){
-									initMainPage();
-								});
-							});
-						}
-						
+				switch(Utils.getCurrentUser().role){
+				case "ADMIN":
+					$("#homeAside").load("mainContent.html #adminAside", function(){
+						$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#fiteagleusers,#testbeds",function(){
+							Users.initForm();
+							initMainPage();
+						});
 					});
+					break;
+					
+				case "TBOWNER":
+					$("#homeAside").load("mainContent.html #tbownerAside", function(){
+						$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
+							initMainPage();
+						});
+					});
+					break;
+					
+				default:
+					$("#homeAside").load("mainContent.html #userAside", function(){
+						$("#desktop").load("mainContent.html #home,#manage,#certificates,#keys,#task,#addcourse",function(){
+							initMainPage();
+						});
+					});
+				}
+						
 			}
 		);
 	};

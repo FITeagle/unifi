@@ -189,11 +189,8 @@ function(require, Validation, Registration, Utils, Messages) {
      */  
 	Login.load = function(){
 	var url = "login.html";
-	$("#navigation").load(url + " #navs",function(){
-		$("#main").load(url + " #loginPages",
-				function(){
-					Login.initLoginPage();
-		});
+	$("#mainPage").load(url + " #navigation,#main",function(){
+		Login.initLoginPage();
 	});	
 };	
 	
