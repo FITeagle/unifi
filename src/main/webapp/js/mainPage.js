@@ -25,7 +25,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			openDesktopTab(tag);
 		}else{
 			window.location.hash = "#home";
-			openDesktopTab('#home');
+			openDesktopTab('unifi/#home');
 		}
 	};
 		
@@ -74,7 +74,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 		$(window).unbind();
 		$(window).on('popstate hashchange',function(){
 			var state = window.location.hash;
-			openDesktopTab(state);
+			openDesktopTab("unifi/"+state);
 		});
 	};
 
@@ -114,8 +114,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 		navLinks.off();
 		navLinks.not('#signOut, #tasksToggle').on('click',function(e){
 			e.preventDefault();
-			var t = $(this);
-			var linkHref = t.attr('href');
+			var linkHref = $(this).attr('href');
 			var hash = linkHref.toLowerCase();
 			if(hash == "unifi/#task" || hash == "unifi/#createtask"){
 				$("#homeAside").fadeOut(200, function(){
@@ -123,7 +122,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 				});
 			}
 			
-			history.pushState(linkHref, "page "+linkHref, "/"+hash);
+//			history.pushState(linkHref, "page "+linkHref, "/"+hash);
 			openDesktopTab(hash);
 		});
 		
@@ -131,7 +130,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
-				history.pushState("#home", "page #home", "#home");
+//				history.pushState("#home", "page #home", "#home");
 				openDesktopTab("#home");
 			});
 		});
@@ -163,11 +162,9 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					break;
 					
 				case "TBOWNER":
-					$("#homeAside").load("mainContent.html #tbownerAside", function(){
-						$("<div>").load("mainContent.html #createcourse,#openepcqosparticipants,#openepcqostestbeds,#createtask,#task",function(){
-							$("#desktop").append(this.childNodes);
-							initMainPage();
-						});
+					$("<div>").load("mainContent.html #createcourse,#courseparticipants,#coursetestbeds,#createtask,#task",function(){
+						$("#desktop").append(this.childNodes);
+						initMainPage();
 					});
 					break;
 					
@@ -202,6 +199,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			
 			var a = $('.navigationLink [href$='+hash.replace("unifi/", "")+']');
 			if(a.length != 0){
+				history.pushState(hash, "page "+hash, "/"+hash);
 				a.tab('show');
 			}
 			else{
