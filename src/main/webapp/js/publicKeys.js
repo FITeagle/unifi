@@ -342,7 +342,6 @@ function(require,Utils,Server,Validation,Messages){
 				'title': Messages.clickToChangeKeyDescription	
 			});
 		label.on('click',function(e){
-			var oldKey = $(this).find('.keyDescriptionSpan').text();
 			onPublicKeyLabelClick(keyLabelID);
 		});
 		
@@ -511,13 +510,12 @@ function(require,Utils,Server,Validation,Messages){
 	    evt.stopPropagation();
 		evt.preventDefault();
 		var f = evt.target.files[0]; // FileList object	
-		var output;			
 		if (!f) {
 			Utils.setErrorMessageTo("#newUserKeyErrors",Messages.failToLoadFile);
 		}else {			
 			var checked = checkPublicKeyFile(f);
 			setTimeout(function(){
-				if(checked)output = readFile(f); // correct file selected
+				if(checked) readFile(f); // correct file selected
 			},100);
 		}
 	};

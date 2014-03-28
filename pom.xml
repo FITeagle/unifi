@@ -43,6 +43,7 @@
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
@@ -89,11 +90,6 @@
 						<inputEncoding>UTF-8</inputEncoding>
 						<outputEncoding>UTF-8</outputEncoding>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.5</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -152,7 +148,7 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-
+				
 			</plugins>
 		</pluginManagement>
 	</build>

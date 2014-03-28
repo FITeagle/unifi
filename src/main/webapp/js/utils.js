@@ -528,7 +528,7 @@ function(){
 			
 		var body = $('<div>').addClass('centered').append(successMsg);
 		
-		var modal = Utils.createCustomModal('successModal',null,body,foot);
+		Utils.createCustomModal('successModal',null,body,foot);
 		Utils.showModal('#successModal');
 	};
 	
