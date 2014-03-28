@@ -59,6 +59,7 @@ function(Utils,Server){
 
 			$("#tbownerCourses").prepend(createCourseForAsideList(course));
 			//TODO: open right page
+			initCollapseHeaders();
 			openDesktopTab("#courseparticipants");
 			
 		});
@@ -72,12 +73,10 @@ function(Utils,Server){
 		
 		var participantsLink = $("<li>").append($("<a>").attr("href","unifi/#courseparticipants").append($("<i>").addClass("fa fa-minus fa-li"),"Participants").on("click",function(e){
 			e.preventDefault();
-//			history.pushState("#courseparticipants", "page #courseparticipants", "/#courseparticipants");
 			openDesktopTab("#courseparticipants");
 		}));
 		var testbedsLink = $("<li>").append($("<a>").attr("href","unifi/#coursetestbeds").append($("<i>").addClass("fa fa-minus fa-li"),"Testbeds").on("click",function(e){
 			e.preventDefault();
-//			history.pushState("#coursetestbeds", "page #coursetestbeds", "/#coursetestbeds");
 			openDesktopTab("#coursetestbeds");
 		}));
 		
@@ -87,7 +86,6 @@ function(Utils,Server){
 			e.preventDefault();
 			$("#homeAside").fadeOut(200, function(){
 				$("#taskAsides").fadeIn(200);
-//				history.pushState("#createtask", "page #createtask", "/#createtask");
 				openDesktopTab("#createtask");
 			});
 		}));
@@ -113,7 +111,6 @@ function(Utils,Server){
 		
 		var createCourseLink = $("<a>").attr("href","unifi/#createcourse").append($("<i>").addClass("fa fa-plus fa-li"),"Create Course").on("click",function(e){
 			e.preventDefault();
-//			history.pushState("#createcourse", "page #createcourse", "/#createcourse");
 			openDesktopTab("#createcourse");
 		});
 		var createCourseDiv = $("<div>").addClass("navigationLink").append(createCourseLink);

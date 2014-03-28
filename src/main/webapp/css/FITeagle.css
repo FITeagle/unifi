@@ -79,8 +79,6 @@ td .centered{
 	overflow: visible;
 }
 
-.btn-inverse.disabled{background-color: #c8c8c8 !important;}
-
 #loginPages a{
 	text-decoration: none;
 	color: #f09030;
@@ -230,8 +228,6 @@ input.search-query{height:24px !important;}
 #toolbar .btn-navbar{margin: 0 2% 0 2%}
 
 #userInfoPanel{ padding: 10px 0px 5px 0}
-#fancyLoginList > ul > li{margin-top:10px; list-style:none;}
-#fancyLogins  li:first{margin-top:0}
 #aside{border-right: 1px solid #d1d1d1;}
 #desktop{
 	margin-left:20px !important;
@@ -394,18 +390,9 @@ input.search-query{height:24px !important;}
 	
 	.alert{ text-align:center !important}
 	
-	#fancyLogins{
-		margin-top:30px;
-	}
 		
 	#publicKeysList .publicKey{margin-top:20px}
 
-	#fancyLoginList ul{margin:0}
-	.padding3pc{
-		padding:0;
-		margin-left: 3%;
-		width: 94% !important;
-	}
 	.wrapper{padding: 0 20px 20px 20px}
 	
 	
@@ -419,7 +406,6 @@ input.search-query{height:24px !important;}
 	}
 	#aside{border-right: none;}
 	
-	#fancyLoginList{ border-right: none; padding-bottom:20px;}
 	#loginForm {margin-top:10px;}
 	label{margin:0;}
 	

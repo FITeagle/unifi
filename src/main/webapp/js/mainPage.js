@@ -38,7 +38,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 	initCollapseHeaders = function(){
 		$('.collapseHeader').click(function(event){
 			var header = event.currentTarget;
-			var icon = header.childNodes[1].childNodes[0]; //header.previousElementSibling;
+			var icon = $(header).find("i")[0];
 			window.setTimeout(function(){
 				switchCollapseSignFor($(icon));
 			},100);
@@ -86,13 +86,13 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 	*/
 	initMainPage = function(){
 		Utils.unhideBody();
-		initCollapseHeaders();
 		
 		initUserInfoPanel();	
 		Courses.init();
 		Profile.initForm();
 		PublicKeys.initForm();
 		Certificates.initForm();
+		initCollapseHeaders();
 		checkForStoredHashTags();
 		
 		require(["jsPlumb"], function(jsPlumb) {
@@ -121,8 +121,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					$("#taskAsides").fadeIn(200);
 				});
 			}
-			
-//			history.pushState(linkHref, "page "+linkHref, "/"+hash);
 			openDesktopTab(hash);
 		});
 		
@@ -130,7 +128,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
-//				history.pushState("#home", "page #home", "#home");
 				openDesktopTab("#home");
 			});
 		});
