@@ -149,12 +149,10 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "ADMIN":
-					$("#homeAside").load("mainContent.html #adminAside", function(){
-						$("<div>").load("mainContent.html #fiteagleusers,#testbeds",function(){
-							$("#desktop").append(this.childNodes);
-							Users.initForm();
-							initMainPage();
-						});
+					$("<div>").load("mainContent.html #fiteagleusers,#testbeds",function(){
+						$("#desktop").append(this.childNodes);
+						Users.initForm();
+						initMainPage();
 					});
 					break;
 					
