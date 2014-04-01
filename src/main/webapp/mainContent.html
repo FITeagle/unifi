@@ -1,72 +1,5 @@
 <div id="homeAside">
 
-	<div id="userAside">
-		<div class="offset1">
-			<h4>
-				<i class="fa fa-group fa-lg"></i>Courses
-			</h4>
-			<div>
-				<ul class="fa-ul">
-
-					<li>
-						<div class="collapseHeader" data-toggle='collapse'
-							data-target='#openepcqosTasks'>
-							<a><i class="collapseSign fa fa-caret-right fa-li"></i>OpenEPC QoS</a>
-						</div>
-						<div id="openepcqosTasks" class="row-fluid collapse out">
-							<ul class="navigationLink fa-ul">
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>First
-										task</a></li>
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>Second
-										task</a></li>
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>Third
-										task</a></li>
-							</ul>
-						</div></li>
-
-					<li>
-						<div class="collapseHeader" data-toggle='collapse'
-							data-target='#openmtcintroTasks'>
-							<a><i class="collapseSign fa fa-caret-right fa-li"></i>OpenMTC Intro</a>
-						</div>
-						<div id="openmtcintroTasks" class="row-fluid collapse out">
-							<ul class="navigationLink fa-ul">
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>First
-										task</a></li>
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>Second
-										task</a></li>
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>Third
-										task</a></li>
-							</ul>
-						</div></li>
-
-					<li>
-						<div class="collapseHeader" data-toggle='collapse'
-							data-target='#openimsdevelopmentTasks'>
-							<a><i class="collapseSign fa fa-caret-right fa-li"></i>OpenIMS Development</a>
-						</div>
-						<div id="openimsdevelopmentTasks" class="row-fluid collapse out">
-							<ul class="navigationLink fa-ul">
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>First
-										task</a></li>
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>Second
-										task</a></li>
-								<li><a href="unifi/#task"><i class="fa fa-minus fa-li"></i>Third
-										task</a></li>
-							</ul>
-						</div></li>
-						
-						<li>
-						  <div class="navigationLink">
-                <a href="unifi/#addcourse"><i class="fa fa-plus fa-li"></i>Add course</a>
-              </div>
-            </li>
-
-				</ul>
-			</div>
-		</div>
-	</div>
-
 	<div id="adminAside">
 		<div class="offset1">
 			<h4>
@@ -216,22 +149,21 @@
 	</div>
 
   <div id="addcourse" class="row-fluid tab-pane">
-    <div id="coursesAvailable">
-      <h3>Courses Available</h3>
+    <div>
+      <h3>All courses</h3>
     </div>
-    <div id="addCourseDescription">
+    <div>
       <h4>Chose a course you want to sign up for</h4>
     </div>
     <hr>
-    <div id="addCourseCourses">
-      <h4>
-        <a href="#" onclick="return false;" class="black"><i
-          class="fa fa-group"></i>Course 4</a>
-      </h4>
-      <h4>
-        <a href="#" onclick="return false;" class="black"><i
-          class="fa fa-group"></i>Course 5</a>
-      </h4>
+    <div>
+      <table id="addCourseCourses">
+        <tr>
+          <th class="span3">Name</th>
+          <th class="span7">Description</th>
+          <th class="span2"></th>
+        </tr>
+      </table>
     </div>
    </div>
 

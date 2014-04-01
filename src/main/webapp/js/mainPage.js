@@ -166,11 +166,9 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					break;
 					
 				default:
-					$("#homeAside").load("mainContent.html #userAside", function(){
-						$("<div>").load("mainContent.html #task,#addcourse",function(){
-							$("#desktop").append(this.childNodes);
-							initMainPage();
-						});
+					$("<div>").load("mainContent.html #task,#addcourse",function(){
+						$("#desktop").append(this.childNodes);
+						initMainPage();
 					});
 				}
 						

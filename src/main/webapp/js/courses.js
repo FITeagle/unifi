@@ -8,11 +8,12 @@ function(Utils,Server){
 		case "ADMIN":
 			break;
 		case "TBOWNER":
-			initCoursesAside();
+			initAdminCoursesAside();
 			initCreateCoursePage();
 			break;
 		default:
-			
+			initUserCoursesAside();
+			initAddCourse();
 		}
 	};
 	
@@ -60,7 +61,7 @@ function(Utils,Server){
 			//TODO: persist course
 			console.log(JSON.stringify(course));	
 
-			createCourseForAsideList(course);
+			createAdminCourseForAsideList(course);
 			
 			createCourseParticipantsPage(course);
 			createCourseTestbedsPage(course);
@@ -99,12 +100,9 @@ function(Utils,Server){
 		$("#desktop").append(page);
 	};
 	
-	
-	createCourseForAsideList = function(course){
-		var courseID = course.name.split(" ").join("_");
-		
+	createAdminCourseForAsideList = function(course){
 		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),course.name);
-		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+courseID+"Options").append(name);
+		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+course.id+"Options").append(name);
 		
 		var participantsLink = $("<li>").append($("<a>").attr("href","unifi/#course"+course.id+"_participants").append($("<i>").addClass("fa fa-minus fa-li"),"Participants").on("click",function(e){
 			e.preventDefault();
@@ -116,7 +114,7 @@ function(Utils,Server){
 		}));
 		
 		var tasksHeaderLink = $("<a>").attr("id","tasksToggle").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),"Tasks");
-		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+courseID+"Tasks").append(tasksHeaderLink);
+		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+course.id+"Tasks").append(tasksHeaderLink);
 		var createTaskLink = $("<li>").append($("<a>").attr("href","unifi/#createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
 			e.preventDefault();
 			$("#homeAside").fadeOut(200, function(){
@@ -125,7 +123,7 @@ function(Utils,Server){
 			});
 		}));
 		var tasks = $("<ul>").addClass("navigationLink fa-ul").append(createTaskLink);
-		var tasksList =  $("<div>").attr("id",courseID+"Tasks").addClass("row-fluid collapse out").append(tasks);
+		var tasksList =  $("<div>").attr("id",course.id+"Tasks").addClass("row-fluid collapse out").append(tasks);
 		var tasksToggle = $("<li>").append(tasksHeader,tasksList);
 		
 		var deleteLink = $("<li>").append($("<a>").append($("<i>").addClass("fa fa-trash-o fa-li"),"Delete course").on("click",function(e){
@@ -136,38 +134,105 @@ function(Utils,Server){
 		}));
 		
 		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,testbedsLink,tasksToggle,deleteLink);
-		var options = $("<div>").attr("id",courseID+"Options").addClass("row-fluid collapse out").append(optionList);
+		var options = $("<div>").attr("id",course.id+"Options").addClass("row-fluid collapse out").append(optionList);
 		
 		var courseElement = $("<li>").append(header, options);
 		$("#tbownerCourses").prepend(courseElement);
 	};
 	
+	createUserCourseForAsideList = function(course){
+		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),course.name);
+		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+course.id+"Tasks").append(name);
+		
+		var taskLink1 = $("<li>").append($("<a>").attr("href","unifi/#task").append($("<i>").addClass("fa fa-minus fa-li"),"First Task").on("click",function(e){
+			e.preventDefault();
+			$("#homeAside").fadeOut(200, function(){
+				$("#taskAsides").fadeIn(200);
+				openDesktopTab("#task");
+			});
+		}));
+		var tasksList = $("<ul>").addClass("navigationLink fa-ul").append(taskLink1);
+		var tasks = $("<div>").attr("id",course.id+"Tasks").addClass("row-fluid collapse out").append(tasksList);
+		
+		var courseElement = $("<li>").append(header, tasks);
+		$("#userCourses").prepend(courseElement);
+	};
 	
-	initCoursesAside = function(){
+	
+	initAdminCoursesAside = function(){
 		var list = $("<ul>").attr("id","tbownerCourses").addClass("fa-ul");
 		
 		var createCourseLink = $("<a>").attr("href","unifi/#createcourse").append($("<i>").addClass("fa fa-plus fa-li"),"Create Course").on("click",function(e){
 			e.preventDefault();
 			openDesktopTab("#createcourse");
 		});
-		var createCourseDiv = $("<div>").addClass("navigationLink").append(createCourseLink);
-		var createCourse = $("<li>").append("<i class='fa fa-plus fa-li'></i>",createCourseDiv);
+		var createCourse =  $("<li>").append($("<div>").addClass("navigationLink").append(createCourseLink));
 		list.append(createCourse);
 		
 		var header = "<h4><i class='fa fa-group fa-lg'></i>Courses</h4>";
 		$("#homeAside").append($("<div>").addClass("offset1").append(header,list));
-		createDefaultCourse();
+		createDefaultAdminCourse();
 	};
 	
-	createDefaultCourse = function(){
+	initUserCoursesAside = function(){
+		var list = $("<ul>").attr("id","userCourses").addClass("fa-ul");
+		
+		var addCourseLink = $("<a>").attr("href","unifi/#addcourse").append($("<i>").addClass("fa fa-plus fa-li"),"Add course").on("click",function(e){
+			e.preventDefault();
+			openDesktopTab("#addcourse");
+		});
+		var addCourse = $("<li>").append($("<div>").addClass("navigationLink").append(addCourseLink));
+		list.append(addCourse);
+		
+		var header = "<h4><i class='fa fa-group fa-lg'></i>Courses</h4>";
+		$("#homeAside").append($("<div>").addClass("offset1").append(header,list));
+		createDefaultUserCourse();
+	};
+	
+	createDefaultAdminCourse = function(){
 		var course = new Object();
 		course.name = "OpenEPC QoS";
 		course.id = idCount++;
 		course.testbeds = [];
-		createCourseForAsideList(course);
+		createAdminCourseForAsideList(course);
 		createCourseParticipantsPage(course);
 		createCourseTestbedsPage(course);
 	};
+	
+	createDefaultUserCourse = function(){
+		var course = new Object();
+		course.name = "OpenEPC QoS";
+		course.id = idCount++;
+		course.testbeds = [];
+		createUserCourseForAsideList(course);
+	};
+	
+	
+	initAddCourse = function(){
+		var allCourses = [];
+		var course1 = new Object();
+		course1.name = "OpenMTC Intro";
+		course1.description = "This course is an intro to OpenMTC.";
+		course1.id = idCount++;
+		allCourses.push(course1);
+		var course2 = new Object();
+		course2.name = "OpenIMS Development";
+		course2.description = "This course is about OpenIMS Development. It has a longer description where it explains what it is about and why.";
+		course2.id = idCount++;
+		allCourses.push(course2);
+		
+		$.each(allCourses, function(i, course) {
+			var signUpBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Sign up").on("click",function(e){
+				e.preventDefault();
+				createUserCourseForAsideList(course);
+				courseElement.remove();
+				initCollapseHeaders();
+			}));
+			var courseElement = $("<tr>").append("<td>"+course.name+"</td>","<td>"+course.description+"</td>",signUpBtn);
+			$("#addCourseCourses").append(courseElement);
+		});
+	};
+	
 	
 	return Courses;
 
