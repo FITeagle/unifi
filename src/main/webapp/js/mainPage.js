@@ -159,7 +159,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					break;
 					
 				case "TBOWNER":
-					$("<div>").load("mainContent.html #createcourse,#courseparticipants,#coursetestbeds,#createtask,#task",function(){
+					$("<div>").load("mainContent.html #createcourse,#createtask",function(){
 						$("#desktop").append(this.childNodes);
 						initMainPage();
 					});
