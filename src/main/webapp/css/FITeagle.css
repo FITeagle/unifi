@@ -116,11 +116,6 @@ td .centered{
 
 #navs .btn-navbar{margin-right:4%; margin-bottom:20px}
 
-#courseName{
-	font-weight: bold;
-	margin-top: 15px;
-}
-
 .btn {
 	color: white;
 }
@@ -454,10 +449,6 @@ input.search-query{height:24px !important;}
 	background-image: url('../img/FITeagle1.png'),         linear-gradient(top, #ffffff, #e6e6e6); /* W3C */
 }
 
-/* #tbdropdown{ */
-/* 	margin-left: 0; */
-/* } */
-
 #resources{
 	position: relative;
 	height: 600px;
@@ -499,6 +490,10 @@ input.search-query{height:24px !important;}
   left:5%;
 }
 
+#desktop a{
+	color:#373737;
+}
+
 #resources a {
     border-radius:0.2em;
 }
@@ -525,16 +520,13 @@ input.search-query{height:24px !important;}
 	font-size: 12px;
 }
 
-
 #resources path, ._jsPlumb_endpoint .dropdown{
 	cursor:pointer;
 }
 
-
 #courseName a:hover{
   color: #f09030;
 }
-
 
 #resources div::selection{
 	background: transparent;

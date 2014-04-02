@@ -23,22 +23,22 @@ function(Utils,Server){
 	};
 	
 	initTbDropdown = function(){
-		var courseName1 = "FUSECO Playground";
-		var courseName2 = "UCT Testbed";
-		var course1 = $("<li>").append($("<a>").attr("tabindex",-1).html(courseName1).on("click",function(){
+		var tbName1 = "FUSECO Playground";
+		var tbName2 = "UCT Testbed";
+		var course1 = $("<li>").append($("<a>").attr("tabindex",-1).html(tbName1).on("click",function(){
 			var tb = "";
 			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
 				tb.remove();
 			});
-			tb = $("<div>").append("<span>"+courseName1+" </span>",deleteBtn);
+			tb = $("<div>").append("<span>"+tbName1+" </span>",deleteBtn);
 			$("#addedTestbeds").append(tb);
 		}));
-		var course2 = $("<li>").append($("<a>").attr("tabindex",-1).html(courseName2).on("click",function(){
+		var course2 = $("<li>").append($("<a>").attr("tabindex",-1).html(tbName2).on("click",function(){
 			var tb = "";
 			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
 				tb.remove();
 			});
-			tb = $("<div>").append("<span>"+courseName2+" </span>",deleteBtn);
+			tb = $("<div>").append("<span>"+tbName2+" </span>",deleteBtn);
 			$("#addedTestbeds").append(tb);
 		}));
 		$("#availableTestbeds").append(course1,course2);
@@ -50,8 +50,8 @@ function(Utils,Server){
 		$("#createCourseBtn").on("click",function(){
 			var course = new Object();
 			course.id = idCount++;
-			course.name = $("#testbedName").val();
-			course.description = $("#testbedDescripion").val();
+			course.name = $("#courseName").val();
+			course.description = $("#courseDescripion").val();
 			course.testbeds = [];
 			$.each($("#addedTestbeds").children(), function(i, tb) {
 				var testbed = new Object();
@@ -66,8 +66,8 @@ function(Utils,Server){
 			createCourseParticipantsPage(course);
 			createCourseTestbedsPage(course);
 			
-			$("#testbedName").val('');
-			$("#testbedDescripion").val('');
+			$("#courseName").val('');
+			$("#courseDescripion").val('');
 			$("#addedTestbeds").empty();
 			initCollapseHeaders();
 			openDesktopTab("#course"+course.id+"_participants");
@@ -78,7 +78,7 @@ function(Utils,Server){
 		var title = $("<div>").append($("<h3>").html(course.name),"<hr/>");
 		var header = $("<tr>").append($("<td>"),$("<td>"),$("<td>"),$("<td>").html("Task 1"),$("<td>").html("Task 2"),$("<td>").html("Task 3"));
 		var users = $("<tr>").append("<td>Max Mustermann</td>","<td><a class='margin3 btn'>Details</a></td>","<td><a class='margin3 btn'>Delete</a></td>","<td class='centered'><i class='fa fa-check-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-check-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
-		var add = $("<tr>").append("<td><a class='black'><i class='fa fa-plus'></i>Add Participant</a></td>");
+		var add = $("<tr>").append("<td><a><i class='fa fa-plus'></i>Add Participant</a></td>");
 		var participants = $("<div>").append($("<table>").append(header,users,add));
 		
 		var page = $("<div>").attr("id","course"+course.id+"_participants").addClass("row-fluid tab-pane").append(title,$("<h4>").html("Participants"),participants);
@@ -93,7 +93,7 @@ function(Utils,Server){
 			testbeds.append(testbed);
 		});
 		
-		var add = $("<tr>").append("<td><a class='black'><i class='fa fa-plus'></i>Add Testbed</a></td>");
+		var add = $("<tr>").append("<td><a><i class='fa fa-plus'></i>Add Testbed</a></td>");
 		testbeds.append(add);
 		
 		var page = $("<div>").attr("id","course"+course.id+"_testbeds").addClass("row-fluid tab-pane").append(title,$("<h4>").html("Testbeds"),testbeds);
