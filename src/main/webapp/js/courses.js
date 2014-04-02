@@ -76,28 +76,91 @@ function(Utils,Server){
 	
 	createCourseParticipantsPage = function(course){
 		var title = $("<div>").append($("<h3>").html(course.name),"<hr/>");
-		var header = $("<tr>").append($("<td>"),$("<td>"),$("<td>"),$("<td>").html("Task 1"),$("<td>").html("Task 2"),$("<td>").html("Task 3"));
-		var users = $("<tr>").append("<td>Max Mustermann</td>","<td><a class='margin3 btn'>Details</a></td>","<td><a class='margin3 btn'>Delete</a></td>","<td class='centered'><i class='fa fa-check-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-check-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
-		var add = $("<tr>").append("<td><a><i class='fa fa-plus'></i>Add Participant</a></td>");
-		var participants = $("<div>").append($("<table>").append(header,users,add));
+		var header = $("<h4>").html("Participants");
+		var tableheader = $("<tr>").append($("<td>"),$("<td>"),$("<td>"),$("<td>").html("Task 1"),$("<td>").html("Task 2"),$("<td>").html("Task 3"));
+		var participants = $("<div>").append($("<table>").attr("id","course"+course.id+"ParticipantsTable").append(tableheader));
 		
-		var page = $("<div>").attr("id","course"+course.id+"_participants").addClass("row-fluid tab-pane").append(title,$("<h4>").html("Participants"),participants);
+		var addheader = $("<h4>").html("Add participant");
+		var ul = $('<ul>').addClass("dropdown-menu");
+		var allUsers = Server.getAllUsers();
+		$.each(allUsers, function(i, user) {
+			if(user.role == "USER"){
+				var userdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(user.username).on('click',function(){
+					$("#usersDropdown"+course.id).html("<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
+				}));
+				ul.append(userdropdownOption);
+			}
+		});
+		var dropdown = $("<div>").addClass("dropdown").attr("style","margin-bottom:"+25*allUsers.length+"px");
+		dropdown.append("<button class='btn dropdown-toggle' type='button' id='usersDropdown"+course.id+"' data-toggle='dropdown'>Available users</button>");
+		var addBtn = $("<button>").addClass("btn margin3").html("Add").on('click',function(){
+			if($("#usersDropdown"+course.id).html() != "Available users"){
+				createParticipantRow(course.id,$("#usersDropdown"+course.id).html());
+			}
+		});
+		dropdown.append(ul,addBtn);
+		var addParticipant = $("<div>").append(addheader,dropdown);
+		
+		var page = $("<div>").attr("id","course"+course.id+"_participants").addClass("row-fluid tab-pane").append(title,header,participants,"<hr>",addParticipant);
 		$("#desktop").append(page);
+		
+		//TODO: add real participants
+		createParticipantRow(course.id,"<b>max</b> (Max Musterman)");
+	};
+	
+	createParticipantRow = function(courseid,userData){
+		var deleteUserBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Delete").on('click',function(){
+			//TODO: delete from server
+			row.remove();
+		}));
+		var row = $("<tr>").append("<td>"+userData+"</td>","<td><a class='margin3 btn'>Details</a></td>",deleteUserBtn,"<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
+		$("#course"+courseid+"ParticipantsTable").append(row);
 	};
 	
 	createCourseTestbedsPage = function(course){
 		var title = $("<div>").append($("<h3>").html(course.name),"<hr/>");
-		var testbeds = $("<div>").append($("<table>"));
-		$.each(course.testbeds, function(i, tb) {
-			var testbed = $("<tr>").append("<td>"+tb.name+"</td>","<td><a class='margin3 btn'>Delete</a></td>");
-			testbeds.append(testbed);
+		var testbedsHeader = $("<h4>").html("Testbeds");
+		var testbeds = $("<div>").append($("<table>").attr("id","course"+course.id+"TestbedsTable"));
+		
+		var addheader = $("<h4>").html("Add testbed");
+		var ul = $('<ul>').addClass("dropdown-menu");
+		var allTestbeds = [];
+		tb1 = new Object();
+		tb1.name = "UCT Testbed";
+		tb2 = new Object();
+		tb2.name = "FUSECO Playground";
+		allTestbeds.push(tb1,tb2);
+		$.each(allTestbeds, function(i, tb) {
+			var tbdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(tb.name).on('click',function(){
+				$("#testbedsDropdown"+course.id).html(tb.name);
+			}));
+			ul.append(tbdropdownOption);
 		});
+		var dropdown = $("<div>").addClass("dropdown").attr("style","margin-bottom:"+35*allTestbeds.length+"px");
+		dropdown.append("<button class='btn dropdown-toggle' type='button' id='testbedsDropdown"+course.id+"' data-toggle='dropdown'>Available testbeds</button>");
+		var addBtn = $("<button>").addClass("btn margin3").html("Add").on('click',function(){
+			if($("#testbedsDropdown"+course.id).html() != "Available testbeds"){
+				createTestbedRow(course.id,$("#testbedsDropdown"+course.id).html());
+			}
+		});
+		dropdown.append(ul,addBtn);
+		var addTestbed = $("<div>").append(addheader,dropdown);
 		
-		var add = $("<tr>").append("<td><a><i class='fa fa-plus'></i>Add Testbed</a></td>");
-		testbeds.append(add);
-		
-		var page = $("<div>").attr("id","course"+course.id+"_testbeds").addClass("row-fluid tab-pane").append(title,$("<h4>").html("Testbeds"),testbeds);
+		var page = $("<div>").attr("id","course"+course.id+"_testbeds").addClass("row-fluid tab-pane").append(title,testbedsHeader,testbeds,"<hr>",addTestbed);
 		$("#desktop").append(page);
+		
+		$.each(course.testbeds, function(i, tb) {
+			createTestbedRow(course.id,tb.name);
+		});
+	};
+	
+	createTestbedRow = function(courseid,tbname){
+		var deleteTestbedBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Delete").on('click',function(){
+			//TODO: delete from server
+			row.remove();
+		}));
+		var row = $("<tr>").append("<td>"+tbname+"</td>",deleteTestbedBtn);
+		$("#course"+courseid+"TestbedsTable").append(row);
 	};
 	
 	createAdminCourseForAsideList = function(course){
