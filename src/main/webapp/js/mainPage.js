@@ -149,7 +149,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "ADMIN":
-					$("<div>").load("mainContent.html #fiteagleusers,#testbeds",function(){
+					$("<div>").load("mainContent.html #fiteagleusers,#testbeds,#addtestbed",function(){
 						$("#desktop").append(this.childNodes);
 						Users.initForm();
 						initMainPage();
