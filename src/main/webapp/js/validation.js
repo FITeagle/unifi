@@ -90,6 +90,9 @@ function(){
 		return ((affiliation.length >= 2) & (affiliation.length < 200));
 	};
 	
+	Validation._isUniversity = function(university){
+		return university != "University";
+	};
 	
 	/**
 	* Checks if the given public key description name has a valid syntax.

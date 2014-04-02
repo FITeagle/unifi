@@ -129,6 +129,17 @@ function(Validation, Utils, MainPage,Messages){
 		return isValidAffiliation;
 	};
 	
+	checkUniversity = function(){		
+		var isValidUniversity = Utils.checkInputField(
+									"#inputUniversity",
+									"#registrationErrors",
+									Validation._isUniversity,
+									Messages.emptyUniversity,
+									Messages.wrongUniversity
+									);
+		return isValidUniversity;
+	};
+	
 	/**
 	* Checks if the password entered by a user in the registration form is a valid one 
 	* and shows an appropriate error message if the value occurs wrong after the its validation is performed.
@@ -146,10 +157,7 @@ function(Validation, Utils, MainPage,Messages){
 								Messages.emptyPassword,
 								Messages.wrongPassword
 								);
-//		console.log("PSW: " + isValidPassword);		
-			
 		return isValidPassword;
-							
 	};
 	
 	
@@ -225,11 +233,12 @@ function(Validation, Utils, MainPage,Messages){
 	*/
 	checkRequiredUserEntries = function(){
 		var allEntriesValid = 
-					checkRegUsername()     &
+					checkRegUsername()  &
 					checkEmail()        &
 					checkFirstName()    &
 					checkLastName()     &
 					checkAffiliation()  &
+					checkUniversity()   &
 					checkUserPasswords();
 					
 		return allEntriesValid; 
@@ -244,24 +253,21 @@ function(Validation, Utils, MainPage,Messages){
 	* @memberOf Registration#
 	*/
 	registerNewUser = function(){
-		//console.log("Registration clicked ");	
 		Utils.unhideElement('#registerSpinner');
 		var allEntriesValid = checkRequiredUserEntries();
-		//console.log("All entries are valid !" + allEntriesValid);
 		if(allEntriesValid){		
 			var newUserInfo = Utils.createNewUser(
-							$('#inputFirstName').val(), // get user's first name
-							$('#inputLastName').val(), // get last name
-							$("#inputAffiliation").val(), // get affiliation
-							$('#inputPassword').val(), // get password
-							$('#inputEmail').val() // get user's email
+							$('#inputFirstName').val(),
+							$('#inputLastName').val(),
+							$("#inputAffiliation").val(),
+							$('#inputPassword').val(),
+							$('#inputEmail').val()
 						  );
 						  
 			
 			var errorMessage = Server.registerUser(
 											newUserInfo,
-											$('#inputUsername').val() // get username
-											/*showNewUserProfile*/);
+											$('#inputUsername').val());
 			
 			if(errorMessage){
 				setTimeout(function(){
@@ -293,9 +299,18 @@ function(Validation, Utils, MainPage,Messages){
 		Utils.addOnEnterClickEvent('#inputConfirmPassword',"#registerBtn");	
 		Registration.initRegistrationFormHints();
 		Registration.initRegisterNewUserButton();
-
-		
-
+		Registration.initUniversityDropdown();
+	};
+	
+	Registration.initUniversityDropdown = function(){
+		$("#UCT").click(function(){
+			$("#inputUniversity").html("University of Cape Town");
+			$("#inputUniversity").val("University of Cape Town");
+		});
+		$("#TUB").click(function(){
+			$("#inputUniversity").html("TU Berlin");
+			$("#inputUniversity").val("TU Berlin");
+		});
 	};
 	
 	

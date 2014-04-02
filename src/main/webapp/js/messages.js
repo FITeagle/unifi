@@ -113,6 +113,8 @@ define([],function(){
 	*/	
 	Messages.emptyAffiliation = "Affiliation is empty.";
 	
+	Messages.emptyUniversity = "Please chose a university from the dropdown-menu";
+	
 	/**
 	* Warning message after submitting an empty user's password value.
 	* @public
@@ -170,6 +172,8 @@ define([],function(){
 	* @example "Wrong Affiliation syntax."
 	*/
 	Messages.wrongAffiliation = "Wrong Affiliation syntax.";
+	
+	Messages.wrongUniversity = "Please chose a university from the dropdown-menu";
 	
 	/**
 	* Warning message after submitting a user's password value with a wrong syntax.

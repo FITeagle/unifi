@@ -23,7 +23,7 @@ function(Utils,Server){
 		var users = Server.getAllUsers();
 		
 		$.each(users, function(i, user) {
-			var userRow = $("<tr>").append("<td>"+user.username+"</td");
+			var userRow = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+") </td>");
 			
 			var getUser = $('<a>').addClass("margin3 btn").html("Details").on("click", function(){
 				alert(JSON.stringify(Server.getUser(user.username)));
