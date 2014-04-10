@@ -49,7 +49,6 @@ function(Utils,Server){
 	initCreateBtn = function(){
 		$("#createCourseBtn").on("click",function(){
 			var course = new Object();
-			course.id = idCount++;
 			course.name = $("#courseName").val();
 			course.description = $("#courseDescripion").val();
 			course.testbeds = [];
@@ -58,9 +57,9 @@ function(Utils,Server){
 				testbed.name = tb.children[0].innerHTML;
 				course.testbeds.push(testbed);
 			});
-			//TODO: persist course
-			console.log(JSON.stringify(course));	
-
+			
+			course.id = Server.createCourse(course);
+			
 			createAdminCourseForAsideList(course);
 			
 			createCourseParticipantsPage(course);
@@ -191,9 +190,10 @@ function(Utils,Server){
 		
 		var deleteLink = $("<li>").append($("<a>").append($("<i>").addClass("fa fa-trash-o fa-li"),"Delete course").on("click",function(e){
 			e.preventDefault();
-			//TODO: delete from server
-			courseElement.remove();
-			openDesktopTab("#home");
+			Server.deleteCourse(course.id,function(){
+				courseElement.remove();
+				openDesktopTab("#home");
+			});
 		}));
 		
 		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,testbedsLink,tasksToggle,deleteLink);

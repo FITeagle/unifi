@@ -552,6 +552,51 @@ function(require,Utils){
 		return message;
 	};
 	
+	Server.createCourse = function(course){	
+		var courseJSON = JSON.stringify(course);
+		var id=0;
+		$.ajax({
+			cache: false,
+			type: "PUT",
+			async: false,
+			url: "/native/api/course/",
+			data: courseJSON,
+			contentType: "application/json",
+			success: function(data,status){
+				id = data;
+			},
+			error: function(xhl,status){
+				console.log(Utils.createErrorMessage(xhl.responseText));
+			},
+		});
+		
+		return id;
+	};
+	
+	Server.deleteCourse = function(id, afterDeleteFunction){
+		var message=0;
+		$.ajax({
+			cache: false,
+			type: "DELETE",
+			async: false,
+			url: "/native/api/course/"+id,
+			success: function(data,status){
+				message = Utils.createSuccessMessage('The course has been successfully deleted');
+			},
+			error: function(xhl,status){
+				message = Utils.createErrorMessage(xhl.responseText);
+				console.log(status);
+			},
+			statusCode:{			
+				200: function(){		
+					afterDeleteFunction();
+				}
+			},
+			complete: function(){}
+		});
+		
+		return message;
+	};
 		
 	return Server;
 
