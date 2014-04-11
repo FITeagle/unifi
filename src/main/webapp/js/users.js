@@ -10,7 +10,7 @@ function(Utils,Server){
 	
 	initUsersAside = function(){
 		var usersHeader = "<h4><i class='fa fa-group fa-lg'></i>Users</h4>";
-		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#fiteagleusers'><i class='fa fa-minus fa-li'></i>FITeagle Users</a></li>"));
+		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#fiteagleusers'><i class='fa fa-minus fa-li'></i>All users</a></li>"));
 		
 		var testbedsHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Testbeds</h4>";
 		var testbeds = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#testbeds'><i class='fa fa-minus fa-li'></i>Testbeds</a></li>","<li><a href='unifi/#addtestbed'><i class='fa fa-plus fa-li'></i>Add testbed</a></li>"));
