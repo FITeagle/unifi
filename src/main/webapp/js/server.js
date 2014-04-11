@@ -536,7 +536,6 @@ function(require,Utils){
 				
 			},
 			success: function(data,status){
-//				console.log(status);
 				message = status;
 			},
 			error: function(xhl,status){
@@ -552,15 +551,15 @@ function(require,Utils){
 		return message;
 	};
 	
-	Server.createCourse = function(course){	
-		var courseJSON = JSON.stringify(course);
+	Server.createClass = function(newClass){	
+		var classJSON = JSON.stringify(newClass);
 		var id=0;
 		$.ajax({
 			cache: false,
 			type: "PUT",
 			async: false,
 			url: "/native/api/course/",
-			data: courseJSON,
+			data: classJSON,
 			contentType: "application/json",
 			success: function(data,status){
 				id = data;
@@ -573,7 +572,7 @@ function(require,Utils){
 		return id;
 	};
 	
-	Server.deleteCourse = function(id, afterDeleteFunction){
+	Server.deleteClass = function(id, afterDeleteFunction){
 		var message=0;
 		$.ajax({
 			cache: false,

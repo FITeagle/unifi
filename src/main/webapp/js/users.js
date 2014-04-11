@@ -1,5 +1,5 @@
-define(['utils','server'], 
-function(Utils,Server){
+define(['utils','server','classes'], 
+function(Utils,Server,Classes){
 	
 	Users = {};
 	
@@ -16,7 +16,7 @@ function(Utils,Server){
 		var nodes = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#nodes'><i class='fa fa-minus fa-li'></i>All nodes</a></li>","<li><a href='unifi/#addnode'><i class='fa fa-plus fa-li'></i>Add node</a></li>"));
 
 		$("#homeAside").append($("<div>").addClass("offset1").append(usersHeader,users,nodesHeader,nodes));
-		createDefaultUserCourse();
+		createDefaultUserClass();
 	};
 	
 	initUserFields = function(){

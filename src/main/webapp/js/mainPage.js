@@ -1,5 +1,5 @@
 var Main;
-define(['require','utils','profile','publicKeys','certificates','server','users','courses'],
+define(['require','utils','profile','publicKeys','certificates','server','users','classes'],
 /**
  * @lends MainPage
  */ 
@@ -165,14 +165,14 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					break;
 					
 				case "CLASSOWNER":
-					$("<div>").load("mainContent.html #createcourse,#createtask",function(){
+					$("<div>").load("mainContent.html #createclass,#createtask",function(){
 						$("#desktop").append(this.childNodes);
 						initMainPage();
 					});
 					break;
 					
 				default:
-					$("<div>").load("mainContent.html #task,#addcourse",function(){
+					$("<div>").load("mainContent.html #task,#addclass",function(){
 						$("#desktop").append(this.childNodes);
 						initMainPage();
 					});
