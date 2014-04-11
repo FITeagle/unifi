@@ -148,7 +148,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 		$("#mainPage").load("main.html #navigation,#main",
 			function(){
 				switch(Utils.getCurrentUser().role){
-				case "ADMIN":
+				case "FEDERATION_ADMIN":
 					$("<div>").load("mainContent.html #fiteagleusers,#testbeds,#addtestbed",function(){
 						$("#desktop").append(this.childNodes);
 						Users.initForm();
@@ -156,7 +156,15 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					});
 					break;
 					
-				case "TBOWNER":
+				case "NODE_ADMIN":
+					$("<div>").load("mainContent.html #fiteagleusers,#testbeds,#addtestbed",function(){
+						$("#desktop").append(this.childNodes);
+						Users.initForm();
+						initMainPage();
+					});
+					break;
+					
+				case "CLASSOWNER":
 					$("<div>").load("mainContent.html #createcourse,#createtask",function(){
 						$("#desktop").append(this.childNodes);
 						initMainPage();

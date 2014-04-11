@@ -45,28 +45,35 @@ function(Utils,Server){
 				var dropdown = $('<div>').addClass("dropdown");
 				dropdown.append("<button class='margin3 btn dropdown-toggle' type='button' id='roleDropdown"+user.username+"' data-toggle='dropdown'>"+user.role+"</button>");
 							
-				var setRoleUSER = $('<a>').attr("tabindex",-1).html("USER").on('click',function(){
-					if(Server.setRole(user.username, "USER") == "success"){
-						$(document.getElementById("roleDropdown"+user.username)).html("USER");
+				var setRoleSTUDENT = $('<a>').attr("tabindex",-1).html("STUDENT").on('click',function(){
+					if(Server.setRole(user.username, "STUDENT") == "success"){
+						$(document.getElementById("roleDropdown"+user.username)).html("STUDENT");
 					}
 				});
-				var setRoleTBOWNER = $('<a>').attr("tabindex",-1).html("TBOWNER").on('click',function(){
-					if(Server.setRole(user.username, "TBOWNER") == "success"){
-						$(document.getElementById("roleDropdown"+user.username)).html("TBOWNER");
+				var setRoleCLASSOWNER = $('<a>').attr("tabindex",-1).html("CLASSOWNER").on('click',function(){
+					if(Server.setRole(user.username, "CLASSOWNER") == "success"){
+						$(document.getElementById("roleDropdown"+user.username)).html("CLASSOWNER");
 					}
 				});
-				var setRoleADMIN = $('<a>').attr("tabindex",-1).html("ADMIN").on('click',function(){
-					if(Server.setRole(user.username, "ADMIN") == "success"){
-						$(document.getElementById("roleDropdown"+user.username)).html("ADMIN");
+				var setRoleFEDERATION_ADMIN = $('<a>').attr("tabindex",-1).html("FEDERATION_ADMIN").on('click',function(){
+					if(Server.setRole(user.username, "FEDERATION_ADMIN") == "success"){
+						$(document.getElementById("roleDropdown"+user.username)).html("FEDERATION_ADMIN");
 					}
 				});
-				var dropdownOptionUSER = $('<li>').append(setRoleUSER);
-				var dropdownOptionTBOWNER = $('<li>').append(setRoleTBOWNER);
-				var dropdownOptionADMIN = $('<li>').append(setRoleADMIN);
+				var setRoleNODE_ADMIN = $('<a>').attr("tabindex",-1).html("NODE_ADMIN").on('click',function(){
+					if(Server.setRole(user.username, "NODE_ADMIN") == "success"){
+						$(document.getElementById("roleDropdown"+user.username)).html("NODE_ADMIN");
+					}
+				});
+				var dropdownOptionSTUDENT = $('<li>').append(setRoleSTUDENT);
+				var dropdownOptionCLASSOWNER = $('<li>').append(setRoleCLASSOWNER);
+				var dropdownOptionFEDERATION_ADMIN = $('<li>').append(setRoleFEDERATION_ADMIN);
+				var dropdownOptionNODE_ADMIN = $('<li>').append(setRoleNODE_ADMIN);
 				var ul = $('<ul>').addClass("dropdown-menu");
-				ul.append(dropdownOptionUSER);
-				ul.append(dropdownOptionTBOWNER);
-				ul.append(dropdownOptionADMIN);
+				ul.append(dropdownOptionSTUDENT);
+				ul.append(dropdownOptionCLASSOWNER);
+				ul.append(dropdownOptionFEDERATION_ADMIN);
+				ul.append(dropdownOptionNODE_ADMIN);
 				dropdown.append(ul);
 				
 				userRow.append($('<td>').append(dropdown));

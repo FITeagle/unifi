@@ -5,9 +5,11 @@ function(Utils,Server){
 	
 	Courses.init = function(){
 		switch(Utils.getCurrentUser().role){
-		case "ADMIN":
+		case "FEDERATION_ADMIN":
 			break;
-		case "TBOWNER":
+		case "NODE_ADMIN":
+			break;
+		case "CLASSOWNER":
 			initAdminCoursesAside();
 			initCreateCoursePage();
 			break;
