@@ -558,7 +558,7 @@ function(require,Utils){
 			cache: false,
 			type: "PUT",
 			async: false,
-			url: "/native/api/course/",
+			url: "/native/api/class/",
 			data: classJSON,
 			contentType: "application/json",
 			success: function(data,status){
@@ -578,9 +578,9 @@ function(require,Utils){
 			cache: false,
 			type: "DELETE",
 			async: false,
-			url: "/native/api/course/"+id,
+			url: "/native/api/class/"+id,
 			success: function(data,status){
-				message = Utils.createSuccessMessage('The course has been successfully deleted');
+				message = Utils.createSuccessMessage('The class has been successfully deleted');
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
