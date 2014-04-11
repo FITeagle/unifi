@@ -73,29 +73,29 @@
 		</div>
 	</div>
 
-	<div id="fiteagleusers" class="row-fluid tab-pane">
+	<div id="allusers" class="row-fluid tab-pane">
 		<div>
-			<h3>Manage FITeagle Users</h3>
+			<h3>Manage All Users</h3>
 		</div>
 		<div>
-			<h4>View all exisiting users, edit their roles or delete them.</h4>
+			<h4>View all existing users, edit their roles or delete them.</h4>
 		</div>
 		<hr />
 		<div style="margin-bottom: 120px">
 
-			<table id="fiteagleusersusers">
+			<table id="allusersusers">
 
 			</table>
 
 		</div>
 	</div>
 
-	<div id="testbeds" class="row-fluid tab-pane">
+	<div id="nodes" class="row-fluid tab-pane">
 		<div>
-			<h3>Manage Unifi Testbeds</h3>
+			<h3>Manage Unifi Nodes</h3>
 		</div>
 		<div>
-			<h4>View the status of all connected testbeds.</h4>
+			<h4>View the status of all connected nodes.</h4>
 		</div>
 		<hr />
 		<div>
@@ -106,12 +106,12 @@
 					<th></th>
 				</tr>
 				<tr>
-					<td>FUSECO Playground</td>
+					<td>TUB Node</td>
 					<td>Up</td>
 					<td><a href="#" class="margin3 btn" onclick="return false;">Delete</a></td>
 				</tr>
 				<tr>
-					<td>UCT Testbed</td>
+					<td>UCT Node</td>
 					<td>Down</td>
 					<td><a href="#" class="margin3 btn" onclick="return false;">Delete</a></td>
 				</tr>
@@ -119,22 +119,22 @@
 		</div>
 	</div>
 	
-	<div id="addtestbed" class="row-fluid tab-pane">
+	<div id="addnode" class="row-fluid tab-pane">
     <div>
-      <h3>Add testbed</h3>
+      <h3>Add node</h3>
     </div>
     <div>
-      <h4>Set up connection to a new testbed</h4>
+      <h4>Set up connection to a new node</h4>
     </div>
     <hr />
     <div>
       <div class="row-fluid">
-        <label class="span2" for="testbedName">Name</label> <input
-          class="span8" type="text" id="testbedName"
-          placeholder="The name of the testbed">
+        <label class="span2" for="nodeName">Name</label> <input
+          class="span8" type="text" id="nodeName"
+          placeholder="The name of the node">
       </div>
       <div class="row-fluid">
-        <a id="addTestbedBtn" class="btn">Add</a>
+        <a id="addNodeBtn" class="btn">Add</a>
       </div>
     </div>
   </div>

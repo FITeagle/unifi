@@ -10,12 +10,12 @@ function(Utils,Server){
 	
 	initUsersAside = function(){
 		var usersHeader = "<h4><i class='fa fa-group fa-lg'></i>Users</h4>";
-		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#fiteagleusers'><i class='fa fa-minus fa-li'></i>All users</a></li>"));
+		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#allusers'><i class='fa fa-minus fa-li'></i>All users</a></li>"));
 		
-		var testbedsHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Testbeds</h4>";
-		var testbeds = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#testbeds'><i class='fa fa-minus fa-li'></i>Testbeds</a></li>","<li><a href='unifi/#addtestbed'><i class='fa fa-plus fa-li'></i>Add testbed</a></li>"));
+		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
+		var nodes = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#nodes'><i class='fa fa-minus fa-li'></i>All nodes</a></li>","<li><a href='unifi/#addnode'><i class='fa fa-plus fa-li'></i>Add node</a></li>"));
 
-		$("#homeAside").append($("<div>").addClass("offset1").append(usersHeader,users,testbedsHeader,testbeds));
+		$("#homeAside").append($("<div>").addClass("offset1").append(usersHeader,users,nodesHeader,nodes));
 		createDefaultUserCourse();
 	};
 	
@@ -78,7 +78,7 @@ function(Utils,Server){
 				
 				userRow.append($('<td>').append(dropdown));
 				
-				$("#fiteagleusersusers").append(userRow);
+				$("#allusersusers").append(userRow);
 			}
 		});
 	};

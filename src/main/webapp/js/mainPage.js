@@ -149,7 +149,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "FEDERATION_ADMIN":
-					$("<div>").load("mainContent.html #fiteagleusers,#testbeds,#addtestbed",function(){
+					$("<div>").load("mainContent.html #allusers,#nodes,#addnode",function(){
 						$("#desktop").append(this.childNodes);
 						Users.initForm();
 						initMainPage();
@@ -157,7 +157,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					break;
 					
 				case "NODE_ADMIN":
-					$("<div>").load("mainContent.html #fiteagleusers,#testbeds,#addtestbed",function(){
+					$("<div>").load("mainContent.html #allusers,#nodes,#addnode",function(){
 						$("#desktop").append(this.childNodes);
 						Users.initForm();
 						initMainPage();
