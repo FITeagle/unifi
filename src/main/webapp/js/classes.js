@@ -229,7 +229,7 @@ function(Utils,Server){
 		
 		var createClassLink = $("<a>").attr("href","unifi/#createclass").append($("<i>").addClass("fa fa-plus fa-li"),"Create Class").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("#createclass");
+			openDesktopTab("unifi/#createclass");
 		});
 		var createClass =  $("<li>").append($("<div>").addClass("navigationLink").append(createClassLink));
 		list.append(createClass);
@@ -240,17 +240,26 @@ function(Utils,Server){
 	};
 	
 	initUserClassesAside = function(){
-		var list = $("<ul>").attr("id","userClasses").addClass("fa-ul");
+		var myClassesList = $("<ul>").attr("id","userClasses").addClass("fa-ul");
 		
-		var addClassLink = $("<a>").attr("href","unifi/#addclass").append($("<i>").addClass("fa fa-plus fa-li"),"Add class").on("click",function(e){
+		var myClassesHeader = "<h4><i class='fa fa-group fa-lg'></i>My classes</h4>";
+		
+		var allClassesHeader = "<h4><i class='fa fa-group fa-lg'></i>All classes</h4>";
+		var allClassesList = $("<ul>").attr("id","userClasses").addClass("fa-ul");
+		
+		var uctClassesLink = $("<a>").attr("href","unifi/#uctclasses").append($("<i>").addClass("fa fa-minus fa-li"),"UCT classes").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("#addclass");
+			openDesktopTab("unifi/#uctclasses");
 		});
-		var addClass = $("<li>").append($("<div>").addClass("navigationLink").append(addClassLink));
-		list.append(addClass);
+		var uctClasses = $("<li>").append($("<div>").addClass("navigationLink").append(uctClassesLink));
+		var tubClassesLink = $("<a>").attr("href","unifi/#uctclasses").append($("<i>").addClass("fa fa-minus fa-li"),"TUB classes").on("click",function(e){
+			e.preventDefault();
+			openDesktopTab("unifi/#uctclasses");
+		});
+		var tubClasses = $("<li>").append($("<div>").addClass("navigationLink").append(tubClassesLink));
+		allClassesList.append(uctClasses, tubClasses);
 		
-		var header = "<h4><i class='fa fa-group fa-lg'></i>Classes</h4>";
-		$("#homeAside").append($("<div>").addClass("offset1").append(header,list));
+		$("#homeAside").append($("<div>").addClass("offset1").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
 		createDefaultUserClass();
 	};
 	
@@ -294,7 +303,7 @@ function(Utils,Server){
 				initCollapseHeaders();
 			}));
 			var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
-			$("#addClassClasses").append(classElement);
+			$("#uctClassClasses").append(classElement);
 		});
 	};
 	

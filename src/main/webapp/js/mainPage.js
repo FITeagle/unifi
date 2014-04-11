@@ -172,7 +172,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					break;
 					
 				default:
-					$("<div>").load("mainContent.html #task,#addclass",function(){
+					$("<div>").load("mainContent.html #task,#uctclasses",function(){
 						$("#desktop").append(this.childNodes);
 						initMainPage();
 					});
