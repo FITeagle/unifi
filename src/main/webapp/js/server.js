@@ -353,14 +353,10 @@ function(require,Utils){
 			type: "DELETE",
 			async: false,
 			url : "/native/api/user/"+username+"/cookie",
-			beforeSend: function(xhr){
-
-			},
-			success: function(answer,status,xhr){
+			success: function(answer,status){
 				isSuccessful = true;
 			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
+			error: function(status,thrown){
 				console.log(status);
 				console.log(thrown);
 			},

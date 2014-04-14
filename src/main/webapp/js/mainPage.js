@@ -217,8 +217,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 	initSignOutBtn = function(){
 		$("#signOut").on('click',function(e){
 			e.preventDefault();
-				var isCookieDeleted = Server.invalidateCookie();
-				if(isCookieDeleted) Main.signOut();
+				Server.invalidateCookie();
+				Main.signOut();
 		});
 	};
 	
