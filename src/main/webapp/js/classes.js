@@ -20,30 +20,30 @@ function(Utils,Server){
 	};
 	
 	initCreateClassPage = function(){
-		initTbDropdown();
+		initNodeDropdown();
 		initCreateBtn();
 	};
 	
-	initTbDropdown = function(){
-		var tbName1 = "FUSECO Playground";
-		var tbName2 = "UCT Testbed";
-		var class1 = $("<li>").append($("<a>").attr("tabindex",-1).html(tbName1).on("click",function(){
-			var tb = "";
+	initNodeDropdown = function(){
+		var nodeName1 = "FUSECO Playground";
+		var nodeName2 = "UCT Testbed";
+		var class1 = $("<li>").append($("<a>").attr("tabindex",-1).html(nodeName1).on("click",function(){
+			var node = "";
 			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
-				tb.remove();
+				node.remove();
 			});
-			tb = $("<div>").append("<span>"+tbName1+" </span>",deleteBtn);
-			$("#addedTestbeds").append(tb);
+			node = $("<div>").append("<span>"+nodeName1+" </span>",deleteBtn);
+			$("#addedNodes").append(node);
 		}));
-		var class2 = $("<li>").append($("<a>").attr("tabindex",-1).html(tbName2).on("click",function(){
-			var tb = "";
+		var class2 = $("<li>").append($("<a>").attr("tabindex",-1).html(nodeName2).on("click",function(){
+			var node = "";
 			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
-				tb.remove();
+				node.remove();
 			});
-			tb = $("<div>").append("<span>"+tbName2+" </span>",deleteBtn);
-			$("#addedTestbeds").append(tb);
+			node = $("<div>").append("<span>"+nodeName2+" </span>",deleteBtn);
+			$("#addedNodes").append(node);
 		}));
-		$("#availableTestbeds").append(class1,class2);
+		$("#availableNodes").append(class1,class2);
 	};
 	
 	var idCount = 0;
@@ -53,11 +53,11 @@ function(Utils,Server){
 			var newClass = new Object();
 			newClass.name = $("#className").val();
 			newClass.description = $("#classDescripion").val();
-			newClass.testbeds = [];
-			$.each($("#addedTestbeds").children(), function(i, tb) {
-				var testbed = new Object();
-				testbed.name = tb.children[0].innerHTML;
-				newClass.testbeds.push(testbed);
+			newClass.nodes = [];
+			$.each($("#addedNodes").children(), function(i, tb) {
+				var node = new Object();
+				node.name = tb.children[0].innerHTML;
+				newClass.nodes.push(node);
 			});
 			
 			newClass.id = Server.createClass(newClass);
@@ -69,7 +69,7 @@ function(Utils,Server){
 			
 			$("#className").val('');
 			$("#classDescripion").val('');
-			$("#addedTestbeds").empty();
+			$("#addedNodes").empty();
 			initCollapseHeaders();
 			openDesktopTab("#class"+newClass.id+"_participants");
 		});
@@ -150,7 +150,7 @@ function(Utils,Server){
 		var page = $("<div>").attr("id","class"+newClass.id+"_testbeds").addClass("row-fluid tab-pane").append(title,testbedsHeader,testbeds,"<hr>",addTestbed);
 		$("#desktop").append(page);
 		
-		$.each(newClass.testbeds, function(i, tb) {
+		$.each(newClass.nodes, function(i, tb) {
 			createTestbedRow(newClass.id,tb.name);
 		});
 	};
@@ -267,7 +267,7 @@ function(Utils,Server){
 		var newClass = new Object();
 		newClass.name = "OpenEPC QoS";
 		newClass.id = idCount++;
-		newClass.testbeds = [];
+		newClass.nodes = [];
 		createAdminClassForAsideList(newClass);
 		createClassParticipantsPage(newClass);
 		createClassTestbedsPage(newClass);
@@ -277,7 +277,7 @@ function(Utils,Server){
 		var newClass = new Object();
 		newClass.name = "OpenEPC QoS";
 		newClass.id = idCount++;
-		newClass.testbeds = [];
+		newClass.nodes = [];
 		createUserClassForAsideList(newClass);
 	};
 	
