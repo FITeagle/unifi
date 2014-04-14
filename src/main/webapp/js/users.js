@@ -23,9 +23,10 @@ function(Utils,Server,Classes){
 		var users = Server.getAllUsers();
 		
 		$.each(users, function(i, user) {
-			if(user.username != Utils.getCurrentUser().username){
 			
-				var userRow = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+") </td>");
+			var userRow = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+") </td>");
+			
+			if(user.username != Utils.getCurrentUser().username){
 				
 				var getUser = $('<a>').addClass("margin3 btn").html("Details").on("click", function(){
 					alert(JSON.stringify(Server.getUser(user.username)));
@@ -40,8 +41,7 @@ function(Utils,Server,Classes){
 					
 				});
 				userRow.append($('<td>').append(deleteUser));
-				
-				
+			
 				var dropdown = $('<div>').addClass("dropdown");
 				dropdown.append("<button class='margin3 btn dropdown-toggle' type='button' id='roleDropdown"+user.username+"' data-toggle='dropdown'>"+user.role+"</button>");
 							
@@ -77,9 +77,10 @@ function(Utils,Server,Classes){
 				dropdown.append(ul);
 				
 				userRow.append($('<td>').append(dropdown));
-				
-				$("#allusersusers").append(userRow);
 			}
+			
+			$("#allusersusers").append(userRow);
+			
 		});
 	};
 
