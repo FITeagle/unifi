@@ -53,6 +53,7 @@ function(Utils,Server){
 			var newClass = new Object();
 			newClass.name = $("#className").val();
 			newClass.description = $("#classDescripion").val();
+			newClass.owner = Utils.getCurrentUser();
 			newClass.nodes = [];
 			$.each($("#addedNodes").children(), function(i, tb) {
 				var node = new Object();
@@ -260,7 +261,7 @@ function(Utils,Server){
 		allClassesList.append(uctClasses, tubClasses);
 		
 		$("#homeAside").append($("<div>").addClass("offset1").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
-		createDefaultUserClass();
+		createAllUserClassesAsides();
 	};
 	
 	createDefaultAdminClass = function(){
@@ -273,32 +274,30 @@ function(Utils,Server){
 		createClassTestbedsPage(newClass);
 	};
 	
-	createDefaultUserClass = function(){
+	createAllUserClassesAsides = function(){
 		var newClass = new Object();
 		newClass.name = "OpenEPC QoS";
 		newClass.id = idCount++;
 		newClass.nodes = [];
 		createUserClassForAsideList(newClass);
+		
+		var allClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+		if(allClasses != null){
+			$.each(allClasses, function(i, newClass) {
+				createUserClassForAsideList(newClass);
+			});
+		}
 	};
 	
 	
 	initAddClass = function(){
-		var allClasses = [];
-		var class1 = new Object();
-		class1.name = "OpenMTC Intro";
-		class1.description = "This class is an intro to OpenMTC.";
-		class1.id = idCount++;
-		allClasses.push(class1);
-		var class2 = new Object();
-		class2.name = "OpenIMS Development";
-		class2.description = "This class is about OpenIMS Development. It has a longer description where it explains what it is about and why.";
-		class2.id = idCount++;
-		allClasses.push(class2);
+		var allClasses = Server.getAllClasses();
 		
 		$.each(allClasses, function(i, newClass) {
 			var signUpBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Sign up").on("click",function(e){
 				e.preventDefault();
 				createUserClassForAsideList(newClass);
+				Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
 				classElement.remove();
 				initCollapseHeaders();
 			}));

@@ -592,6 +592,71 @@ function(require,Utils){
 		
 		return message;
 	};
+	
+	Server.addParticipant = function(id, username){	
+		var message=0;
+		$.ajax({
+			cache: false,
+			type: "POST",
+			async: false,
+			url: "/native/api/class/"+id+"/participant/"+username,
+			success: function(data,status){
+				message = data;
+			},
+			error: function(xhl,status){
+				console.log(Utils.createErrorMessage(xhl.responseText));
+			},
+		});
+		
+		return message;
+	};
+	
+	Server.getAllClassesFromUser = function(username){
+		var classesFromServer = null;
+		$.ajax({
+			cache: false,
+			type: "GET",
+			async: false,
+			url: "/native/api/user/"+username+"/classes",
+			beforeSend: function(xhr){
+				
+			},
+			success: function(classes,status,xhr){
+				classesFromServer = classes;				
+			},
+			error: function(xhr,status,thrown){
+				console.log("Response " + xhr.responseText);
+				console.log(status);
+				console.log(thrown);
+			},
+		});
+		
+		return classesFromServer;
+	};
+	
+	
+	Server.getAllClasses = function(){
+		var classesFromServer = null;
+		$.ajax({
+			cache: false,
+			type: "GET",
+			async: false,
+			url: "/native/api/class/",
+			beforeSend: function(xhr){
+				
+			},
+			success: function(classes,status,xhr){
+				classesFromServer = classes;				
+			},
+			error: function(xhr,status,thrown){
+				console.log("Response " + xhr.responseText);
+				console.log(status);
+				console.log(thrown);
+			},
+		});
+		
+		return classesFromServer;
+	};
 		
 	return Server;
 
