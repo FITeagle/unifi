@@ -16,7 +16,7 @@ function(Utils,Server,Classes){
 		var nodes = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#nodes'><i class='fa fa-minus fa-li'></i>All nodes</a></li>","<li><a href='unifi/#addnode'><i class='fa fa-plus fa-li'></i>Add node</a></li>"));
 
 		$("#homeAside").append($("<div>").addClass("offset1").append(usersHeader,users,nodesHeader,nodes));
-		createDefaultUserClass();
+//		createDefaultUserClass();
 	};
 	
 	initUserFields = function(){
