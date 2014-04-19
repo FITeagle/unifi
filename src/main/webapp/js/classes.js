@@ -84,9 +84,14 @@ function(Utils,Server){
 		
 		var addheader = $("<h4>").html("Add participant");
 		var ul = $('<ul>').addClass("dropdown-menu");
+		
+		var participantsUsernames = []
+		$.each(newClass.participants, function(i, user) {
+			participantsUsernames.push(user.username);
+		});
 		var allUsers = Server.getAllUsers();
 		$.each(allUsers, function(i, user) {
-			if(user.role == "USER"){
+			if(user.role == "STUDENT" && ($.inArray(user.username, participantsUsernames) == -1)){
 				var userdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(user.username).on('click',function(){
 					$("#usersDropdown"+newClass.id).html("<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
 				}));
@@ -98,6 +103,7 @@ function(Utils,Server){
 		var addBtn = $("<button>").addClass("btn margin3").html("Add").on('click',function(){
 			if($("#usersDropdown"+newClass.id).html() != "Available users"){
 				createParticipantRow(newClass.id,$("#usersDropdown"+newClass.id).html());
+				//TODO: persist participant
 			}
 		});
 		dropdown.append(ul,addBtn);
@@ -106,8 +112,9 @@ function(Utils,Server){
 		var page = $("<div>").attr("id","class"+newClass.id+"_participants").addClass("row-fluid tab-pane").append(title,header,participants,"<hr>",addParticipant);
 		$("#desktop").append(page);
 		
-		//TODO: add real participants
-		createParticipantRow(newClass.id,"<b>max</b> (Max Musterman)");
+		$.each(newClass.participants, function(i, user) {
+			createParticipantRow(newClass.id,"<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
+		});
 	};
 	
 	createParticipantRow = function(classid,userData){

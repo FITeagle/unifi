@@ -622,6 +622,11 @@ function(require,Utils){
 				
 			},
 			success: function(classes,status,xhr){
+				$.each(classes, function(i, targetClass) {
+					$.each(targetClass.participants, function(i, user) {
+						user.username = user.username.split("@")[0];
+					});
+				});
 				classesFromServer = classes;				
 			},
 			error: function(xhr,status,thrown){
@@ -645,6 +650,11 @@ function(require,Utils){
 				
 			},
 			success: function(classes,status,xhr){
+				$.each(classes, function(i, targetClass) {
+					$.each(targetClass.participants, function(i, user) {
+						user.username = user.username.split("@")[0];
+					});
+				});
 				classesFromServer = classes;				
 			},
 			error: function(xhr,status,thrown){
@@ -668,6 +678,11 @@ function(require,Utils){
 				
 			},
 			success: function(classes,status,xhr){
+				$.each(classes, function(i, targetClass) {
+					$.each(targetClass.participants, function(i, user) {
+						user.username = user.username.split("@")[0];
+					});
+				});
 				classesFromServer = classes;				
 			},
 			error: function(xhr,status,thrown){
