@@ -634,6 +634,28 @@ function(require,Utils){
 		return classesFromServer;
 	};
 	
+	Server.getAllClassesOwnedByUser = function(username){
+		var classesFromServer = null;
+		$.ajax({
+			cache: false,
+			type: "GET",
+			async: false,
+			url: "/native/api/user/"+username+"/ownedclasses",
+			beforeSend: function(xhr){
+				
+			},
+			success: function(classes,status,xhr){
+				classesFromServer = classes;				
+			},
+			error: function(xhr,status,thrown){
+				console.log("Response " + xhr.responseText);
+				console.log(status);
+				console.log(thrown);
+			},
+		});
+		
+		return classesFromServer;
+	};
 	
 	Server.getAllClasses = function(){
 		var classesFromServer = null;

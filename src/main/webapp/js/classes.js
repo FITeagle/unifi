@@ -237,7 +237,7 @@ function(Utils,Server){
 		
 		var header = "<h4><i class='fa fa-group fa-lg'></i>Classes</h4>";
 		$("#homeAside").append($("<div>").addClass("offset1").append(header,list));
-		createDefaultAdminClass();
+		createAllClassownerClassesAsides();
 	};
 	
 	initUserClassesAside = function(){
@@ -264,23 +264,18 @@ function(Utils,Server){
 		createAllUserClassesAsides();
 	};
 	
-	createDefaultAdminClass = function(){
-		var newClass = new Object();
-		newClass.name = "OpenEPC QoS";
-		newClass.id = idCount++;
-		newClass.nodes = [];
-		createAdminClassForAsideList(newClass);
-		createClassParticipantsPage(newClass);
-		createClassTestbedsPage(newClass);
+	createAllClassownerClassesAsides = function(){
+		var allClasses = Server.getAllClassesOwnedByUser(Utils.getCurrentUser().username);
+		if(allClasses != null){
+			$.each(allClasses, function(i, newClass) {
+				createAdminClassForAsideList(newClass);
+				createClassParticipantsPage(newClass);
+				createClassTestbedsPage(newClass);
+			});
+		}
 	};
 	
 	createAllUserClassesAsides = function(){
-		var newClass = new Object();
-		newClass.name = "OpenEPC QoS";
-		newClass.id = idCount++;
-		newClass.nodes = [];
-		createUserClassForAsideList(newClass);
-		
 		var allClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
 		if(allClasses != null){
 			$.each(allClasses, function(i, newClass) {
