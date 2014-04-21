@@ -26,7 +26,7 @@ function(Utils,Server){
 	
 	initNodeDropdown = function(){
 		var nodeName1 = "FUSECO Playground";
-		var nodeName2 = "UCT Testbed";
+		var nodeName2 = "UCT Node";
 		var class1 = $("<li>").append($("<a>").attr("tabindex",-1).html(nodeName1).on("click",function(){
 			var node = "";
 			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
@@ -66,7 +66,7 @@ function(Utils,Server){
 			createAdminClassForAsideList(newClass);
 			
 			createClassParticipantsPage(newClass);
-			createClassTestbedsPage(newClass);
+			createClassResourcesPage(newClass);
 			
 			$("#className").val('');
 			$("#classDescripion").val('');
@@ -85,10 +85,12 @@ function(Utils,Server){
 		var addheader = $("<h4>").html("Add participant");
 		var ul = $('<ul>').addClass("dropdown-menu");
 		
-		var participantsUsernames = []
-		$.each(newClass.participants, function(i, user) {
-			participantsUsernames.push(user.username);
-		});
+		var participantsUsernames = [];
+		if(newClass.participants != null){
+			$.each(newClass.participants, function(i, user) {
+				participantsUsernames.push(user.username);
+			});
+		}
 		var allUsers = Server.getAllUsers();
 		$.each(allUsers, function(i, user) {
 			if(user.role == "STUDENT" && ($.inArray(user.username, participantsUsernames) == -1)){
@@ -112,9 +114,11 @@ function(Utils,Server){
 		var page = $("<div>").attr("id","class"+newClass.id+"_participants").addClass("row-fluid tab-pane").append(title,header,participants,"<hr>",addParticipant);
 		$("#desktop").append(page);
 		
-		$.each(newClass.participants, function(i, user) {
-			createParticipantRow(newClass.id,"<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
-		});
+		if(newClass.participants != null){
+			$.each(newClass.participants, function(i, user) {
+				createParticipantRow(newClass.id,"<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
+			});
+		}
 	};
 	
 	createParticipantRow = function(classid,userData){
@@ -126,50 +130,12 @@ function(Utils,Server){
 		$("#class"+classid+"ParticipantsTable").append(row);
 	};
 	
-	createClassTestbedsPage = function(newClass){
+	createClassResourcesPage = function(newClass){
 		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
-		var testbedsHeader = $("<h4>").html("Testbeds");
-		var testbeds = $("<div>").append($("<table>").attr("id","class"+newClass.id+"TestbedsTable"));
+		var header = $("<h4>").html("Topology of the resources");
 		
-		var addheader = $("<h4>").html("Add testbed");
-		var ul = $('<ul>').addClass("dropdown-menu");
-		var allTestbeds = [];
-		tb1 = new Object();
-		tb1.name = "UCT Testbed";
-		tb2 = new Object();
-		tb2.name = "FUSECO Playground";
-		allTestbeds.push(tb1,tb2);
-		$.each(allTestbeds, function(i, tb) {
-			var tbdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(tb.name).on('click',function(){
-				$("#testbedsDropdown"+newClass.id).html(tb.name);
-			}));
-			ul.append(tbdropdownOption);
-		});
-		var dropdown = $("<div>").addClass("dropdown").attr("style","margin-bottom:"+35*allTestbeds.length+"px");
-		dropdown.append("<button class='btn dropdown-toggle' type='button' id='testbedsDropdown"+newClass.id+"' data-toggle='dropdown'>Available testbeds</button>");
-		var addBtn = $("<button>").addClass("btn margin3").html("Add").on('click',function(){
-			if($("#testbedsDropdown"+newClass.id).html() != "Available testbeds"){
-				createTestbedRow(newClass.id,$("#testbedsDropdown"+newClass.id).html());
-			}
-		});
-		dropdown.append(ul,addBtn);
-		var addTestbed = $("<div>").append(addheader,dropdown);
-		
-		var page = $("<div>").attr("id","class"+newClass.id+"_testbeds").addClass("row-fluid tab-pane").append(title,testbedsHeader,testbeds,"<hr>",addTestbed);
+		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title,header);
 		$("#desktop").append(page);
-		
-		$.each(newClass.nodes, function(i, tb) {
-			createTestbedRow(newClass.id,tb.name);
-		});
-	};
-	
-	createTestbedRow = function(classid,tbname){
-		var deleteTestbedBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Delete").on('click',function(){
-			//TODO: delete from server
-			row.remove();
-		}));
-		var row = $("<tr>").append("<td>"+tbname+"</td>",deleteTestbedBtn);
-		$("#class"+classid+"TestbedsTable").append(row);
 	};
 	
 	createAdminClassForAsideList = function(newClass){
@@ -180,9 +146,9 @@ function(Utils,Server){
 			e.preventDefault();
 			openDesktopTab("#class"+newClass.id+"_participants");
 		}));
-		var testbedsLink = $("<li>").append($("<a>").attr("href","unifi/#class"+newClass.id+"_testbeds").append($("<i>").addClass("fa fa-minus fa-li"),"Testbeds").on("click",function(e){
+		var resourcesLink = $("<li>").append($("<a>").attr("href","unifi/#class"+newClass.id+"_resources").append($("<i>").addClass("fa fa-minus fa-li"),"Resources").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("#class"+newClass.id+"_testbeds");
+			openDesktopTab("#class"+newClass.id+"_resources");
 		}));
 		
 		var tasksHeaderLink = $("<a>").attr("id","tasksToggle").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),"Tasks");
@@ -206,7 +172,7 @@ function(Utils,Server){
 			});
 		}));
 		
-		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,testbedsLink,tasksToggle,deleteLink);
+		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,resourcesLink,tasksToggle,deleteLink);
 		var options = $("<div>").attr("id",newClass.id+"Options").addClass("row-fluid collapse out").append(optionList);
 		
 		var classElement = $("<li>").append(header, options);
@@ -277,7 +243,7 @@ function(Utils,Server){
 			$.each(allClasses, function(i, newClass) {
 				createAdminClassForAsideList(newClass);
 				createClassParticipantsPage(newClass);
-				createClassTestbedsPage(newClass);
+				createClassResourcesPage(newClass);
 			});
 		}
 	};
