@@ -226,12 +226,12 @@ function(Utils,Server){
 			openDesktopTab("unifi/#uctclasses");
 		});
 		var uctClasses = $("<li>").append($("<div>").addClass("navigationLink").append(uctClassesLink));
-		var tubClassesLink = $("<a>").attr("href","unifi/#uctclasses").append($("<i>").addClass("fa fa-minus fa-li"),"TUB classes").on("click",function(e){
+		var tubClassesLink = $("<a>").attr("href","unifi/#tubclasses").append($("<i>").addClass("fa fa-minus fa-li"),"TUB classes").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("unifi/#uctclasses");
+			openDesktopTab("unifi/#tubclasses");
 		});
 		var tubClasses = $("<li>").append($("<div>").addClass("navigationLink").append(tubClassesLink));
-		allClassesList.append(uctClasses, tubClasses);
+		allClassesList.append(tubClasses, uctClasses);
 		
 		$("#homeAside").append($("<div>").addClass("offset1").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
 		createAllUserClassesAsides();
@@ -270,7 +270,7 @@ function(Utils,Server){
 				initCollapseHeaders();
 			}));
 			var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
-			$("#uctClassClasses").append(classElement);
+			$("#tubClassClasses").append(classElement);
 		});
 	};
 	

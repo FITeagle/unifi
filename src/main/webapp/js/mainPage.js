@@ -24,8 +24,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 		if(tag && tag.length > 1){
 			openDesktopTab(tag);
 		}else{
-			window.location.hash = "#home";
-			openDesktopTab('unifi/#home');
+			window.location.hash = home;
+			openDesktopTab('unifi/'+home);
 		}
 	};
 		
@@ -87,6 +87,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 	initMainPage = function(){
 		Utils.unhideBody();
 		
+		$("#unifiLogo").attr("href",home);
 		initUserInfoPanel();	
 		Courses.init();
 		Profile.initForm();
@@ -128,7 +129,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
-				openDesktopTab("#home");
+				openDesktopTab(home);
 			});
 		});
 		
@@ -138,6 +139,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 	};
 	
 	
+	var home;
 	/**
 	* Loads HTML for the FITeagle main page dynamically and triggers the page initialization after the loading is successfully completed.
 	* @public
@@ -149,31 +151,35 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "FEDERATION_ADMIN":
-					$("<div>").load("mainContent.html #allusers,#nodes,#addnode",function(){
+					$("<div>").load("mainContent.html #home_federationadmin,#allusers,#nodes,#addnode",function(){
 						$("#desktop").append(this.childNodes);
+						home = "#home_federationadmin";
 						Users.initForm();
 						initMainPage();
 					});
 					break;
 					
 				case "NODE_ADMIN":
-					$("<div>").load("mainContent.html #allusers,#nodes,#addnode",function(){
+					$("<div>").load("mainContent.html #home_nodeadmin,#allusers,#nodes,#addnode",function(){
 						$("#desktop").append(this.childNodes);
+						home = "#home_nodeadmin";
 						Users.initForm();
 						initMainPage();
 					});
 					break;
 					
 				case "CLASSOWNER":
-					$("<div>").load("mainContent.html #createclass,#createtask",function(){
+					$("<div>").load("mainContent.html #home_classowner,#createclass,#createtask",function(){
 						$("#desktop").append(this.childNodes);
+						home = "#home_classowner";
 						initMainPage();
 					});
 					break;
 					
 				default:
-					$("<div>").load("mainContent.html #task,#uctclasses",function(){
+					$("<div>").load("mainContent.html #home_student,#task,#uctclasses,#tubclasses",function(){
 						$("#desktop").append(this.childNodes);
+						home = "#home_student";
 						initMainPage();
 					});
 				}
@@ -204,7 +210,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 				a.tab('show');
 			}
 			else{
-				$('[href$=#home]').tab('show'); 
+				$('[href$='+home+']').tab('show'); 
 			}
 		}
 	};
