@@ -204,12 +204,14 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 			var navLinks = $(".navigationLink li");
 			navLinks.removeClass("active");
 			
-			var a = $('.navigationLink [href$='+hash.replace("unifi/", "")+']');
+			var hashtag = hash.replace("unifi/", "");
+			var a = $('.navigationLink [href$='+hashtag+']');
 			if(a.length != 0){
-				history.pushState(hash, "page "+hash, "/"+hash);
+				history.pushState(hash, "page "+hash, "/unifi/"+hashtag);
 				a.tab('show');
 			}
 			else{
+				history.pushState(home, "page "+home, "/unifi/"+home);
 				$('[href$='+home+']').tab('show'); 
 			}
 		}
