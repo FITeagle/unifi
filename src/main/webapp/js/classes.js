@@ -46,8 +46,6 @@ function(Utils,Server){
 		$("#availableNodes").append(class1,class2);
 	};
 	
-	var idCount = 0;
-	
 	initCreateBtn = function(){
 		$("#createClassBtn").on("click",function(){
 			var newClass = new Object();
