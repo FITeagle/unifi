@@ -1,9 +1,9 @@
 var Main;
-define(['require','utils','profile','publicKeys','certificates','server','users','classes'],
+define(['require','utils','profile','publicKeys','certificates','server','users','classes','nodes'],
 /**
  * @lends MainPage
  */ 
-function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
+function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	
 	 /** 
 	 * The FITeagle main page class contains functions required for initialization of the 
@@ -89,7 +89,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 		
 		$("#unifiLogo").attr("href",home);
 		initUserInfoPanel();	
-		Courses.init();
+		Classes.init();
 		Profile.initForm();
 		PublicKeys.initForm();
 		Certificates.initForm();
@@ -154,16 +154,18 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Courses){
 					$("<div>").load("mainContent.html #home_federationadmin,#allusers,#nodes,#addnode",function(){
 						$("#desktop").append(this.childNodes);
 						home = "#home_federationadmin";
-						Users.initForm();
+						Users.init();
+						Nodes.init();
 						initMainPage();
 					});
 					break;
 					
 				case "NODE_ADMIN":
-					$("<div>").load("mainContent.html #home_nodeadmin,#allusers,#nodes,#addnode",function(){
+					$("<div>").load("mainContent.html #home_nodeadmin,#tubnode,#allusers",function(){
 						$("#desktop").append(this.childNodes);
 						home = "#home_nodeadmin";
-						Users.initForm();
+						Users.init();
+						Nodes.init();
 						initMainPage();
 					});
 					break;

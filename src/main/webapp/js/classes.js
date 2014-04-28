@@ -207,7 +207,7 @@ function(Utils,Server){
 		list.append(createClass);
 		
 		var header = "<h4><i class='fa fa-group fa-lg'></i>Classes</h4>";
-		$("#homeAside").append($("<div>").addClass("offset1").append(header,list));
+		$("#homeAside").append($("<div>").append(header,list));
 		createAllClassownerClassesAsides();
 	};
 	
@@ -231,7 +231,7 @@ function(Utils,Server){
 		var tubClasses = $("<li>").append($("<div>").addClass("navigationLink").append(tubClassesLink));
 		allClassesList.append(tubClasses, uctClasses);
 		
-		$("#homeAside").append($("<div>").addClass("offset1").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
+		$("#homeAside").append($("<div>").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
 		createAllUserClassesAsides();
 	};
 	
