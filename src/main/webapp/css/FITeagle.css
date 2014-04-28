@@ -218,13 +218,13 @@ input.search-query{height:24px !important;}
 #loginErrorField{margin-bottom: 20px;}
 
 #avLogo{
-	height: 80px;
-	bottom: 6px;
+	height: 55px;
+	bottom: 20px;
   position: absolute;
 }
 
 #unifiLogo{
-	height: 90px;
+	height: 95px;
   bottom: 10px;
   position: absolute;
 }
