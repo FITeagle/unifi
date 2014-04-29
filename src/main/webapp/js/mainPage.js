@@ -139,7 +139,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	};
 	
 	
-	var home;
+	var home = "";
 	/**
 	* Loads HTML for the FITeagle main page dynamically and triggers the page initialization after the loading is successfully completed.
 	* @public
