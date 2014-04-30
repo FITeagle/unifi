@@ -89,10 +89,12 @@ function(Utils,Server){
 				participantsUsernames.push(user.username);
 			});
 		}
+		var currentlyChosenUsername = null;
 		var allUsers = Server.getAllUsers();
 		$.each(allUsers, function(i, user) {
 			if(user.role == "STUDENT" && ($.inArray(user.username, participantsUsernames) == -1)){
 				var userdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(user.username).on('click',function(){
+					currentlyChosenUsername = user.username;
 					$("#usersDropdown"+newClass.id).html("<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
 				}));
 				ul.append(userdropdownOption);
@@ -101,9 +103,10 @@ function(Utils,Server){
 		var dropdown = $("<div>").addClass("dropdown").attr("style","margin-bottom:"+25*allUsers.length+"px");
 		dropdown.append("<button class='btn dropdown-toggle' type='button' id='usersDropdown"+newClass.id+"' data-toggle='dropdown'>Available users</button>");
 		var addBtn = $("<button>").addClass("btn margin3").html("Add").on('click',function(){
-			if($("#usersDropdown"+newClass.id).html() != "Available users"){
+			if(currentlyChosenUsername != null){
 				createParticipantRow(newClass.id,$("#usersDropdown"+newClass.id).html());
-				//TODO: persist participant
+				Server.addParticipant(newClass.id, currentlyChosenUsername);
+				currentlyChosenUsername = null;
 			}
 		});
 		dropdown.append(ul,addBtn);
