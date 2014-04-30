@@ -305,7 +305,7 @@ function(require,Utils,Server,Validation,Messages){
 		
 		var deleteKey = $('<button>')
 							.attr('data-number',itemNumber)
-							.addClass('btn btn-inverse span5 offset2 ')
+							.addClass('btn span5 offset2 ')
 							.html('<i class="fa fa-times fa-lg nopadding"></i>');
 							
 		deleteKey.tooltip({'title':"Remove", 'placement':'top'});
@@ -475,7 +475,7 @@ function(require,Utils,Server,Validation,Messages){
 	*/
 	createPublicKeyDownloadBtn = function(keyDescription,keyString){	
 		var downloadBtn = $('<a>')
-							.addClass('btn btn-inverse span5 ')
+							.addClass('btn span5')
 							.html('<i class="fa fa-download fa-lg nopadding"></i>').
 							on('click',function(){
 								var blob = new Blob([keyString], {type: "text/plain;charset=utf-8"});
