@@ -89,34 +89,23 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	initMainPage = function(){
 		$("#unifiLogo").attr("href",home);
 		Classes.init();
-		initUserInfoPanel();	
+		initNavigationTabs();
+		Utils.updateUserInfoPanel();
+		initSignOutBtn();
+		initHashtagChange();
 		Profile.initForm();
 		PublicKeys.initForm();
 		Certificates.initForm();
 		initCollapseHeaders();
 		checkForStoredHashTags();
-		
-		require(["jsPlumb"], function(jsPlumb) {
-			initResourceButtons();
-		});
 	};
 	
-	
-	/**
-      * Initiates user info panel located in the main page header section. Defines the behaviour for clicking on the panel items: 
-	  * opening the corresponding window. Sets current user first and last name in it.
-	  * Scrolls to the appropriate fields to the top after they are selected from the menu.
-	  * Triggers sign out button initialization.
-	  * @private
-	  * @memberOf Main#
-      */ 
-	initUserInfoPanel = function(){		
+	initNavigationTabs = function(){		
 		var navLinks = $(".navigationLink a");
 		navLinks.off();
 		navLinks.not('#signOut, #tasksToggle').on('click',function(e){
 			e.preventDefault();
-			var linkHref = $(this).attr('href');
-			var hash = linkHref.toLowerCase();
+			var hash = $(this).attr('href');
 			if(hash == "#task" || hash == "#createtask"){
 				$("#homeAside").fadeOut(200, function(){
 					$("#taskAsides").fadeIn(200);
@@ -134,10 +123,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 				openDesktopTab(home);
 			});
 		});
-		
-		Utils.updateUserInfoPanel();
-		initSignOutBtn();
-		initHashtagChange();
 	};
 	
 	
@@ -177,6 +162,9 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 						$("#desktop").append(this.childNodes);
 						home = "#home_classowner";
 						initMainPage();
+						require(["jsPlumb"], function(jsPlumb) {
+							initResourceButtons();
+						});
 					});
 					break;
 					
@@ -185,9 +173,11 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 						$("#desktop").append(this.childNodes);
 						home = "#home_student";
 						initMainPage();
+						require(["jsPlumb"], function(jsPlumb) {
+							initResourceButtons();
+						});
 					});
 				}
-						
 			}
 		);
 	};
@@ -226,8 +216,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	initSignOutBtn = function(){
 		$("#signOut").on('click',function(e){
 			e.preventDefault();
-				Server.invalidateCookie();
-				Main.signOut();
+			Main.signOut();
 		});
 	};
 	
@@ -238,6 +227,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	* @function
 	**/
 	Main.signOut = function(){
+		Server.invalidateCookie();
 		Utils.resetUser();
 		history.pushState('', "page ", "/unifi/"); 
 		require('loginPage').load();
