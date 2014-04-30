@@ -22,10 +22,12 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	checkForStoredHashTags = function(){
 		var tag = Utils.getStoredHashTag();
 		if(tag && tag.length > 1){
+			history.pushState(tag, "page "+tag, tag);
 			openDesktopTab(tag);
 		}else{
 			window.location.hash = home;
-			openDesktopTab('unifi/'+home);
+			history.pushState(home, "page "+home, home);
+			openDesktopTab(home);
 		}
 	};
 		
@@ -74,7 +76,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 		$(window).unbind();
 		$(window).on('popstate hashchange',function(){
 			var state = window.location.hash;
-			openDesktopTab("unifi/"+state);
+			openDesktopTab(state);
 		});
 	};
 
@@ -88,8 +90,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 		Utils.unhideBody();
 		
 		$("#unifiLogo").attr("href",home);
-		initUserInfoPanel();	
 		Classes.init();
+		initUserInfoPanel();	
 		Profile.initForm();
 		PublicKeys.initForm();
 		Certificates.initForm();
@@ -117,11 +119,12 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			e.preventDefault();
 			var linkHref = $(this).attr('href');
 			var hash = linkHref.toLowerCase();
-			if(hash == "unifi/#task" || hash == "unifi/#createtask"){
+			if(hash == "#task" || hash == "#createtask"){
 				$("#homeAside").fadeOut(200, function(){
 					$("#taskAsides").fadeIn(200);
 				});
 			}
+			history.pushState(hash, "page "+hash, hash);
 			openDesktopTab(hash);
 		});
 		
@@ -129,6 +132,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
+				history.pushState(home, "page "+home, home);
 				openDesktopTab(home);
 			});
 		});
@@ -206,14 +210,11 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			var navLinks = $(".navigationLink li");
 			navLinks.removeClass("active");
 			
-			var hashtag = hash.replace("unifi/", "");
-			var a = $('.navigationLink [href$='+hashtag+']');
+			var a = $('.navigationLink [href$='+hash+']');
 			if(a.length != 0){
-				history.pushState(hash, "page "+hash, "/unifi/"+hashtag);
 				a.tab('show');
 			}
 			else{
-				history.pushState(home, "page "+home, "/unifi/"+home);
 				$('[href$='+home+']').tab('show'); 
 			}
 		}

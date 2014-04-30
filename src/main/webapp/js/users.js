@@ -19,7 +19,7 @@ function(Utils,Server,Classes){
 	
 	initUsersAside = function(nodeName){
 		var usersHeader = "<h4><i class='fa fa-group fa-lg'></i>Users</h4>";
-		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='unifi/#allusers'><i class='fa fa-minus fa-li'></i>"+nodeName+" users</a></li>"));
+		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#allusers'><i class='fa fa-minus fa-li'></i>"+nodeName+" users</a></li>"));
 		
 		$("#homeAside").append($("<div>").append(usersHeader,users));
 	};

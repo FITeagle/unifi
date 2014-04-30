@@ -140,18 +140,18 @@ function(Utils,Server){
 		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
 		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Options").append(name);
 		
-		var participantsLink = $("<li>").append($("<a>").attr("href","unifi/#class"+newClass.id+"_participants").append($("<i>").addClass("fa fa-minus fa-li"),"Participants").on("click",function(e){
+		var participantsLink = $("<li>").append($("<a>").attr("href","#class"+newClass.id+"_participants").append($("<i>").addClass("fa fa-minus fa-li"),"Participants").on("click",function(e){
 			e.preventDefault();
 			openDesktopTab("#class"+newClass.id+"_participants");
 		}));
-		var resourcesLink = $("<li>").append($("<a>").attr("href","unifi/#class"+newClass.id+"_resources").append($("<i>").addClass("fa fa-minus fa-li"),"Resources").on("click",function(e){
+		var resourcesLink = $("<li>").append($("<a>").attr("href","#class"+newClass.id+"_resources").append($("<i>").addClass("fa fa-minus fa-li"),"Resources").on("click",function(e){
 			e.preventDefault();
 			openDesktopTab("#class"+newClass.id+"_resources");
 		}));
 		
 		var tasksHeaderLink = $("<a>").attr("id","tasksToggle").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),"Tasks");
 		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(tasksHeaderLink);
-		var createTaskLink = $("<li>").append($("<a>").attr("href","unifi/#createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
+		var createTaskLink = $("<li>").append($("<a>").attr("href","#createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
 			e.preventDefault();
 			$("#homeAside").fadeOut(200, function(){
 				$("#taskAsides").fadeIn(200);
@@ -181,7 +181,7 @@ function(Utils,Server){
 		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
 		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(name);
 		
-		var taskLink1 = $("<li>").append($("<a>").attr("href","unifi/#task").append($("<i>").addClass("fa fa-minus fa-li"),"First Task").on("click",function(e){
+		var taskLink1 = $("<li>").append($("<a>").attr("href","#task").append($("<i>").addClass("fa fa-minus fa-li"),"First Task").on("click",function(e){
 			e.preventDefault();
 			$("#homeAside").fadeOut(200, function(){
 				$("#taskAsides").fadeIn(200);
@@ -199,9 +199,9 @@ function(Utils,Server){
 	initAdminClassesAside = function(){
 		var list = $("<ul>").attr("id","tbownerClasses").addClass("fa-ul");
 		
-		var createClassLink = $("<a>").attr("href","unifi/#createclass").append($("<i>").addClass("fa fa-plus fa-li"),"Create Class").on("click",function(e){
+		var createClassLink = $("<a>").attr("href","#createclass").append($("<i>").addClass("fa fa-plus fa-li"),"Create Class").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("unifi/#createclass");
+			openDesktopTab("#createclass");
 		});
 		var createClass =  $("<li>").append($("<div>").addClass("navigationLink").append(createClassLink));
 		list.append(createClass);
@@ -219,14 +219,14 @@ function(Utils,Server){
 		var allClassesHeader = "<h4><i class='fa fa-group fa-lg'></i>All classes</h4>";
 		var allClassesList = $("<ul>").attr("id","userClasses").addClass("fa-ul");
 		
-		var uctClassesLink = $("<a>").attr("href","unifi/#uctclasses").append($("<i>").addClass("fa fa-minus fa-li"),"UCT classes").on("click",function(e){
+		var uctClassesLink = $("<a>").attr("href","#uctclasses").append($("<i>").addClass("fa fa-minus fa-li"),"UCT classes").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("unifi/#uctclasses");
+			openDesktopTab("#uctclasses");
 		});
 		var uctClasses = $("<li>").append($("<div>").addClass("navigationLink").append(uctClassesLink));
-		var tubClassesLink = $("<a>").attr("href","unifi/#tubclasses").append($("<i>").addClass("fa fa-minus fa-li"),"TUB classes").on("click",function(e){
+		var tubClassesLink = $("<a>").attr("href","#tubclasses").append($("<i>").addClass("fa fa-minus fa-li"),"TUB classes").on("click",function(e){
 			e.preventDefault();
-			openDesktopTab("unifi/#tubclasses");
+			openDesktopTab("#tubclasses");
 		});
 		var tubClasses = $("<li>").append($("<div>").addClass("navigationLink").append(tubClassesLink));
 		allClassesList.append(tubClasses, uctClasses);
