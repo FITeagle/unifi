@@ -16,17 +16,14 @@ function(require, Validation, Registration, Utils, Messages) {
 	Login = {};
 
 	Login.initLoginPage = function() {
-		 toggleNavigationBtn();
 		 redirectToUrl();
-		 Utils.unhideBody();
 		 initOnWindowResizeEvent();
-		 initRegisterLink();
 		 initLoginForm();
 		 initSignInBtn();
 		 Registration.initRegistrationForm();
 		 initOnWindowResizeEvent();
 		 initHistory();
-		 onFITeagleLogoClicked();
+		 initOnUnifiLogoClicked();
 	};
 
 	/**
@@ -34,7 +31,7 @@ function(require, Validation, Registration, Utils, Messages) {
 	* @private
 	* @memberOf Login#	
 	*/
-	onFITeagleLogoClicked = function(){
+	initOnUnifiLogoClicked = function(){
 		$('#logoImg img').on('click',function(){
 			$('#navigation [href$=#home]').tab('show');
 		}).css('cursor','pointer');
@@ -99,25 +96,11 @@ function(require, Validation, Registration, Utils, Messages) {
 	 */
 	initOnWindowResizeEvent = function() {
 		$(window).resize(function() {
-			toggleNavigationBtn();
 			Registration.initRegistrationFormHints();
 		});
 	};
 
-	 /**
-	 * Initiates on enter click event for "register" link identified by
-	 #registrationLink on the Home page.
-	 * The link opens the registration tab on the login page.
-	 * @private
-	 * @memberOf Login#
-	 */
-	 initRegisterLink = function(){
-	 $("#registrationLink").on('click',function(e){
-	 e.preventDefault();
-	 $("#registrationTab").click();
-	 });
-	 };
-
+	
 	/**
 	 * Initiates on click event for "signIn" button on the Home page identified
 	 * by #signIn. The Function Login.loginUser() is called after clicking on
@@ -166,7 +149,6 @@ function(require, Validation, Registration, Utils, Messages) {
 	 */
 	Login.isUserLoggedIn = function() {
 		var user = Utils.getCurrentUser();
-		// console.log('Current User: ' + Utils.userToString());
 		if (!user) {
 			return false;
 		}
@@ -181,11 +163,11 @@ function(require, Validation, Registration, Utils, Messages) {
 	  * @see Login#initLoginPage function
      */  
 	Login.load = function(){
-	var url = "login.html";
-	$("#mainPage").load(url + " #navigation,#main",function(){
-		Login.initLoginPage();
-	});	
-};	
+		var url = "login.html";
+		$("#mainPage").load(url + " #navigation,#main",function(){
+			Login.initLoginPage();
+		});	
+	};	
 	
 
 	/**
@@ -222,26 +204,6 @@ function(require, Validation, Registration, Utils, Messages) {
 			// if this hashtag is not found on this page
 			Utils.storeHashTag(href); // store the hashtag to try open it on main page
 		}
-	};
-
-	/**
-	 * Toggles navigation button depending on the screen size width. It is shown
-	 * on a small screen window and hidden on a large one.
-	 * 
-	 * @private
-	 * @memberOf Login#
-	 * @function
-	 */
-	toggleNavigationBtn = function() {
-		if (Utils.isSmallScreen()) {
-			$('.btn-navbar').removeClass('hidden');
-		} else {
-			$('.btn-navbar').addClass('hidden');
-		}
-	};
-
-	Login.initLogin = function() {
-		initSignInBtn();
 	};
 
 	return Login;
