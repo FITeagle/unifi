@@ -2,8 +2,6 @@ var Registration;
 define(['validation','utils','mainPage','messages'],
 function(Validation, Utils, MainPage,Messages){
 
-//	console.log("registration.js is called");
-
 	Registration = {};
 	domain = "";
 	/**

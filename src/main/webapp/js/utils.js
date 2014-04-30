@@ -125,7 +125,7 @@ function(){
 	Utils.hideElement = function(selector){
 		var toHide = $(selector);
 		if(!toHide.hasClass('hidden')){
-				toHide.addClass('hidden');			
+			toHide.addClass('hidden');			
 		}
 	};
 	
@@ -139,7 +139,6 @@ function(){
 	* @function
 	*/
 	Utils.unhideElement = function(selector){
-		//console.log("Unhiding Element " + selector);
 		$(selector).removeClass('hidden');
 	};
 
@@ -151,9 +150,7 @@ function(){
 	* @function
 	*/
 	Utils.setCurrentUser = function(user){
-				
 		var userJSON = JSON.stringify(user);
-		
 		if(typeof(Storage)!=="undefined"){
 			sessionStorage.user = userJSON;
 		  }
@@ -197,10 +194,10 @@ function(){
 	* @function
 	*/
 	Utils.getCurrentUser = function(){		
-			if (sessionStorage.user != undefined){
-				return JSON.parse(sessionStorage.user);
-			}
-			return null;
+		if (sessionStorage.user != undefined){
+			return JSON.parse(sessionStorage.user);
+		}
+		return null;
 	};
 	
 		
@@ -223,13 +220,13 @@ function(){
 	* @function
 	*/
 	Utils.userToString = function(user){
-			var userToString = '';
-			if(user !=null){
-				userToString = user.firstName + " " + user.lastName + " " + user.email;
-			}else{
-				userToString = "no user is set";
-			}
-			return userToString;
+		var userToString = '';
+		if(user !=null){
+			userToString = user.firstName + " " + user.lastName + " " + user.email;
+		}else{
+			userToString = "no user is set";
+		}
+		return userToString;
 	};
 	
 	/**
@@ -267,8 +264,6 @@ function(){
 	Utils.initTooltipFor = function(selector,title,placement,trigger){
 		if(selector){
 			var s = $(selector);
-//			s.tooltip('destroy');
-			//console.log("Tooltip for " + selector + ' placement '+ placement);
 			s.tooltip({
 				'title': title,
 				'placement':placement, 
@@ -374,7 +369,6 @@ function(){
 		newUser.affiliation = affiliation;
 		newUser.password = password;
 		newUser.publicKeys = [];
-		//console.log(JSON.stringify(newUser));	
 		return newUser;
 	};
 	

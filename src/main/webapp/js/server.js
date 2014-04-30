@@ -55,9 +55,6 @@ function(require,Utils){
 			},
 			error: function(xhr,status,thrown){		
 				msg = thrown;
-				//console.log("Response " + xhr.responseText);
-				//console.log(status);
-				//console.log(thrown);
 			},
 			complete: function(){
 				setTimeout(function(){
@@ -93,10 +90,8 @@ function(require,Utils){
 	* @function
 	*/
 	Server.registerUser = function(newUser,newUsername,successFunction){	
-//		console.log("Registering a new user on a server...");
 		var userToJSON = JSON.stringify(newUser);
 		var message=0;
-		//console.log("New USER "+ userToJSON);			
 		$.ajax({
 			cache: false,
 			type: "PUT",
@@ -111,7 +106,6 @@ function(require,Utils){
 			},
 			statusCode:{				
 				201: function(){
-//					console.log("New user: "+ newUser.firstName +" "+newUser.lastName+ " has been successfully created.");				
 					newUser.username = newUsername;
 					Utils.setCurrentUser(newUser);
 					Server.loginUser(newUser.username, newUser.password,false,successFunction);
@@ -175,11 +169,8 @@ function(require,Utils){
 	* @function
 	*/
 	Server.updateUser = function(updateInformation){
-		//console.log("credentials" + Utils.getCredentials());
-//		console.log("Updating user on the server...");
 		var data = JSON.stringify(updateInformation);
 		var user = Utils.getCurrentUser(); 
-//		console.log(user);
 		var message=0;
 		$.ajax({
 			cache: false,
@@ -189,10 +180,6 @@ function(require,Utils){
 			data: data,
 			contentType: "application/json",
 			beforeSend: function(xhr){
-			},
-			success: function(data,status){
-//				console.log("UPDATING DATA " + data);
-//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
@@ -237,10 +224,6 @@ function(require,Utils){
 			beforeSend: function(xhr){
 				Utils.unhideElement(uploadingSign);
 			},
-			success: function(data,status){
-//				console.log(data);
-//				console.log(status);
-			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
 			},
@@ -280,20 +263,15 @@ function(require,Utils){
 			async: false,
 			url : "/native/api/user/"+username+"/pubkey/"+publicKeyDescription+"/certificate",
 			beforeSend: function(xhr){
-				//Utils.showProgressbarModal(Messages.generateCertificate);
 			},
 			success: function(cert,status,xhr){
 				certificat = cert;
-				//console.log(xhr.responseText);
 			},
 			error: function(xhr,status,thrown){
 				console.log("Response " + xhr.responseText);
 				console.log(status);
 				console.log(thrown);
 			},
-			complete: function(){
-				//Utils.hideProgressbarModal(Messages.generateCertificate);
-			}
 		});
 
 		return certificat;
@@ -386,16 +364,9 @@ function(require,Utils){
 			async: false,
 			url: "/native/api/user/"+username+'/pubkey/'+keyDescription,
 			beforeSend: function(xhr){
-				//xhr.setRequestHeader("Authorization",
-                //"Basic " + Utils.getCredentials()); // TODO Base64 support
-			},
-			success: function(data,status){
-//				console.log(data);
-//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-//				console.log(status);
 			},
 			statusCode:{			
 				200: function(){
@@ -435,12 +406,6 @@ function(require,Utils){
 			data: newKeyDescription,
 			contentType: "text/plain",
 			beforeSend: function(xhr){
-				//xhr.setRequestHeader("Authorization",
-                //"Basic " + Utils.getCredentials()); // TODO Base64 support
-			},
-			success: function(data,status){
-//				console.log(data);
-//				console.log(status);
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
@@ -453,9 +418,6 @@ function(require,Utils){
 					message = Utils.createSuccessMessage("Public key " + oldKeyDescription+" has been successfully renamed to: " + newKeyDescription+'.');
 				}
 			},
-			complete: function(){
-				//Utils.hideElement(uploadingSign);
-			}
 		});
 		
 		return message;
@@ -619,7 +581,6 @@ function(require,Utils){
 			async: false,
 			url: "/native/api/user/"+username+"/classes",
 			beforeSend: function(xhr){
-				
 			},
 			success: function(classes,status,xhr){
 				$.each(classes, function(i, targetClass) {
@@ -647,7 +608,6 @@ function(require,Utils){
 			async: false,
 			url: "/native/api/user/"+username+"/ownedclasses",
 			beforeSend: function(xhr){
-				
 			},
 			success: function(classes,status,xhr){
 				$.each(classes, function(i, targetClass) {
@@ -675,7 +635,6 @@ function(require,Utils){
 			async: false,
 			url: "/native/api/class/",
 			beforeSend: function(xhr){
-				
 			},
 			success: function(classes,status,xhr){
 				$.each(classes, function(i, targetClass) {
