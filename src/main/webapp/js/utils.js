@@ -110,30 +110,9 @@ function(){
 	*/
 	Utils.updateUserInfoPanel = function(){
 		var user = Utils.getCurrentUser();
-		//console.log('current user is set to: '+ Utils.userToString(user));
 		$("#userName").text(user.firstName +" " + user.lastName);
 	};
 
-	/**
-	* Unhides the entire body content of the current HTML page.
-	* @public
-	* @name Utils#unhideBody
-	* @function
-	*/
-	Utils.unhideBody = function(){
-		this.unhideElement('#fiteagle');
-	};	
-
-	/**
-	* Hides the entire body content of the current HTML page.
-	* @public
-	* @name Utils#hideBody
-	* @function
-	*/
-	Utils.hideBody = function(){
-		this.hideElement("#fiteagle");
-	};
-	
 	/**
 	* Hides the specified element by adding a 'hidden' class. Note that the class has to be available
 	* in the appropriate css file. 
@@ -145,7 +124,6 @@ function(){
 	*/
 	Utils.hideElement = function(selector){
 		var toHide = $(selector);
-		//console.log("Hiding Element"+ selector);
 		if(!toHide.hasClass('hidden')){
 				toHide.addClass('hidden');			
 		}

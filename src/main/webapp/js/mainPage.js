@@ -87,8 +87,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	* @memberOf Main#
 	*/
 	initMainPage = function(){
-		Utils.unhideBody();
-		
 		$("#unifiLogo").attr("href",home);
 		Classes.init();
 		initUserInfoPanel();	

@@ -23,21 +23,8 @@ function(require, Validation, Registration, Utils, Messages) {
 		 Registration.initRegistrationForm();
 		 initOnWindowResizeEvent();
 		 initHistory();
-		 initOnUnifiLogoClicked();
 	};
 
-	/**
-	* Defines on FITeagle logo click event. The function opens the 'home' tab after clicking on the logo.
-	* @private
-	* @memberOf Login#	
-	*/
-	initOnUnifiLogoClicked = function(){
-		$('#logoImg img').on('click',function(){
-			$('#navigation [href$=#home]').tab('show');
-		}).css('cursor','pointer');
-	};
-	
-	
 	/**
 	* Initiates history functionality for the login page navigation menu by initializing History API. It stores 
 	* the previous clicked navigation tab in the browser tab so it can be reached by clicking
@@ -48,13 +35,12 @@ function(require, Validation, Registration, Utils, Messages) {
 	initHistory = function(){
 		$('#navigation ul li a').not("#unifiLink").not("#avLink").on('click',function(e){
 			e.preventDefault();
-			var t = $(this);
-			var href = t.attr('href');
-			history.pushState(href, "page "+href, "/"+href);
+			var href = $(this).attr('href');
+			history.pushState(href, "page "+href, href);
 			(href == '')?
 				$('[href$=#home]').tab('show')
 					:
-				$('[href$='+href.replace("unifi/", "")+']').tab('show');
+				$('[href$='+href+']').tab('show');
 		});
 		$(window).on(' hashchange', function(event) {
 			redirectToUrl();
@@ -200,9 +186,7 @@ function(require, Validation, Registration, Utils, Messages) {
 			$('#navigation [href$=#home]').tab('show');
 		} else {
 			var tab = $('#navigation [href$=' + href + ']');
-			(tab.length) ? tab.tab('show') :
-			// if this hashtag is not found on this page
-			Utils.storeHashTag(href); // store the hashtag to try open it on main page
+			(tab.length) ? tab.tab('show') : Utils.storeHashTag(href); 
 		}
 	};
 
