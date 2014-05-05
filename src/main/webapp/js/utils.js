@@ -430,11 +430,11 @@ function(){
 	Utils.createConfirmModal = function(id,okId,okBtnText,closeBtnText,body){
 		var ok = $('<button>')
 				.attr('id',okId)
-				.addClass('btn btn-success')
+				.addClass('btn')
 				.append('<i class="icon-ok"></i>'+okBtnText);
 				
 		var cancel  = $('<button>')
-				.addClass('btn btn-danger left40')
+				.addClass('btn left40')
 				.attr('data-dismiss','modal')
 				.attr('aria-hidden','true')
 				.append('<i class="icon-remove-sign"></i>'+closeBtnText);
@@ -443,7 +443,7 @@ function(){
 					.append(ok)
 					.append(cancel);
 			
-		return Utils.createCustomModal(id, null,body, footer);
+		return Utils.createCustomModal(id, null, body, footer);
 	};
 	
 	
