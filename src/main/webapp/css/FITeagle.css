@@ -149,20 +149,24 @@ h4{margin-bottom:5px !important}
 
 #aside{border-right: 1px solid #d1d1d1;}
 
-#logos{
+#header{
 	height: 120px;
 }
 
 #avLogoLabel{
 	font-size: 13px;
-	margin-top: 18px;
 	font-style: italic;
-	margin-bottom: 0 !important;
+  position: relative;
+  top: -25px;
+  left: 10px;
 }
 
 #avLogo{
   width: auto;
   height: 55px;
+  position: relative;
+  left: -60px;
+  top: 10px;
 }
 
 #unifiLogo{
