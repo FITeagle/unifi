@@ -65,7 +65,7 @@ function(Validation, Utils,Messages,Server){
 	createDownloadCertificateBtn = function(filename,certificate){
 		var downloadBtn = $('<a>')
 				.addClass('btn span3 offset3')
-				.html('<i class="icon-file-text-alt"></i>Download Certificate')
+				.html('<i class="fa fa-file-text"></i>Download Certificate')
 				.on('click',function(){
 					var blob = new Blob([certificate], {type: "text/plain;charset=utf-8"});
 					saveAs(blob, filename);
@@ -85,7 +85,7 @@ function(Validation, Utils,Messages,Server){
 	createDownloadPrivateKeyBtn = function(filename,privateKey){
 		var downloadBtn = $('<a>')
 				.addClass('btn span3')
-				.html('<i class="icon-file"></i>Download Private Key')
+				.html('<i class="fa fa-file"></i>Download Private Key')
 				.on('click',function(){
 					var blob = new Blob([privateKey], {type: "text/plain;charset=utf-8"});
 					saveAs(blob, filename);
