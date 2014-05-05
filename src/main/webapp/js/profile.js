@@ -39,15 +39,13 @@ function(require,Utils,Server){
 	afterProfileUpdate = function(msg){
 		setProfileFields(Utils.getCurrentUser());
 		isSuccessMsg = msg.find('span').hasClass('alert-success');
-		if(isSuccessMsg){
-			Utils.showSuccessModal(msg);
-		}else{
+		if(!isSuccessMsg){
 			Utils.clearErrorMessagesFrom('#userProfileErrors');
 			$('#userProfileErrors').append(msg);
 		}
 		Utils.updateUserInfoPanel();
 		setTimeout(function(){
-			$('#saveProfileLoadingSign').addClass('hidden'); // hide loading sign
+			$('#saveProfileLoadingSign').addClass('hidden');
 		},50);
 	};
 	
@@ -140,15 +138,6 @@ function(require,Utils,Server){
 		});
 	};
 	
-	/**
-	* Enables the availability of the 'save' button identified by "#saveProfileInfo" selector  
-	* @private
-	* @memberOf Profile#
-	*/
-	enableSaveProfileBtn = function(){
-		console.log("enabling");
-		$('#saveProfileInfo').removeClass('disabled');
-	};
 	
 	/**
 	* Collect the changed information from the managing user profile form and stores it in the new object.
@@ -226,7 +215,6 @@ function(require,Utils,Server){
 		saveBtn.on('click',function(){		
 			if(checkUserProfileEntries() && !saveBtn.hasClass('disabled')){
 				$('#saveProfileLoadingSign').removeClass('hidden');
-				//console.log(JSON.stringify(getUserProfileChanges()));
 				var msg = Server.updateUser(getUserProfileChanges());
 				afterProfileUpdate(msg);
 			}
@@ -278,9 +266,9 @@ function(require,Utils,Server){
 	toggleSaveBtn = function(){
 		var saveBtn = $('#saveProfileInfo');
 		if(isAnyFieldChanges()){
-			saveBtn.removeClass('disabled');	// show btn		
+			saveBtn.removeClass('disabled');	
 		}else{
-			(!saveBtn.hasClass('disabled')) ? saveBtn.addClass('disabled') : ""; // hide btn
+			(!saveBtn.hasClass('disabled')) ? saveBtn.addClass('disabled') : "";
 		}
 	};	
 	
