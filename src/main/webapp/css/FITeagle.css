@@ -213,20 +213,26 @@ input.search-query{height:24px !important;}
 }
 
 #logoImg{
-	height: 110px;
+	height: 120px;
 }
 #loginErrorField{margin-bottom: 20px;}
 
+#avLogoLabel{
+	font-size: 13px;
+	margin-top: 18px;
+	font-style: italic;
+	margin-bottom: 0 !important;
+}
+
 #avLogo{
-	height: 55px;
-	bottom: 25px;
-  position: absolute;
+  width: auto;
+  height: 55px;
 }
 
 #unifiLogo{
-	height: 95px;
-  bottom: 10px;
-  position: absolute;
+  margin-top: 10px;
+  width: auto;
+  height: 100px;
 }
 
 #navigation{
