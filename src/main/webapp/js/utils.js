@@ -96,7 +96,6 @@ function(){
 	* @function
 	*/
 	Utils.clearErrorMessagesFrom = function(selector){
-		//console.log("Clearing all error messages from "+ selector);
 		var errorMessages = $(selector).find(".errorMessage");
 		errorMessages.remove();
 	};	
@@ -431,13 +430,13 @@ function(){
 		var ok = $('<button>')
 				.attr('id',okId)
 				.addClass('btn')
-				.append('<i class="icon-ok"></i>'+okBtnText);
+				.append('<i class="fa fa-check"></i>'+okBtnText);
 				
 		var cancel  = $('<button>')
 				.addClass('btn left40')
 				.attr('data-dismiss','modal')
 				.attr('aria-hidden','true')
-				.append('<i class="icon-remove-sign"></i>'+closeBtnText);
+				.append('<i class="fa fa-times"></i>'+closeBtnText);
 				
 		var footer = $('<div>').addClass('centered')
 					.append(ok)
@@ -495,7 +494,7 @@ function(){
 				.attr('id',okId)
 				.attr('data-dismiss','modal')
 				.attr('aria-hidden','true')
-				.append('<i class="icon-ok"></i>OK')
+				.append('<i class="fa fa-check"></i>OK')
 			);
 			
 		var body = $('<div>').addClass('centered').append(successMsg);
