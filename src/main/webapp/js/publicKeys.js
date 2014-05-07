@@ -286,17 +286,12 @@ function(require,Utils,Server,Validation,Messages){
 		var label = initPublicKeyLabel('pubKeyDescriptionLabel'+itemNumber,keyDescription);
 
 		var d = $('<div>').addClass('span8');
-		var textArea =$('<textarea style="resize:none" class="span12" rows="6"  disabled ></textarea>')
+		var textArea =$('<textarea style="resize:none" class="span12" rows="9"  disabled ></textarea>')
 						.val(keyString)
 						.attr('id','publicKeyTextArea'+itemNumber);
 						
 		d.append(textArea);
 		
-		//				$('#publicKeyTextArea'+i).on('click',function(){console.log('dfdsgsdfgsdfgadfg')});
-		d.on('click',function(){
-			//$('#publicKeyTextArea'+itemNumber).removeAttr('disabled');
-			
-		});	
 		var keyContols = $('<div>')
 						.attr('id',"publicKeyControls")
 						.addClass('span2 pull-right');
@@ -322,7 +317,6 @@ function(require,Utils,Server,Validation,Messages){
 		div.append(keyContols);
 		
 		return div;
-		
 	};
 	
 	
@@ -433,7 +427,7 @@ function(require,Utils,Server,Validation,Messages){
 	onDeleteKeyPressed = function(keyDescription){
 		//id,okId,okBtnText,closeBtnText,body
 		var modalBody = '<h5 class="centered">'+Messages.confirmKeyDeletionQuestion +'</h5><br/>'+
-						'<p class="centered">'+"Key Description: "+ keyDescription+'</p>';
+						'<p class="centered">'+"Description: "+ keyDescription+'</p>';
 		Utils.createConfirmModal('deleteKeyConfirmation','deleteKeyConfirmedBtn','YES','NO',modalBody);
 		Utils.showModal('#deleteKeyConfirmation');
 		$('#deleteKeyConfirmedBtn').on('click',function(){

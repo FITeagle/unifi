@@ -156,8 +156,8 @@ function(Validation, Utils,Messages,Server){
 	* @function
 	**/
 	Certificates.initForm = function(){
-		Certificates.initPublicKeySelect();	
 		initGenerateCertificatesBtn();
+		Certificates.initPublicKeySelect();	
 		initPassphraseField();
 		initGenerateKeyAndCertificateBtn();
 		$(window).bind('resizeEnd',function(){
@@ -259,28 +259,23 @@ function(Validation, Utils,Messages,Server){
 		var selectPubKey = $('#selectKeyForGeneration');
 		selectPubKey.children().remove();
 		var publicKeys = getUserPublicKeysFromServer();
-		var label;
 		if(publicKeys.length == 0){ // if no keys	
-			Utils.hideElement("#pubicKeySetLabel");
 			selectPubKey.append('<span class="alert alert-info span8">'+Messages.noPublicKeys+"</span>");
 			$("#genPubKey").addClass('disabled');
-			
-		}else{ // if keys exists	
+			$("#genPubKey").off();
+		}
+		else{ // if keys exists	
 			$("#genPubKey").removeClass('disabled');
-			label = $('<label>')
-				.addClass('span2')
-				.html("Please select a public key");
 			var sel = $('<select>')
 				.addClass('span12')
 				.attr("id","publicKeySetSelect");
 			
-			var selDiv = $('<div>').addClass('span8').append(sel);	
+			var selDiv = $('<div>').addClass('span10').append(sel);	
 			
 			for(var i = 0; i < publicKeys.length; i ++){
 				var description = publicKeys[i].description;
 				sel.append(createOptionItem(description));
 			}
-			selectPubKey.append(label);
 			selectPubKey.append(selDiv);
 		}			
 	};
