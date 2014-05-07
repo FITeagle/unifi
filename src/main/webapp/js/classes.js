@@ -128,7 +128,11 @@ function(Utils,Server){
 				row.remove();
 			}			
 		}));
-		var row = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")</td>","<td><a class='margin3 btn'>Details</a></td>",deleteUserBtn,"<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
+		var detailsBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Details").on('click',function(){
+			Utils.showUserModal(Server.getUser(user.username));			
+		}));
+		
+		var row = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")</td>",detailsBtn,deleteUserBtn,"<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
 		$("#class"+classid+"ParticipantsTable").append(row);
 	};
 	
