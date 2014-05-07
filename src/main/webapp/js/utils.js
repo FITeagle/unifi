@@ -503,6 +503,12 @@ function(){
 		Utils.showModal('#successModal');
 	};
 	
+	Utils.showUserModal = function(user){
+		var userToString = $("<pre>").append(JSON.stringify(user,null,' '));
+		Utils.showSuccessModal(userToString);
+	};
+	
+	
 	/**
 	* Hides a modal specified by a given selector.
 	* @param {String} selector of a modal container to be closed.

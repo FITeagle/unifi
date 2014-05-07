@@ -34,7 +34,7 @@ function(Utils,Server,Classes){
 			if(user.username != Utils.getCurrentUser().username){
 				
 				var getUser = $('<a>').addClass("margin3 btn").html("Details").on("click", function(){
-					Utils.showSuccessModal(JSON.stringify(Server.getUser(user.username),null,' '));
+					Utils.showUserModal(Server.getUser(user.username));
 				});
 				userRow.append($('<td>').append(getUser));
 				
@@ -101,7 +101,7 @@ function(Utils,Server,Classes){
 				if(user.username != Utils.getCurrentUser().username){
 					
 					var getUser = $('<a>').addClass("margin3 btn").html("Details").on("click", function(){
-						Utils.showSuccessModal(JSON.stringify(Server.getUser(user.username),null,' '));
+						Utils.showUserModal(Server.getUser(user.username));
 					});
 					userRow.append($('<td>').append(getUser));
 					
