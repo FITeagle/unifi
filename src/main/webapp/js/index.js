@@ -4,7 +4,6 @@ requirejs.config({
     'history' : ['jquery'],
     'ajaxify' : ['history'],
 	'prettyCheckable' : ['jquery'],
-	'scrollTo' : ['jquery']
   }
 });
 
@@ -31,8 +30,8 @@ function($,Bootstrap,LoginPage,MainPage,StatusPage,Utils){
 			LoginPage.load();
 		}
 	}
-	// new Event listener for end of the window resizing. Called : "resizeEnd"	
-	 $(window).resize(function() {
+
+	$(window).resize(function() {
         if(this.resizeTO) clearTimeout(this.resizeTO);
         this.resizeTO = setTimeout(function() {
             $(this).trigger('resizeEnd');
