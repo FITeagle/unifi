@@ -425,7 +425,6 @@ function(require,Utils,Server,Validation,Messages){
 	* @memberOf PublicKeys#
 	*/
 	onDeleteKeyPressed = function(keyDescription){
-		//id,okId,okBtnText,closeBtnText,body
 		var modalBody = '<h5 class="centered">'+Messages.confirmKeyDeletionQuestion +'</h5><br/>'+
 						'<p class="centered">'+"Description: "+ keyDescription+'</p>';
 		Utils.createConfirmModal('deleteKeyConfirmation','deleteKeyConfirmedBtn','YES','NO',modalBody);

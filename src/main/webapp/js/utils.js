@@ -393,7 +393,7 @@ function(){
 	* @param {String} id - is an identifier of the created modal
 	* @param {Object} modalHeader object carries custom HTML structure to be placed into the modal header section. 
 	* @param {Object} modalBody object carries custom HTML structure to be placed into the modal body section.
-	* @param {Object} modalFooter bject carries custom HTML structure to be placed into the modal footer section.
+	* @param {Object} modalFooter object carries custom HTML structure to be placed into the modal footer section.
 	* @public 
 	* @name Utils#createCustomModal
 	* @function
@@ -490,7 +490,7 @@ function(){
 	Utils.showSuccessModal = function(successMsg,okId){
 		var foot = $('<div>').addClass('centered')
 			.append(
-				$('<button>').addClass('btn btn-success btn-large')
+				$('<button>').addClass('btn btn-large')
 				.attr('id',okId)
 				.attr('data-dismiss','modal')
 				.attr('aria-hidden','true')
