@@ -89,12 +89,12 @@ function(Utils,Server){
 				participantsUsernames.push(user.username);
 			});
 		}
-		var currentlyChosenUsername = null;
+		var currentlyChosenUser = null;
 		var allUsers = Server.getAllUsers();
 		$.each(allUsers, function(i, user) {
 			if(user.role == "STUDENT" && ($.inArray(user.username, participantsUsernames) == -1)){
 				var userdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(user.username).on('click',function(){
-					currentlyChosenUsername = user.username;
+					currentlyChosenUser = user;
 					$("#usersDropdown"+newClass.id).html("<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
 				}));
 				ul.append(userdropdownOption);
@@ -103,10 +103,10 @@ function(Utils,Server){
 		var dropdown = $("<div>").addClass("dropdown").attr("style","margin-bottom:"+25*allUsers.length+"px");
 		dropdown.append("<button class='btn dropdown-toggle' type='button' id='usersDropdown"+newClass.id+"' data-toggle='dropdown'>Available users</button>");
 		var addBtn = $("<button>").addClass("btn margin3").html("Add").on('click',function(){
-			if(currentlyChosenUsername != null){
-				createParticipantRow(newClass.id,$("#usersDropdown"+newClass.id).html());
-				Server.addParticipant(newClass.id, currentlyChosenUsername);
-				currentlyChosenUsername = null;
+			if(currentlyChosenUser != null){
+				createParticipantRow(newClass.id,currentlyChosenUser);
+				Server.addParticipant(newClass.id, currentlyChosenUser.username);
+				currentlyChosenUser = null;
 			}
 		});
 		dropdown.append(ul,addBtn);
@@ -117,17 +117,18 @@ function(Utils,Server){
 		
 		if(newClass.participants != null){
 			$.each(newClass.participants, function(i, user) {
-				createParticipantRow(newClass.id,"<b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")");
+				createParticipantRow(newClass.id,user);
 			});
 		}
 	};
 	
-	createParticipantRow = function(classid,userData){
+	createParticipantRow = function(classid,user){
 		var deleteUserBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Delete").on('click',function(){
-			//TODO: delete from server
-			row.remove();
+			if(Server.deleteParticipant(classid, user.username) == "success"){
+				row.remove();
+			}			
 		}));
-		var row = $("<tr>").append("<td>"+userData+"</td>","<td><a class='margin3 btn'>Details</a></td>",deleteUserBtn,"<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
+		var row = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")</td>","<td><a class='margin3 btn'>Details</a></td>",deleteUserBtn,"<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
 		$("#class"+classid+"ParticipantsTable").append(row);
 	};
 	

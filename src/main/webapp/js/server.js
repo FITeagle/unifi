@@ -563,13 +563,29 @@ function(require,Utils){
 			async: false,
 			url: "/native/api/class/"+id+"/participant/"+username,
 			success: function(data,status){
-				message = data;
+				message = status;
 			},
 			error: function(xhl,status){
-				console.log(Utils.createErrorMessage(xhl.responseText));
+				console.log(xhl.responseText);
 			},
 		});
-		
+		return message;
+	};
+	
+	Server.deleteParticipant = function(id, username){	
+		var message=0;
+		$.ajax({
+			cache: false,
+			type: "DELETE",
+			async: false,
+			url: "/native/api/class/"+id+"/participant/"+username,
+			success: function(data,status){
+				message = status;
+			},
+			error: function(xhl,status){
+				console.log(xhl.responseText);
+			},
+		});
 		return message;
 	};
 	
