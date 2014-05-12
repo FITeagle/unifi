@@ -10,7 +10,7 @@ function(Utils,Server){
 		case "NODE_ADMIN":
 			break;
 		case "CLASSOWNER":
-			initAdminClassesAside();
+			initClassownerClassesAside();
 			initCreateClassPage();
 			break;
 		default:
@@ -61,7 +61,7 @@ function(Utils,Server){
 			
 			newClass.id = Server.createClass(newClass);
 			
-			createAdminClassForAsideList(newClass);
+			createClassownerClassForAsideList(newClass);
 			
 			createClassParticipantsPage(newClass);
 			createClassResourcesPage(newClass);
@@ -144,7 +144,7 @@ function(Utils,Server){
 		$("#desktop").append(page);
 	};
 	
-	createAdminClassForAsideList = function(newClass){
+	createClassownerClassForAsideList = function(newClass){
 		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
 		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Options").append(name);
 		
@@ -204,7 +204,7 @@ function(Utils,Server){
 	};
 	
 	
-	initAdminClassesAside = function(){
+	initClassownerClassesAside = function(){
 		var list = $("<ul>").attr("id","tbownerClasses").addClass("fa-ul");
 		
 		var createClassLink = $("<a>").attr("href","#createclass").append($("<i>").addClass("fa fa-plus fa-li"),"Create Class").on("click",function(e){
@@ -247,7 +247,7 @@ function(Utils,Server){
 		var allClasses = Server.getAllClassesOwnedByUser(Utils.getCurrentUser().username);
 		if(allClasses != null){
 			$.each(allClasses, function(i, newClass) {
-				createAdminClassForAsideList(newClass);
+				createClassownerClassForAsideList(newClass);
 				createClassParticipantsPage(newClass);
 				createClassResourcesPage(newClass);
 			});
