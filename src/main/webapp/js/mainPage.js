@@ -102,7 +102,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	
 	initNavigationTabs = function(){		
 		var navLinks = $(".navigationLink a");
-		navLinks.off();
 		navLinks.not('#signOut, #tasksToggle').on('click',function(e){
 			e.preventDefault();
 			var hash = $(this).attr('href');
