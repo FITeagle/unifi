@@ -561,7 +561,7 @@ function(require,Utils){
 			cache: false,
 			type: "POST",
 			async: false,
-			url: "/native/api/class/"+id+"/participant/"+username,
+			url: "/native/api/user/"+username+"/class/"+id,
 			success: function(data,status){
 				message = status;
 			},
@@ -578,7 +578,7 @@ function(require,Utils){
 			cache: false,
 			type: "DELETE",
 			async: false,
-			url: "/native/api/class/"+id+"/participant/"+username,
+			url: "/native/api/user/"+username+"/class/"+id,
 			success: function(data,status){
 				message = status;
 			},
