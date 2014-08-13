@@ -1,6 +1,6 @@
 var Registration;
-define(['validation','utils','mainPage','messages'],
-function(Validation, Utils, MainPage,Messages){
+define(['validation','utils','mainPage','messages','server'],
+function(Validation, Utils, MainPage, Messages, Server){
 
 	Registration = {};
 	domain = "";
@@ -127,15 +127,15 @@ function(Validation, Utils, MainPage,Messages){
 		return isValidAffiliation;
 	};
 	
-	checkUniversity = function(){		
-		var isValidUniversity = Utils.checkInputField(
-									"#inputUniversity",
+	checkNode = function(){		
+		var isValidNode = Utils.checkInputField(
+									"#inputNode",
 									"#registrationErrors",
-									Validation._isUniversity,
-									Messages.emptyUniversity,
-									Messages.wrongUniversity
+									Validation._isNode,
+									Messages.emptyNode,
+									Messages.wrongNode
 									);
-		return isValidUniversity;
+		return isValidNode;
 	};
 	
 	/**
@@ -236,7 +236,7 @@ function(Validation, Utils, MainPage,Messages){
 					checkFirstName()    &
 					checkLastName()     &
 					checkAffiliation()  &
-					checkUniversity()   &
+					checkNode()   &
 					checkUserPasswords();
 					
 		return allEntriesValid; 
@@ -259,7 +259,8 @@ function(Validation, Utils, MainPage,Messages){
 							$('#inputLastName').val(),
 							$("#inputAffiliation").val(),
 							$('#inputPassword').val(),
-							$('#inputEmail').val()
+							$('#inputEmail').val(),
+							$('#inputNode').val()
 						  );
 						  
 			
@@ -297,17 +298,19 @@ function(Validation, Utils, MainPage,Messages){
 		Utils.addOnEnterClickEvent('#inputConfirmPassword',"#registerBtn");	
 		Registration.initRegistrationFormHints();
 		Registration.initRegisterNewUserButton();
-		Registration.initUniversityDropdown();
+		Registration.initNodeDropdown();
 	};
 	
-	Registration.initUniversityDropdown = function(){
-		$("#UCT").click(function(){
-			$("#inputUniversity").html("University of Cape Town");
-			$("#inputUniversity").val("University of Cape Town");
-		});
-		$("#TUB").click(function(){
-			$("#inputUniversity").html("TU Berlin");
-			$("#inputUniversity").val("TU Berlin");
+	Registration.initNodeDropdown = function(){
+		var nodes = Server.getAllNodes();
+		
+		$.each(nodes, function(i, node) {
+			var nodeLink = $('<a>').attr("tabindex", "-1").html(node.name).click(function(){
+				$("#inputNode").html(node.name);
+				$("#inputNode").val(node.id);
+			});
+			
+			$("#registrationNodeDropwdown").append($("<li>").append(nodeLink));
 		});
 	};
 	

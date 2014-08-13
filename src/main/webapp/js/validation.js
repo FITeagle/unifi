@@ -90,8 +90,8 @@ function(){
 		return ((affiliation.length >= 2) & (affiliation.length < 200));
 	};
 	
-	Validation._isUniversity = function(university){
-		return university != "University";
+	Validation._isNode = function(node){
+		return node != "Node";
 	};
 	
 	/**

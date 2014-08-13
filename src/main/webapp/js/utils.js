@@ -360,7 +360,7 @@ function(){
 	* @name Utils#createNewUser
 	* @function
 	*/
-	Utils.createNewUser = function(firstName,lastName,affiliation,password,email){			
+	Utils.createNewUser = function(firstName,lastName,affiliation,password,email,nodeID){			
 		var newUser = new Object();	
 		newUser.firstName = firstName;
 		newUser.lastName = lastName;
@@ -368,6 +368,10 @@ function(){
 		newUser.affiliation = affiliation;
 		newUser.password = password;
 		newUser.publicKeys = [];
+		var node = new Object();
+		node.id = nodeID;
+		newUser.node = node;
+		
 		return newUser;
 	};
 	

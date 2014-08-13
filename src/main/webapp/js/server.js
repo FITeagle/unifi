@@ -669,6 +669,28 @@ function(require,Utils){
 		
 		return classesFromServer;
 	};
+	
+	Server.getAllNodes = function(){
+		var nodesFromServer = null;
+		$.ajax({
+			cache: false,
+			type: "GET",
+			async: false,
+			url: "/native/api/node/",
+			beforeSend: function(xhr){
+			},
+			success: function(nodes,status,xhr){
+				nodesFromServer = nodes;				
+			},
+			error: function(xhr,status,thrown){
+				console.log("Response " + xhr.responseText);
+				console.log(status);
+				console.log(thrown);
+			},
+		});
+		
+		return nodesFromServer;
+	};
 		
 	return Server;
 
