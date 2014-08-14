@@ -25,25 +25,19 @@ function(Utils,Server){
 	};
 	
 	initNodeDropdown = function(){
-		var nodeName1 = "FUSECO Playground";
-		var nodeName2 = "UCT Node";
-		var class1 = $("<li>").append($("<a>").attr("tabindex",-1).html(nodeName1).on("click",function(){
-			var node = "";
-			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
-				node.remove();
-			});
-			node = $("<div>").append("<span>"+nodeName1+" </span>",deleteBtn);
-			$("#addedNodes").append(node);
-		}));
-		var class2 = $("<li>").append($("<a>").attr("tabindex",-1).html(nodeName2).on("click",function(){
-			var node = "";
-			var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
-				node.remove();
-			});
-			node = $("<div>").append("<span>"+nodeName2+" </span>",deleteBtn);
-			$("#addedNodes").append(node);
-		}));
-		$("#availableNodes").append(class1,class2);
+		var nodes = Server.getAllNodes();
+		
+		$.each(nodes, function(i, node) {
+			var nodeItem = $("<li>").append($("<a>").attr("tabindex",-1).html(node.name).on("click",function(){
+				var nodeDiv = "";
+				var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
+					nodeDiv.remove();
+				});
+				nodeDiv = $("<div>").append("<span>"+node.name+" </span>",deleteBtn).val(node.id);
+				$("#addedNodes").append(nodeDiv);
+			}));
+			$("#availableNodes").append(nodeItem);
+		});
 	};
 	
 	initCreateBtn = function(){
@@ -53,9 +47,10 @@ function(Utils,Server){
 			newClass.description = $("#classDescripion").val();
 			newClass.owner = Utils.getCurrentUser();
 			newClass.nodes = [];
-			$.each($("#addedNodes").children(), function(i, tb) {
+			$.each($("#addedNodes").children(), function(i, nodeItem) {
 				var node = new Object();
-				node.name = tb.children[0].innerHTML;
+				node.name = nodeItem.children[0].innerHTML;
+				node.id = nodeItem.value;
 				newClass.nodes.push(node);
 			});
 			
