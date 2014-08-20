@@ -7,6 +7,8 @@ function(Utils,Server){
 		switch(Utils.getCurrentUser().role){
 		case "FEDERATION_ADMIN":
 			initAllNodesAside();
+			initAllNodes();
+			initAddNode();
 			break;
 		case "NODE_ADMIN":
 			initNodeAside("TUB");
@@ -28,7 +30,32 @@ function(Utils,Server){
 		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
 	
-
+	initAllNodes = function(){
+		$("#allnodes").empty();
+		var nodes = Server.getAllNodes();
+		
+		$.each(nodes, function(i, node) {
+			var nodename = $("<td>").html(node.name);
+			var nodestatus = $("<td>").html("Up");
+			var deleteBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Delete").on("click",function(){
+				alert("deleting nodes not supported yet");
+			}));
+			var nodeitem = $("<tr>").append(nodename, nodestatus, deleteBtn);
+			$("#allnodes").append(nodeitem);
+		});
+	};
+	
+	initAddNode = function(){
+		$("#addNodeBtn").on("click",function(){
+			var node = new Object();
+			node.name = $("#nodeName").val();
+			node.id = Server.addNode(node);
+			
+			initAllNodes();
+			$("#nodeName").val('');
+			openDesktopTab("#nodes");
+		});
+	};
 	
 	return Nodes;
 

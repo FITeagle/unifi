@@ -691,6 +691,27 @@ function(require,Utils){
 		
 		return nodesFromServer;
 	};
+	
+	Server.addNode = function(node){	
+		var nodeJSON = JSON.stringify(node);
+		var id=0;
+		$.ajax({
+			cache: false,
+			type: "PUT",
+			async: false,
+			url: "/native/api/node/",
+			data: nodeJSON,
+			contentType: "application/json",
+			success: function(data,status){
+				id = data;
+			},
+			error: function(xhl,status){
+				console.log(Utils.createErrorMessage(xhl.responseText));
+			},
+		});
+		
+		return id;
+	};
 		
 	return Server;
 
