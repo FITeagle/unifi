@@ -25,8 +25,8 @@ function(Utils,Server){
 	
 	initNodeAside = function(nodeName){
 		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
-		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#tubnode'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
-
+		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#manage_node'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
+		$("#nodeName").html(nodeName);
 		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
 	

@@ -147,7 +147,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 					break;
 					
 				case "NODE_ADMIN":
-					$("<div>").load("mainContent.html #home_nodeadmin,#tubnode,#allusers",function(){
+					$("<div>").load("mainContent.html #home_nodeadmin,#manage_node,#allusers",function(){
 						$("#desktop").append(this.childNodes);
 						home = "#home_nodeadmin";
 						Users.init();
