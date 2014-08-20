@@ -11,7 +11,7 @@ function(Utils,Server){
 			initAddNode();
 			break;
 		case "NODE_ADMIN":
-			initNodeAside("TUB");
+			initNodeAside(Utils.getCurrentUser().node.name);
 			break;
 		}
 	};
@@ -25,7 +25,7 @@ function(Utils,Server){
 	
 	initNodeAside = function(nodeName){
 		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
-		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#tubnode'><i class='fa fa-minus fa-li'></i>"+nodeName+" node</a></li>"));
+		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#tubnode'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
 
 		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
