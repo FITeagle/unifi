@@ -36,7 +36,7 @@ function(require, Validation, Registration, Utils, Messages) {
 		$('#navigation ul li a').not("#unifiLink").not("#avLink").on('click',function(e){
 			e.preventDefault();
 			var href = $(this).attr('href');
-			history.pushState(href, "page "+href, href);
+			history.pushState(href, "page "+href, href+"_page");
 			(href == '')?
 				$('[href$=#home]').tab('show')
 					:
@@ -181,12 +181,13 @@ function(require, Validation, Registration, Utils, Messages) {
 	 * @memberOf Login#
 	 */
 	redirectToUrl = function() {
-		var href = window.location.hash;
-		if (href == null || href == '') {
+		var state = window.location.hash;
+		var hash = state.split("_page")[0];
+		if (hash == null || hash == '') {
 			$('#navigation [href$=#home]').tab('show');
 		} else {
-			var tab = $('#navigation [href$=' + href + ']');
-			(tab.length) ? tab.tab('show') : Utils.storeHashTag(href); 
+			var tab = $('#navigation [href$=' + hash + ']');
+			(tab.length) ? tab.tab('show') : Utils.storeHashTag(hash); 
 		}
 	};
 

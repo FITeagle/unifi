@@ -15,24 +15,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	Main = {};
 	
 	/**
-	* Checks if any hashtag is stored before. In case the tag is found the function triggers the tab opening according to this tag.
-	* @private
-	* @memberOf Main#
-	*/
-	checkForStoredHashTags = function(){
-		var tag = Utils.getStoredHashTag();
-		if(tag && tag.length > 1){
-			history.pushState(tag, "page "+tag, tag);
-			openDesktopTab(tag);
-		}else{
-			window.location.hash = home;
-			history.pushState(home, "page "+home, home);
-			openDesktopTab(home);
-		}
-	};
-		
-	
-	/**
 	* Initializes change of the icon sign for all of the headers with the class with  the ".collapseHeader" selector after clicking on it.
 	* @private
 	* @memberOf Main#
@@ -74,9 +56,11 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	*/
 	initHashtagChange = function(){
 		$(window).unbind();
+		var hash = window.location.hash.split("_page")[0];
+		openDesktopTab(hash);
 		$(window).on('popstate hashchange',function(){
-			var state = window.location.hash;
-			openDesktopTab(state);
+			var hash = window.location.hash.split("_page")[0];
+			openDesktopTab(hash);
 		});
 	};
 
@@ -97,7 +81,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 		PublicKeys.initForm();
 		Certificates.initForm();
 		initCollapseHeaders();
-		checkForStoredHashTags();
 	};
 	
 	initNavigationTabs = function(){		
@@ -110,7 +93,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 					$("#taskAsides").fadeIn(200);
 				});
 			}
-			history.pushState(hash, "page "+hash, hash);
 			openDesktopTab(hash);
 		});
 		
@@ -118,7 +100,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
-				history.pushState(home, "page "+home, home);
 				openDesktopTab(home);
 			});
 		});
@@ -199,9 +180,11 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			
 			var a = $('.navigationLink [href$='+hash+']');
 			if(a.length != 0){
+				history.pushState(hash, "page "+hash, hash+"_page");
 				a.tab('show');
 			}
 			else{
+				history.pushState(home, "page "+home, home+"_page");
 				$('[href$='+home+']').tab('show'); 
 			}
 		}
