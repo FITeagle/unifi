@@ -302,7 +302,7 @@ function(Validation, Utils, MainPage, Messages, Server){
 	};
 	
 	Registration.initNodeDropdown = function(){
-		var nodes = Server.getAllNodes();
+		var nodes = Utils.getAllNodes();
 		
 		$.each(nodes, function(i, node) {
 			var nodeLink = $('<a>').attr("tabindex", "-1").html(node.name).click(function(){

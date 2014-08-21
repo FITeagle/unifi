@@ -250,7 +250,7 @@ function(Utils,Server){
 	};
 	
 	createAllUserClassesAsides = function(){
-		var joinedClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+		var joinedClasses = Utils.getJoinedClasses();
 		if(joinedClasses != null){
 			$.each(joinedClasses, function(i, newClass) {
 				createUserClassForAsideList(newClass);
@@ -258,10 +258,9 @@ function(Utils,Server){
 		}
 	};
 	
-	
 	initAddClass = function(){
-		var allClasses = Server.getAllClasses();
-		var joinedClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+		var allClasses = Utils.getAllClasses();
+		var joinedClasses = Utils.getJoinedClasses();
 		$.each(allClasses, function(i, newClass) {
 			var alreadyJoined = 0;
 			$.each(joinedClasses, function(i, joinedClass) {

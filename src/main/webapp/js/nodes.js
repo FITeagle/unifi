@@ -32,7 +32,7 @@ function(Utils,Server){
 	
 	initAllNodes = function(){
 		$("#allnodes").empty();
-		var nodes = Server.getAllNodes();
+		var nodes = Utils.getAllNodes();
 		
 		$.each(nodes, function(i, node) {
 			var nodename = $("<td>").html(node.name);

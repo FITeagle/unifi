@@ -604,6 +604,7 @@ function(require,Utils){
 						user.username = user.username.split("@")[0];
 					});
 				});
+				Utils.setJoinedClasses(classes);
 				classesFromServer = classes;				
 			},
 			error: function(xhr,status,thrown){
@@ -658,7 +659,8 @@ function(require,Utils){
 						user.username = user.username.split("@")[0];
 					});
 				});
-				classesFromServer = classes;				
+				Utils.setAllClasses(classes);
+				classesFromServer = classes;	
 			},
 			error: function(xhr,status,thrown){
 				console.log("Response " + xhr.responseText);
@@ -680,7 +682,8 @@ function(require,Utils){
 			beforeSend: function(xhr){
 			},
 			success: function(nodes,status,xhr){
-				nodesFromServer = nodes;				
+				Utils.setAllNodes(nodes);
+				nodesFromServer = nodes;
 			},
 			error: function(xhr,status,thrown){
 				console.log("Response " + xhr.responseText);

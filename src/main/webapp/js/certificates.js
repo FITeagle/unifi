@@ -157,7 +157,7 @@ function(Validation, Utils,Messages,Server){
 	**/
 	Certificates.initForm = function(){
 		initGenerateCertificatesBtn();
-		Certificates.initPublicKeySelect();	
+		Certificates.initPublicKeySelect(false);	
 		initPassphraseField();
 		initGenerateKeyAndCertificateBtn();
 		$(window).bind('resizeEnd',function(){
@@ -221,7 +221,7 @@ function(Validation, Utils,Messages,Server){
 				if(!errorMessage){			
 					addKeyAndCertificateTextarea(keyAndCertificate);
 					require('publicKeys').updateExistingPublicKeyForm();
-					Certificates.initPublicKeySelect();
+					Certificates.initPublicKeySelect(true);
 				}else{
 					Utils.addErrorMessageTo('#newKeypairAndCertificateErrors');
 				}
@@ -255,10 +255,17 @@ function(Validation, Utils,Messages,Server){
 	* @name Certificates#initPublicKeySelect
 	* @function
 	*/
-	Certificates.initPublicKeySelect = function(){
+	Certificates.initPublicKeySelect = function(updateToo){
 		var selectPubKey = $('#selectKeyForGeneration');
 		selectPubKey.children().remove();
-		var publicKeys = getUserPublicKeysFromServer();
+		var publicKeys;
+		if(updateToo){
+			publicKeys = getUserPublicKeysFromServer();
+		}
+		else{
+			publicKeys = Utils.getCurrentUser().publicKeys;
+		}
+		
 		if(publicKeys.length == 0){ // if no keys	
 			selectPubKey.append('<span class="alert alert-info span8">'+Messages.noPublicKeys+"</span>");
 			$("#genPubKey").addClass('disabled');

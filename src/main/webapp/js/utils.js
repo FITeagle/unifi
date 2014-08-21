@@ -150,12 +150,22 @@ function(){
 	*/
 	Utils.setCurrentUser = function(user){
 		var userJSON = JSON.stringify(user);
-		if(typeof(Storage)!=="undefined"){
-			sessionStorage.user = userJSON;
-		  }
-		else{
-			console.log("Session storage is no supported !");
-		}
+		sessionStorage.user = userJSON;
+	};
+	
+	Utils.setAllNodes = function(allNodes){
+		var nodesJSON = JSON.stringify(allNodes);
+		sessionStorage.nodes = nodesJSON;
+	};
+	
+	Utils.setAllClasses = function(allClasses){
+		var classesJSON = JSON.stringify(allClasses);
+		sessionStorage.classes = classesJSON;
+	};
+	
+	Utils.setJoinedClasses = function(joinedClasses){
+		var classesJSON = JSON.stringify(joinedClasses);
+		sessionStorage.joinedclasses = classesJSON;
 	};
 	
 	/**
@@ -199,14 +209,41 @@ function(){
 		return null;
 	};
 	
+	Utils.getAllNodes = function(){		
+		if (sessionStorage.nodes != undefined){
+			return JSON.parse(sessionStorage.nodes);
+		}
+		else{
+			return Server.getAllNodes();
+		}
+	};
+	
+	Utils.getAllClasses = function(){		
+		if (sessionStorage.classes != undefined){
+			return JSON.parse(sessionStorage.classes);
+		}
+		else{
+			return Server.getAllClasses();
+		}
+	};
+	
+	Utils.getJoinedClasses = function(){		
+		if (sessionStorage.joinedclasses != undefined){
+			return JSON.parse(sessionStorage.joinedclasses);
+		}
+		else{
+			return Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+		}
+	};
+	
 		
 	/**
 	* Removes the all user specific information from a session storage by entirely session storage clearing.
 	* @public
-	* @name Utils#resetUser
+	* @name Utils#clearSessionStorage
 	* @function
 	*/
-	Utils.resetUser = function(){
+	Utils.clearSessionStorage = function(){
 		sessionStorage.clear();
 	};
 
