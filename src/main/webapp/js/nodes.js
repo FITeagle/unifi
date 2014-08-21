@@ -7,7 +7,7 @@ function(Utils,Server){
 		switch(Utils.getCurrentUser().role){
 		case "FEDERATION_ADMIN":
 			initAllNodesAside();
-			initAllNodes();
+			initAllNodes(false);
 			initAddNode();
 			break;
 		case "NODE_ADMIN":
@@ -30,9 +30,15 @@ function(Utils,Server){
 		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
 	
-	initAllNodes = function(){
+	initAllNodes = function(updateToo){
 		$("#allnodes").empty();
-		var nodes = Utils.getAllNodes();
+		var nodes;
+		if(updateToo){
+			nodes = Server.getAllNodes();
+		}
+		else{
+			nodes = Utils.getAllNodes();
+		}
 		
 		$.each(nodes, function(i, node) {
 			var nodename = $("<td>").html(node.name);
@@ -51,7 +57,7 @@ function(Utils,Server){
 			node.name = $("#nodeName").val();
 			node.id = Server.addNode(node);
 			
-			initAllNodes();
+			initAllNodes(true);
 			$("#nodeName").val('');
 			openDesktopTab("#nodes");
 		});
