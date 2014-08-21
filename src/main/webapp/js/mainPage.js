@@ -149,8 +149,19 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 					break;
 					
 				default:
-					$("<div>").load("mainContent.html #home_student,#task,#uctclasses,#tubclasses",function(){
+					$("<div>").load("mainContent.html #home_student,#task",function(){
 						$("#desktop").append(this.childNodes);
+						$.each(Utils.getAllNodes(), function(i, node) {		
+							var title = $("<div>").append($("<h3>").html(node.name+" classes"));
+							var description = $("<div>").append($("<h4>").html("Chose a class you want to sign up for"));
+							var nameHeader = $("<th>").addClass("span3").html("Name");
+							var descriptionHeader = $("<th>").addClass("span7").html("Description");
+							var btnHeader = $("<th>").addClass("span2");
+							var header = $("<tr>").append(nameHeader, descriptionHeader, btnHeader);
+							var table = $("<div>").append($("<table>").attr("id","classesList"+node.id).append(header));
+							var nodeClassesTab = $("<div>").attr("id","classes"+node.id).addClass("row-fluid tab-pane").append(title, description, $("<hr>"), table);
+							$("#desktop").append(nodeClassesTab);
+						});
 						home = "#home_student";
 						initMainPage();
 						require(["jsPlumb"], function(jsPlumb) {

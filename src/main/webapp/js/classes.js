@@ -15,7 +15,7 @@ function(Utils,Server){
 			break;
 		default:
 			initUserClassesAside();
-			initAddClass();
+			initAddClass(false);
 		}
 	};
 	
@@ -222,17 +222,14 @@ function(Utils,Server){
 		var allClassesHeader = "<h4><i class='fa fa-group fa-lg'></i>All classes</h4>";
 		var allClassesList = $("<ul>").attr("id","userClasses").addClass("fa-ul");
 		
-		var uctClassesLink = $("<a>").attr("href","#uctclasses").append($("<i>").addClass("fa fa-minus fa-li"),"UCT classes").on("click",function(e){
-			e.preventDefault();
-			openDesktopTab("#uctclasses");
+		$.each(Utils.getAllNodes(), function(i, node) {		
+			var classesLink = $("<a>").attr("href","#classes"+node.id).append($("<i>").addClass("fa fa-minus fa-li"),node.name+" classes").on("click",function(e){
+				e.preventDefault();
+				openDesktopTab("#classes"+node.id);
+			});
+			var classes = $("<li>").append($("<div>").addClass("navigationLink").append(classesLink));
+			allClassesList.append(classes);
 		});
-		var uctClasses = $("<li>").append($("<div>").addClass("navigationLink").append(uctClassesLink));
-		var tubClassesLink = $("<a>").attr("href","#tubclasses").append($("<i>").addClass("fa fa-minus fa-li"),"TUB classes").on("click",function(e){
-			e.preventDefault();
-			openDesktopTab("#tubclasses");
-		});
-		var tubClasses = $("<li>").append($("<div>").addClass("navigationLink").append(tubClassesLink));
-		allClassesList.append(tubClasses, uctClasses);
 		
 		$("#homeAside").append($("<div>").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
 		createAllUserClassesAsides();
@@ -258,9 +255,20 @@ function(Utils,Server){
 		}
 	};
 	
-	initAddClass = function(){
-		var allClasses = Utils.getAllClasses();
-		var joinedClasses = Utils.getJoinedClasses();
+	initAddClass = function(updateToo){
+		$.each(Utils.getAllNodes(), function(i, node) {	
+			$("#classesList"+node.id).empty();
+		});
+		var allClasses;
+		var joinedClasses;
+		if(updateToo){
+			allClasses = Server.getAllClasses();
+			joinedClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+		}
+		else{
+			allClasses = Utils.getAllClasses();
+			joinedClasses = Utils.getJoinedClasses();
+		}
 		$.each(allClasses, function(i, newClass) {
 			var alreadyJoined = 0;
 			$.each(joinedClasses, function(i, joinedClass) {
@@ -273,11 +281,15 @@ function(Utils,Server){
 					e.preventDefault();
 					createUserClassForAsideList(newClass);
 					Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
-					classElement.remove();
+					initAddClass(true);
 					initCollapseHeaders();
 				}));
 				var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
-				$("#tubClassClasses").append(classElement);
+				
+				$.each(newClass.nodes, function(i, node) {	
+					$("#classesList"+node.id).append(classElement.clone(true));
+				});
+				
 			}
 		});
 	};
