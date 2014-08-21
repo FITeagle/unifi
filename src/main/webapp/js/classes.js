@@ -250,9 +250,9 @@ function(Utils,Server){
 	};
 	
 	createAllUserClassesAsides = function(){
-		var allClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
-		if(allClasses != null){
-			$.each(allClasses, function(i, newClass) {
+		var joinedClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+		if(joinedClasses != null){
+			$.each(joinedClasses, function(i, newClass) {
 				createUserClassForAsideList(newClass);
 			});
 		}
@@ -261,20 +261,27 @@ function(Utils,Server){
 	
 	initAddClass = function(){
 		var allClasses = Server.getAllClasses();
-		
+		var joinedClasses = Server.getAllClassesFromUser(Utils.getCurrentUser().username);
 		$.each(allClasses, function(i, newClass) {
-			var signUpBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Sign up").on("click",function(e){
-				e.preventDefault();
-				createUserClassForAsideList(newClass);
-				Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
-				classElement.remove();
-				initCollapseHeaders();
-			}));
-			var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
-			$("#tubClassClasses").append(classElement);
+			var alreadyJoined = 0;
+			$.each(joinedClasses, function(i, joinedClass) {
+				if(joinedClass.id == newClass.id){
+					alreadyJoined = 1;
+				}
+			});
+			if(alreadyJoined == 0){
+				var signUpBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Sign up").on("click",function(e){
+					e.preventDefault();
+					createUserClassForAsideList(newClass);
+					Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
+					classElement.remove();
+					initCollapseHeaders();
+				}));
+				var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
+				$("#tubClassClasses").append(classElement);
+			}
 		});
 	};
-	
 	
 	return Classes;
 
