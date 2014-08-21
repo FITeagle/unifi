@@ -10,18 +10,17 @@ function(Utils,Server,Classes){
 			initUserFieldsFedAdmin();
 			break;
 		case "NODE_ADMIN":
-			initUsersAside("TUB"); //TODO: dynamic node
-			initUserFieldsNodeAdmin();
+			initUsersAside(Utils.getCurrentUser().node.name);
+			initUserFieldsNodeAdmin(Utils.getCurrentUser().node);
 			break;
 		}
-		
 	};
 	
 	initUsersAside = function(nodeName){
 		var usersHeader = "<h4><i class='fa fa-group fa-lg'></i>Users</h4>";
 		var users = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#allusers'><i class='fa fa-minus fa-li'></i>"+nodeName+" users</a></li>"));
 		
-		$("#homeAside").append($("<div>").append(usersHeader,users));
+		$("#homeAside").append($("<div>").append(usersHeader, users));
 	};
 	
 	initUserFieldsFedAdmin = function(){
@@ -89,12 +88,12 @@ function(Utils,Server,Classes){
 		});
 	};
 	
-	initUserFieldsNodeAdmin = function(){
-		var users = Server.getAllUsers(); //TODO: get only users from node
+	initUserFieldsNodeAdmin = function(node){
+		var users = Server.getAllUsers();
 		
 		$.each(users, function(i, user) {
 			
-			if(user.role != "FEDERATION_ADMIN"){
+			if(user.role != "FEDERATION_ADMIN" && user.node.id == node.id){
 			
 				var userRow = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+") </td>");
 				
