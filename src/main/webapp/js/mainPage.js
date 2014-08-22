@@ -56,8 +56,8 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	*/
 	initHashtagChange = function(){
 		$(window).unbind();
-		var hash = window.location.hash.split("_page")[0];
-		openDesktopTab(hash);
+		history.pushState(home, "page "+home, home+"_page");
+		openDesktopTab(home);
 		$(window).on('popstate hashchange',function(){
 			var hash = window.location.hash.split("_page")[0];
 			openDesktopTab(hash);
@@ -93,6 +93,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 					$("#taskAsides").fadeIn(200);
 				});
 			}
+			history.pushState(hash, "page "+hash, hash+"_page");
 			openDesktopTab(hash);
 		});
 		
@@ -100,6 +101,7 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
+				history.pushState(home, "page "+home, home+"_page");
 				openDesktopTab(home);
 			});
 		});
@@ -191,11 +193,9 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 			
 			var a = $('.navigationLink [href$='+hash+']');
 			if(a.length != 0){
-				history.pushState(hash, "page "+hash, hash+"_page");
 				a.tab('show');
 			}
 			else{
-				history.pushState(home, "page "+home, home+"_page");
 				$('[href$='+home+']').tab('show'); 
 			}
 		}

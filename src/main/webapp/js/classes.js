@@ -223,10 +223,7 @@ function(Utils,Server){
 		var allClassesList = $("<ul>").attr("id","userClasses").addClass("fa-ul");
 		
 		$.each(Utils.getAllNodes(), function(i, node) {		
-			var classesLink = $("<a>").attr("href","#classes"+node.id).append($("<i>").addClass("fa fa-minus fa-li"),node.name+" classes").on("click",function(e){
-				e.preventDefault();
-				openDesktopTab("#classes"+node.id);
-			});
+			var classesLink = $("<a>").attr("href","#classes"+node.id).append($("<i>").addClass("fa fa-minus fa-li"),node.name+" classes");
 			var classes = $("<li>").append($("<div>").addClass("navigationLink").append(classesLink));
 			allClassesList.append(classes);
 		});
