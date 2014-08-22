@@ -15,7 +15,7 @@ function(Utils,Server){
 			break;
 		default:
 			initUserClassesAside();
-			initAddClass(false);
+			initJoinClass(false);
 		}
 	};
 	
@@ -30,10 +30,10 @@ function(Utils,Server){
 		$.each(nodes, function(i, node) {
 			var nodeItem = $("<li>").append($("<a>").attr("tabindex",-1).html(node.name).on("click",function(){
 				var nodeDiv = "";
-				var deleteBtn = $("<button>").addClass("btn").html("Delete").on("click",function(){
+				var deleteBtn = $("<button>").addClass("btn span4").html("Delete").on("click",function(){
 					nodeDiv.remove();
 				});
-				nodeDiv = $("<div>").append("<span>"+node.name+" </span>",deleteBtn).val(node.id);
+				nodeDiv = $("<div>").addClass("span12 nomargin").append("<span class='span8'>"+node.name+" </span>",deleteBtn).val(node.id);
 				$("#addedNodes").append(nodeDiv);
 			}));
 			$("#availableNodes").append(nodeItem);
@@ -252,7 +252,7 @@ function(Utils,Server){
 		}
 	};
 	
-	initAddClass = function(updateToo){
+	initJoinClass = function(updateToo){
 		$.each(Utils.getAllNodes(), function(i, node) {	
 			$("#classesList"+node.id).empty();
 		});
@@ -278,7 +278,7 @@ function(Utils,Server){
 					e.preventDefault();
 					createUserClassForAsideList(newClass);
 					Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
-					initAddClass(true);
+					initJoinClass(true);
 					initCollapseHeaders();
 				}));
 				var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
