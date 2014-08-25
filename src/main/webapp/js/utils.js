@@ -390,24 +390,7 @@ function(){
 		
 		return newUser;
 	};
-	
-	/**
-	* Checks if the current screen is a "small" screen meaning. The small screens are the screens where the
-	* twitter bootstrap responsive navigation menu collapses. It happens for all screens with 
-	* the screen width smaller then 979 pixels.
-	* @public
-	* @name Utils#isSmallScreen
-	* @function
-	* @return {Boolean} true is it is a small scree and false otherwise
-	*/
-	Utils.isSmallScreen = function(){
-		var width = $(window).width();
-		if(width < 979){
-			return true;
-		}
-		return false;
-	};
-	
+
 	/**
 	* Creates a custom Twitter Bootstrap modal with specified identifier, header, body and footer.
 	* @param {String} id - is an identifier of the created modal

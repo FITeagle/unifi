@@ -238,9 +238,7 @@ function(Validation, Utils,Messages,Server){
 	*/
 	initPassphraseField = function(){		
 		Utils.addOnEnterClickEvent("#inputPassphrase","#genKeyAndCertificate");
-		var placement;
-		(Utils.isSmallScreen())? placement ="top" : placement = "right";
-		Utils.initTooltipFor("#inputPassphrase",Messages.passphraseHint,placement,"focus");
+		Utils.initTooltipFor("#inputPassphrase",Messages.passphraseHint,"right","focus");
 	};
 	
 	
@@ -264,7 +262,7 @@ function(Validation, Utils,Messages,Server){
 			publicKeys = Utils.getCurrentUser().publicKeys;
 		}
 		
-		if(publicKeys.length == 0){ // if no keys	
+		if(publicKeys.length == 0){
 			selectPubKey.append('<span class="alert alert-info span8">'+Messages.noPublicKeys+"</span>");
 			$("#genPubKey").addClass('disabled');
 			$("#genPubKey").off();

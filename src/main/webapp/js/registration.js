@@ -338,9 +338,7 @@ function(Validation, Utils, Messages, Server){
 	* @function	
 	*/
 	Registration.initRegistrationFormHints = function(){	
-		var position;
 		var trigger = "focus";
-		(Utils.isSmallScreen())? position = "top":position = "right";		
 		selectors = [
 			"#inputUsername","#inputFirstName","#inputLastName","#inputAffiliation",
 			"#inputEmail","#inputPassword","#inputConfirmPassword"
@@ -354,7 +352,7 @@ function(Validation, Utils, Messages, Server){
 				
 		for(var i=0; i < selectors.length; i++){
 			//console.log(messages[i]);
-			Utils.initTooltipFor(selectors[i],messages[i],position,trigger);
+			Utils.initTooltipFor(selectors[i],messages[i],"right",trigger);
 		}
 	};
 

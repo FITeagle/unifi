@@ -137,12 +137,10 @@ function(require,Utils,Server,Validation,Messages){
 	* @memberOf PublicKeys#
 	*/
 	initTooltipForKeyDescriptionField = function(){		
-		var placement;								
-		(Utils.isSmallScreen())? placement="top": placement = "right";												
 		Utils.initTooltipFor(
 				"#inputKeyDescription",
 				Messages.keyDescription,
-				placement,
+				"right",
 				"focus");
 	};
 
@@ -158,7 +156,6 @@ function(require,Utils,Server,Validation,Messages){
 		var publicKey = new Object();
 		publicKey.publicKeyString = keyString;
 		publicKey.description = description;
-		//console.log(JSON.stringify(publicKey));
 		return publicKey;
 	};
 	
