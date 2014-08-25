@@ -160,9 +160,7 @@ function(Validation, Utils,Messages,Server){
 		Certificates.initPublicKeySelect(false);	
 		initPassphraseField();
 		initGenerateKeyAndCertificateBtn();
-		$(window).bind('resizeEnd',function(){
-			initPassphraseField();
-		});
+		initPassphraseField();
 	};
 	
 	/**
@@ -173,7 +171,7 @@ function(Validation, Utils,Messages,Server){
 	initGenerateCertificatesBtn = function(){
 		$("#genPubKey").on('click',function(){
 			var loadingSign = $('#genPubKeySign');
-			loadingSign.removeClass('hidden'); //show loading sign
+			loadingSign.removeClass('hidden');
 			var selectedKeyDescription = $("#publicKeySetSelect option:selected").html();
 			//console.log("KEY DESCRIPTION: " + selectedKeyDescription);
 			var pubStringCertificate = Server.generateCertificateForPiblicKey(selectedKeyDescription);
@@ -181,7 +179,7 @@ function(Validation, Utils,Messages,Server){
 					addCertificateTextarea(pubStringCertificate);
 			}
 			setTimeout(function(){
-				loadingSign.addClass('hidden'); // hide loading sign
+				loadingSign.addClass('hidden');
 			},50);
 		}).tooltip({title: Messages.generateCertificateFromKey});
 	};
@@ -199,7 +197,7 @@ function(Validation, Utils,Messages,Server){
 	initGenerateKeyAndCertificateBtn = function(){
 		$('#genKeyAndCertificate').on('click',function(){
 			var loadingSign = $('#genKeyAndCertificateSign');
-			loadingSign.removeClass('hidden'); //show loading sign
+			loadingSign.removeClass('hidden');
 			Utils.clearErrorMessagesFrom('#newKeypairAndCertificateErrors');
 			var passphrase = $('#inputPassphrase').val();
 			var isPassphraseValid = Utils.checkInputField(
@@ -227,7 +225,7 @@ function(Validation, Utils,Messages,Server){
 				}
 			}
 			setTimeout(function(){
-				loadingSign.addClass('hidden'); // hide loading sign
+				loadingSign.addClass('hidden');
 			},50);
 		}).tooltip({title: Messages.generateKeyPairAndCertificate});
 	};

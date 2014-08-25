@@ -51,7 +51,9 @@ function(require,Utils){
 			success: function(user,status,xhr){
 				user.username = user.username.split("@")[0];
 				Utils.setCurrentUser(user);
-				require('mainPage').load();
+				require(["mainPage"], function(mainPage) {
+					mainPage.load();
+				});
 			},
 			error: function(xhr,status,thrown){		
 				msg = thrown;

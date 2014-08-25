@@ -7,14 +7,16 @@ requirejs.config({
   }
 });
 
-define(['jquery','bootstrap','loginPage','mainPage', 'utils', 'history', 'ajaxify','fileSaver'], 
+define(['jquery','bootstrap','loginPage', 'utils', 'history', 'ajaxify','fileSaver'], 
 
-function($,Bootstrap,LoginPage,MainPage,StatusPage,Utils){
+function($,Bootstrap,LoginPage,StatusPage,Utils){
 	
 	$.ajaxSetup({cache:false});	
 
 	if(LoginPage.isUserLoggedIn()){
-		MainPage.load();
+		require(["mainPage"], function(mainPage) {
+			mainPage.load();
+		});
 	}else{
 		var rememberedUser = Login.getRememberedUsername();
 		if(rememberedUser){
@@ -27,13 +29,6 @@ function($,Bootstrap,LoginPage,MainPage,StatusPage,Utils){
 			LoginPage.load();
 		}
 	}
-
-	$(window).resize(function() {
-        if(this.resizeTO) clearTimeout(this.resizeTO);
-        this.resizeTO = setTimeout(function() {
-            $(this).trigger('resizeEnd');
-        }, 200);
-    });
 
 });	
 	

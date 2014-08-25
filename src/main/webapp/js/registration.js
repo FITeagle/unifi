@@ -1,6 +1,6 @@
 var Registration;
-define(['validation','utils','mainPage','messages','server'],
-function(Validation, Utils, MainPage, Messages, Server){
+define(['validation','utils','messages','server'],
+function(Validation, Utils, Messages, Server){
 
 	Registration = {};
 	domain = "";
