@@ -144,9 +144,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 						$("#desktop").append(this.childNodes);
 						home = "#home_classowner";
 						initMainPage();
-						require(["jsPlumb"], function(jsPlumb) {
-							initResourceButtons();
-						});
 					});
 					break;
 					
@@ -166,9 +163,6 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 						});
 						home = "#home_student";
 						initMainPage();
-						require(["jsPlumb"], function(jsPlumb) {
-							initResourceButtons();
-						});
 					});
 				}
 			}

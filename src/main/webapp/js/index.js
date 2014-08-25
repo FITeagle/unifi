@@ -11,15 +11,12 @@ define(['jquery','bootstrap','loginPage','mainPage', 'utils', 'history', 'ajaxif
 
 function($,Bootstrap,LoginPage,MainPage,StatusPage,Utils){
 	
-//	console.log("index.js is called");
-					
 	$.ajaxSetup({cache:false});	
 
 	if(LoginPage.isUserLoggedIn()){
 		MainPage.load();
 	}else{
 		var rememberedUser = Login.getRememberedUsername();
-		//console.log("REMEMBERED: " + rememberedUser);
 		if(rememberedUser){
 			var user = Server.getUser(rememberedUser);
 			if(user){
