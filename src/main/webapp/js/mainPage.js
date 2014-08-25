@@ -56,11 +56,10 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	*/
 	initHashtagChange = function(){
 		$(window).unbind();
-		history.pushState(home, "page "+home, home+"_page");
-		openDesktopTab(home);
+		openDesktopTab(window.location.hash.split("_page")[0], true);
 		$(window).on('popstate hashchange',function(){
 			var hash = window.location.hash.split("_page")[0];
-			openDesktopTab(hash);
+			openDesktopTab(hash, false);
 		});
 	};
 
@@ -93,16 +92,14 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 					$("#taskAsides").fadeIn(200);
 				});
 			}
-			history.pushState(hash, "page "+hash, hash+"_page");
-			openDesktopTab(hash);
+			openDesktopTab(hash, true);
 		});
 		
 		$(".toHomeAsideLink").on('click',function(e){
 			e.preventDefault();
 			$("#taskAsides").fadeOut(200, function(){
 				$("#homeAside").fadeIn(200);
-				history.pushState(home, "page "+home, home+"_page");
-				openDesktopTab(home);
+				openDesktopTab(home, true);
 			});
 		});
 	};
@@ -180,16 +177,22 @@ function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Node
 	* @private
 	* @memberOf Main#
 	*/
-	openDesktopTab = function(hash){
+	openDesktopTab = function(hash, pushToHistory){
 		if(hash != null){
 			var navLinks = $(".navigationLink li");
 			navLinks.removeClass("active");
 			
 			var a = $('.navigationLink [href$='+hash+']');
 			if(a.length != 0){
+				if(pushToHistory){
+					history.pushState(hash, "page "+hash, hash+"_page");
+				}
 				a.tab('show');
 			}
 			else{
+				if(pushToHistory){
+					history.pushState(home, "page "+home, home+"_page");
+				}
 				$('[href$='+home+']').tab('show'); 
 			}
 		}
