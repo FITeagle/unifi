@@ -248,24 +248,6 @@ function(){
 	};
 
 	/**
-	* Converts a user object to its textual representation.
-	* @param  {Object} user profile object
-	* @return {String} user profile textual representation
-	* @public
-	* @name Utils#userToString
-	* @function
-	*/
-	Utils.userToString = function(user){
-		var userToString = '';
-		if(user !=null){
-			userToString = user.firstName + " " + user.lastName + " " + user.email;
-		}else{
-			userToString = "no user is set";
-		}
-		return userToString;
-	};
-	
-	/**
 	* Initializes a twitter bootstrap tooltip for the specified element.
 	* @param {String} selector of an element to init a the tooltip for.
 	* @param {String} text to be shown within the tooltip body.
