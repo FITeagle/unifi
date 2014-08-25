@@ -3,7 +3,6 @@ define(['validation','utils','messages','server'],
 function(Validation, Utils, Messages, Server){
 
 	Registration = {};
-	domain = "";
 	/**
 	* 
 	* Gets the username from the ristration form
@@ -33,9 +32,6 @@ function(Validation, Utils, Messages, Server){
 		return _lastName;
 	};
 			
-
-			
-	
 	/**
 	* Checks if the username entered by a user in the registration form is a valid one. 
 	* Highlights the appropriate input element '#inputUsername' if it's not correct.
@@ -147,7 +143,6 @@ function(Validation, Utils, Messages, Server){
 	* @returns true if the password is valid one, otherwise false is returned.
 	*/
 	checkRegPassword = function(){
-		
 		var isValidPassword = Utils.checkInputField(
 								"#inputPassword",
 								"#registrationErrors",
@@ -190,8 +185,8 @@ function(Validation, Utils, Messages, Server){
 	* @returns true if the passwords and it confirmation are not empty and consistent, otherwise false is returned.
 	**/		
 	arePasswordInputsConsist = function(){
-		var p1 = $('#inputPassword').val(); // get password entered by a user
-		var p2 = $('#inputConfirmPassword').val(); // get password confirmation entered by a user
+		var p1 = $('#inputPassword').val();
+		var p2 = $('#inputConfirmPassword').val();
 		var areConsists;
 		if(p1 && p2 && p1 === p2){ 
 			Utils.highlightField("#inputPassword",false);
@@ -236,7 +231,7 @@ function(Validation, Utils, Messages, Server){
 					checkFirstName()    &
 					checkLastName()     &
 					checkAffiliation()  &
-					checkNode()   &
+					checkNode()   		&
 					checkUserPasswords();
 					
 		return allEntriesValid; 
@@ -262,11 +257,8 @@ function(Validation, Utils, Messages, Server){
 							$('#inputEmail').val(),
 							$('#inputNode').val()
 						  );
-						  
 			
-			var errorMessage = Server.registerUser(
-											newUserInfo,
-											$('#inputUsername').val());
+			var errorMessage = Server.registerUser(newUserInfo,	$('#inputUsername').val());
 			
 			if(errorMessage){
 				setTimeout(function(){
@@ -296,6 +288,9 @@ function(Validation, Utils, Messages, Server){
 		Utils.changeFocusOnEnterClick('#inputEmail','#inputPassword');
 		Utils.changeFocusOnEnterClick('#inputPassword','#inputConfirmPassword');
 		Utils.addOnEnterClickEvent('#inputConfirmPassword',"#registerBtn");	
+		$(window).resize(function() {
+			Registration.initRegistrationFormHints();
+		});
 		Registration.initRegistrationFormHints();
 		Registration.initRegisterNewUserButton();
 		Registration.initNodeDropdown();
@@ -314,9 +309,8 @@ function(Validation, Utils, Messages, Server){
 		});
 	};
 	
-	
 	/**
-	* Defines the behaviour after clicking on the register new user button within registration form.
+	* Defines the behavior after clicking on the register new user button within registration form.
 	* It clears all error messages shown to the user before and triggers  the user registration process.
 	* @private
 	* @memberOf Registration#
@@ -351,16 +345,13 @@ function(Validation, Utils, Messages, Server){
 		];
 				
 		for(var i=0; i < selectors.length; i++){
-			//console.log(messages[i]);
 			Utils.initTooltipFor(selectors[i],messages[i],"right",trigger);
 		}
 	};
-
 	
 	Registration.clearAllErrorMessages = function(){
 		Utils.clearErrorMessagesFrom("#registrationErrors");
 	};
-	
 
 	return Registration;
 });

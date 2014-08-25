@@ -102,7 +102,6 @@ function(Validation, Utils,Messages,Server){
 	* @memberOf Certificates#
 	*/
 	createOptionItem = function(keyDescription){	
-		//console.log("Creating option");
 		var opt  = $('<option>').html(keyDescription);
 		return opt;
 	};
@@ -173,7 +172,6 @@ function(Validation, Utils,Messages,Server){
 			var loadingSign = $('#genPubKeySign');
 			loadingSign.removeClass('hidden');
 			var selectedKeyDescription = $("#publicKeySetSelect option:selected").html();
-			//console.log("KEY DESCRIPTION: " + selectedKeyDescription);
 			var pubStringCertificate = Server.generateCertificateForPiblicKey(selectedKeyDescription);
 			if(pubStringCertificate){
 					addCertificateTextarea(pubStringCertificate);
@@ -208,13 +206,9 @@ function(Validation, Utils,Messages,Server){
 										Messages.wrongPassphrase
 									);
 			if(isPassphraseValid){		
-				var repsonse = Server.
-							generatePublicKeyAndCertificate(
-								passphrase);
-				
-				var keyAndCertificate = repsonse[0];
-				//console.log(keyAndCertificate);
-				var errorMessage = repsonse[1];				
+				var response = Server.generatePublicKeyAndCertificate(passphrase);
+				var keyAndCertificate = response[0];
+				var errorMessage = response[1];				
 				console.log(errorMessage);
 				if(!errorMessage){			
 					addKeyAndCertificateTextarea(keyAndCertificate);
@@ -241,7 +235,6 @@ function(Validation, Utils,Messages,Server){
 		Utils.initTooltipFor("#inputPassphrase",Messages.passphraseHint,"right","focus");
 	};
 	
-	
 	/**
 	* Triggers select element initiation for existing user public keys representation.
 	* It fills the selector object identified by "#selectKeyForGeneration" selector with the
@@ -267,7 +260,7 @@ function(Validation, Utils,Messages,Server){
 			$("#genPubKey").addClass('disabled');
 			$("#genPubKey").off();
 		}
-		else{ // if keys exists	
+		else{
 			$("#genPubKey").removeClass('disabled');
 			var sel = $('<select>')
 				.addClass('span12')

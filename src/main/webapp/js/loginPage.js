@@ -16,13 +16,11 @@ function(require, Validation, Registration, Utils, Messages) {
 	Login = {};
 
 	Login.initLoginPage = function() {
-		 redirectToUrl();
-		 initOnWindowResizeEvent();
-		 initLoginForm();
-		 initSignInBtn();
-		 Registration.initRegistrationForm();
-		 initOnWindowResizeEvent();
-		 initHistory();
+		redirectToUrl();
+		initLoginForm();
+		initSignInBtn();
+		Registration.initRegistrationForm();
+		initHistory();
 	};
 
 	/**
@@ -61,31 +59,11 @@ function(require, Validation, Registration, Utils, Messages) {
 		var cookie = $.cookie('fiteagle_user_cookie');
 		if(cookie){
 			var cookieVal = atob(cookie);
-			var start = cookieVal.indexOf("username:");
-			if(start > -1){
-				username = cookieVal.substring(start+9);
-			}
+			var splitted = cookieVal.split("username:");
+			username = splitted[1];
 		}
 		return username;
 	};
-	
-	
-	/**
-	 * Initiates on window resize event that toggles navigation button
-	 * visibility, re-initiates tooltips for the login and registration form
-	 * depending on a current screen size.
-	 * 
-	 * @private
-	 * @memberOf Login#
-	 * @see Registration.initRegistrationFormHints for more information about
-	 *      the tooltip initialization for the registration form
-	 */
-	initOnWindowResizeEvent = function() {
-		$(window).resize(function() {
-			Registration.initRegistrationFormHints();
-		});
-	};
-
 	
 	/**
 	 * Initiates on click event for "signIn" button on the Home page identified

@@ -14,7 +14,6 @@ function(require,Utils,Server,Validation,Messages){
      */
 	PublicKeys = {};
 	
-	
 	/**
 	* Triggers public keys form initialization for existing and new user keys.
 	* @public
@@ -25,7 +24,6 @@ function(require,Utils,Server,Validation,Messages){
 		initExistingPublicKeysForm();
 		initNewUserKeysForm();
 	};
-	
 	
 	/**
       * Triggers new user public keys form initialization for file selection, form field description and public key upload functions 
@@ -42,7 +40,6 @@ function(require,Utils,Server,Validation,Messages){
 		});
 	};
 	
-	
 	/**
       * Initializes the behaviour after clicking on the upload public key button defined by '#uploadNewPublicKey' selector. 
 	  * It performs removing of the previous error messages shown to the user before, checking for valid key description.
@@ -55,8 +52,7 @@ function(require,Utils,Server,Validation,Messages){
 			clearPublicKeysErrors();
 			var isKeyDescrValid = isKeyDescriptionValid();
 			var isKeyValValid = isKeyValueValid();
-			if( isKeyDescrValid && isKeyValValid ){
-				//clearPublicKeysErrors();
+			if(isKeyDescrValid && isKeyValValid ){
 				var description = $("#inputKeyDescription").val();
 				var publicKeyString = $('#publicKeyFromFile textarea').val();
 				publicKey = createNewPublicKeyObject(description,publicKeyString);
@@ -158,10 +154,9 @@ function(require,Utils,Server,Validation,Messages){
 		publicKey.description = description;
 		return publicKey;
 	};
-	
 
 	/**
-	*	Triggers file select button initialization: the behaviour after click, or file selection is performed.
+	*	Triggers file select button initialization: the behavior after click, or file selection is performed.
     * @private
 	* @memberOf PublicKeys#
 	*/
@@ -170,11 +165,6 @@ function(require,Utils,Server,Validation,Messages){
 		$('#selectFromFile').on('click',function(){
 			$('#selectFromFileInput input').click();
 		});
-	/*
-		fileSelectForm.on('click',function(){
-			this.value = null;
-		});*/
-
 	};
 	
 	initSelectFileInput = function(){
@@ -184,7 +174,6 @@ function(require,Utils,Server,Validation,Messages){
 								.attr('type','file')
 								.attr('name','file')
 								.on('change',function(event){
-										//console.log(event);
 										clearPublicKeysErrors();
 										handleFileSelect(event);
 										setTimeout(function(){
@@ -193,7 +182,6 @@ function(require,Utils,Server,Validation,Messages){
 								});
 			inputFileContainer.append(fileSelect);
 	};
-	
 	
 	/**
 	* Checks if the public key description string provided by a user in a form identified by "#inputKeyDescription" selector is a valid one.
@@ -214,7 +202,6 @@ function(require,Utils,Server,Validation,Messages){
 		return isValidDescription;
 	};
 	
-	
 	/**
 	* Checks if the public key value provided by a user in a form identified by "#publicKeyFromFile textarea" selector is a valid one.
 	* The validation is performed by the function called "Validation._isKeyValue()" located in the validation.js module.
@@ -231,7 +218,6 @@ function(require,Utils,Server,Validation,Messages){
 								Messages.wrongKeyValue);						
 		return isValidKeyValue;
 	};
-	
 	
 	/**
 	* Triggers the procedures for the form initialization called "Existing user keys".
@@ -265,7 +251,6 @@ function(require,Utils,Server,Validation,Messages){
 		var userFromServer = Server.getUser(Utils.getCurrentUser().username);
 		initExistingPublicKeysForm(userFromServer);
 	};
-	
 	
 	/**
       * Creates new public key item container to be shown  in the section "Existing User Keys".
@@ -316,7 +301,6 @@ function(require,Utils,Server,Validation,Messages){
 		return div;
 	};
 	
-	
 	/**
 	* Creates and initializes the public key label within the existing public key item. Defines on click functionality and triggers 
 	* twitter bootstrap tooltip on hover event.
@@ -338,7 +322,6 @@ function(require,Utils,Server,Validation,Messages){
 		
 		return label;
 	};
-	
 	
 	/**
 	* Defines the behaviour after the user clicks on the public key label in the "existing public key" form.
@@ -378,7 +361,6 @@ function(require,Utils,Server,Validation,Messages){
 		modal.modal('show');
 	};
 	
-	
 	/**
 	* Creates twitter bootstap modal is used for submitting a new public key description.
 	* The modal body contains input field for providing a new public value.
@@ -411,7 +393,6 @@ function(require,Utils,Server,Validation,Messages){
 		return Utils.createConfirmModal('changePublicKeyDescriptionModal',submitBtnID,'Submit','Cancel',modBody); 
 	};
 	
-	
 	/**
 	* Defines the behaviour after the user clicks on the delete public key button within "existing public keys" form.
 	* The function creates and shows to the user a confirmation modal. If the user confirms the public key deletion the 
@@ -430,7 +411,6 @@ function(require,Utils,Server,Validation,Messages){
 			deletePublicKeyOnServer(keyDescription);
 		});
 	};
-	
 	
 	/**
 	* Triggers sending a request to the server for the deletion of the current user.
@@ -452,7 +432,6 @@ function(require,Utils,Server,Validation,Messages){
 		Certificates.initPublicKeySelect();
 		Utils.hideModal('#deleteKeyConfirmation');
 	};
-	
 	
 	/**
 	* Creates a download button for the specified public key, defines download functionality and initializes 
@@ -477,7 +456,6 @@ function(require,Utils,Server,Validation,Messages){
 		return downloadBtn;
 	};
 	
-	
 	/**
 	* Clears all public keys related error container fields. All error messages are removed from the public key management form.
     * @private
@@ -487,7 +465,6 @@ function(require,Utils,Server,Validation,Messages){
 		Utils.clearErrorMessagesFrom("#newUserKeyErrors");
 		Utils.clearErrorMessagesFrom("#existingUserKeyErrors");
 	};
-	
 	
 	/**
 	* Handles the file selection procedure. It shows an error message to the user if any error occurs while the file selection.
@@ -499,13 +476,13 @@ function(require,Utils,Server,Validation,Messages){
 	handleFileSelect = function(evt){
 	    evt.stopPropagation();
 		evt.preventDefault();
-		var f = evt.target.files[0]; // FileList object	
+		var f = evt.target.files[0];
 		if (!f) {
 			Utils.setErrorMessageTo("#newUserKeyErrors",Messages.failToLoadFile);
 		}else {			
 			var checked = checkPublicKeyFile(f);
 			setTimeout(function(){
-				if(checked) readFile(f); // correct file selected
+				if(checked) readFile(f);
 			},100);
 		}
 	};
@@ -526,7 +503,6 @@ function(require,Utils,Server,Validation,Messages){
 		showSelectedFileInfo(file);	
 	};
 	
-	
 	/**
 	* The creates the container for showing the information about the currently selected file to the user.
 	* @param {Object} file object to show information for.
@@ -534,7 +510,6 @@ function(require,Utils,Server,Validation,Messages){
 	* @memberOf PublicKeys#
 	*/
 	showSelectedFileInfo = function(file){
-		// files is a FileList of File objects. List some properties.
 		var output = [];
 		output.push('<strong>', escape(file.name), '</strong> (', file.type || 'n/a', ') - ',
 			file.size, ' bytes, last modified: ',
@@ -549,7 +524,6 @@ function(require,Utils,Server,Validation,Messages){
 		}
 	};
 	
-	
 	/**
 	* Clears the all of the related containers representing the information about the currently selected public key file.
     * @private
@@ -562,7 +536,6 @@ function(require,Utils,Server,Validation,Messages){
 		$('#currentFileName').html('No file selected.');
 		$('#inputKeyDescription').val('');
 	};
-	
 	
 	/**
 	* Checks the given file if it is a valid public key file. The file extension and file size are verified. 
@@ -577,7 +550,6 @@ function(require,Utils,Server,Validation,Messages){
 		return isValid;
 	};
 	
-	
 	/**
 	* Checks the given file has a valid file extension. 
 	* @param {Object} file object to be verified.
@@ -591,7 +563,6 @@ function(require,Utils,Server,Validation,Messages){
 		if(!isValid)Utils.addErrorMessageTo('#newUserKeyErrors',Messages.wrongPublicKeyFileExt);
 		return isValid;
 	};
-	
 	
 	/**
 	* Checks the given file has a valid file size. 
@@ -616,7 +587,6 @@ function(require,Utils,Server,Validation,Messages){
 	*/
   	setPublicKeyFromFile = function(text){
 	  var container = $("#publicKeyFromFile textarea");
-	 // console.log(container);
 	  container.html(text);
 	};
 	
