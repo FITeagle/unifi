@@ -187,7 +187,7 @@ function(require, Validation, Registration, Utils, Messages) {
 			$('#navigation [href$=#home]').tab('show');
 		} else {
 			var tab = $('#navigation [href$=' + hash + ']');
-			(tab.length) ? tab.tab('show') : Utils.storeHashTag(hash); 
+			(tab.length) ? tab.tab('show') : $('#navigation [href$=#home]').tab('show');
 		}
 	};
 

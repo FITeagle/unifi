@@ -266,27 +266,6 @@ function(){
 	};
 	
 	/**
-	* Stores the specified hash tag in a session storage.
-	* @param {String} hash tag to be stored.
-	* @public
-	* @name Utils#storeHashTag
-	* @function
-	*/
-	Utils.storeHashTag = function(tag){
-		sessionStorage.hashTag = tag;
-	};
-	
-	/**
-	* Gets a currently stored hash tag from a session storage.
-	* @public
-	* @name Utils#getStoredHashTag
-	* @function
-	*/
-	Utils.getStoredHashTag = function(){
-		return sessionStorage.hashTag;
-	};
-	
-	/**
 	* Initializes a twitter bootstrap tooltip for the specified element.
 	* @param {String} selector of an element to init a the tooltip for.
 	* @param {String} text to be shown within the tooltip body.
