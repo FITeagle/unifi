@@ -20,10 +20,6 @@ function(Utils){
 	* @param {Boolean} rememberMe - a flag for remembering the user after the user is successful logged in.
 	* true is for remembering the current user and false for not.
 	* @return {String} message in case of the error the server response message is returned.
-	* in case 404 status code the Messages.userNotFound message is returned.
-	* in case 401 status code the Messages.wrongPasswordKey message is returned.
-	* @see Messages#userNotFound
-	* @see Messages#wrongPasswordKey
 	* @public
 	* @name Server#loginUser
 	* @function
@@ -64,10 +60,10 @@ function(Utils){
 			},
 			statusCode:{				
 				404: function(){
-					msg = Messages.userNotFound;	
+					msg = Messages.wrongUsernameOrPassword;	
 				},
 				401 : function(){
-					msg = Messages.wrongPasswordKey;
+					msg = Messages.wrongUsernameOrPassword;
 				}
 			}
 		});

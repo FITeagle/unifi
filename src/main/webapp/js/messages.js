@@ -200,20 +200,11 @@ define([],function(){
 	Messages.passwordsAreInconsistent = "Passwords are inconsistent.";
 	
 	/**
-	* Warning message informing that the user with given username has not been found on the server.
-	* @public
-	* @name Messages#userNotFound
-	* @example "Current user isn't found."
-	*/
-	Messages.userNotFound = "Current user isn't found.";
-	
-	/**
 	* Warning message after submitting a password with a wrong key value.
 	* @public
-	* @name Messages#wrongPasswordKey
-	* @example "Wrong password."
+	* @name Messages#wrongUsernameOrPassword
 	*/
-	Messages.wrongPasswordKey = "Wrong password.";
+	Messages.wrongUsernameOrPassword = "Wrong username or password.";
 		
 	
 	
