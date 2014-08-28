@@ -60,7 +60,7 @@ function(Utils){
 			complete: function(){
 				setTimeout(function(){
 					Utils.hideElement('#loginSpinner');
-				},100);
+				},300);
 			},
 			statusCode:{				
 				404: function(){
