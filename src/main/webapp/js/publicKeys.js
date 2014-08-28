@@ -1,9 +1,9 @@
 var PublicKeys;
-define(['require','utils','server','validation','messages','fileSaver'],
+define(['utils', 'server', 'validation', 'messages', 'fileSaver'],
 /**
  * @lends MainPage
  */ 
-function(require,Utils,Server,Validation,Messages){
+function(Utils, Server, Validation, Messages){
 	
 	/** 
      * PublicKeys class

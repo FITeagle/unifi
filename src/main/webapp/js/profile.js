@@ -1,6 +1,6 @@
 var Profile;
-define(['require','utils','server'], 
-function(require,Utils,Server){
+define(['utils','server'], 
+function(Utils,Server){
 	
 	/** 
      * Profile class.

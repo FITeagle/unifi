@@ -1,5 +1,5 @@
-define(['utils','server'], 
-function(Utils,Server){
+define(['utils', 'server'], 
+function(Utils, Server){
 	
 	Classes = {};
 	

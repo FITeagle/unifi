@@ -1,6 +1,6 @@
 var Certificates;
-define(['validation','utils','messages','server'],
-function(Validation, Utils,Messages,Server){
+define(['validation', 'utils', 'messages', 'server'],
+function(Validation, Utils, Messages, Server){
 
 	/** 
      * Certificates class.

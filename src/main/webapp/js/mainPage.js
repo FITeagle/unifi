@@ -1,9 +1,9 @@
 var Main;
-define(['require','utils','profile','publicKeys','certificates','server','users','classes','nodes'],
+define(['utils','profile','publicKeys','certificates','server','users','classes','nodes'],
 /**
  * @lends MainPage
  */ 
-function(require,Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
+function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	
 	 /** 
 	 * The FITeagle main page class contains functions required for initialization of the 

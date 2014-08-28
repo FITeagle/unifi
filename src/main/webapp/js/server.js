@@ -1,8 +1,8 @@
-define(['require','utils'],
+define(['utils'],
 /**
  * @lends MainPage
  */ 
-function(require,Utils){
+function(Utils){
 	
 	/** 
      * Server class contains functions that enables the remote communication with the FITeagle server REST API,  
@@ -43,8 +43,7 @@ function(require,Utils){
 			data: setCookie,
 			url : "/native/api/user/"+username,
 			beforeSend: function(xhr){
-				signInBtn.hide();
-				Utils.unhideElement('#loginForm .progress');
+				Utils.unhideElement('#loginSpinner');
 				xhr.setRequestHeader("Authorization",
                 "Basic " + btoa(username + ":" + password)); // TODO Base64 support
 			},
@@ -60,8 +59,7 @@ function(require,Utils){
 			},
 			complete: function(){
 				setTimeout(function(){
-					signInBtn.show();
-					Utils.hideElement('#loginForm .progress');
+					Utils.hideElement('#loginSpinner');
 				},100);
 			},
 			statusCode:{				
@@ -104,13 +102,12 @@ function(require,Utils){
 			success: function(data,status){	},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
 			},
 			statusCode:{				
 				201: function(){
 					newUser.username = newUsername;
 					Utils.setCurrentUser(newUser);
-					Server.loginUser(newUser.username, newUser.password,false,successFunction);
+					Server.loginUser(newUser.username, newUser.password, false, successFunction);
 				}
 			}
 		});
@@ -122,7 +119,6 @@ function(require,Utils){
 	* Sends the request to the server API for getting user profile object for the specified username.
 	* In case there was an unauthorized request attempt (meaning the user is not logged on the server side) the function and currently shown page is a FITeagle main page,
 	* the function triggers the sing out procedure, it is done for security reasons and other use cases.
-	* In case the error code is responded the information about the event is written to the browser's console.
 	* @param {String} username to get the user profile object for.
 	* @return {Object} user profile object containing the entire information about the user.
 	* @see Main#signOut for sign out procedure.
@@ -143,14 +139,8 @@ function(require,Utils){
 				userFromServer = user;
 				userFromServer.username = userFromServer.username.split("@")[0];
 			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
-			},
 			statusCode:{			
 				401: function(){
-					console.log("Unathorized access. To be signed out");	
 					require('mainPage').signOut();
 				}
 			},	
@@ -185,7 +175,6 @@ function(require,Utils){
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
 			},
 			statusCode:{			
 				200: function(){
@@ -212,7 +201,6 @@ function(require,Utils){
 	* @function
 	*/
 	Server.uploadNewPublicKey = function(publicKey, uploadingSign){
-		
 		var user = Utils.getCurrentUser();
 		var username = user.username;
 		var message="";
@@ -248,7 +236,6 @@ function(require,Utils){
 	
 	/**
 	* Sends an AJAX request to the FITeagle REST API for generating a new certificate for a specified public key, that is already exists in a user profile.
-	* In case of the error response the function writes the information about the error source to the browser's console. 
 	* @param {String} publicKeyDescription is a name of the public key to generate a certificate for.
 	* @return {String} generated certificate for the specified public key is returned. 
 	* @public
@@ -256,9 +243,8 @@ function(require,Utils){
 	* @function
 	*/
 	Server.generateCertificateForPiblicKey = function(publicKeyDescription){
-
 		var username = Utils.getCurrentUser().username;
-		var certificat="";
+		var certificate="";
 		$.ajax({
 			cache: false,
 			type: "GET",
@@ -267,16 +253,11 @@ function(require,Utils){
 			beforeSend: function(xhr){
 			},
 			success: function(cert,status,xhr){
-				certificat = cert;
-			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
+				certificate = cert;
 			},
 		});
 
-		return certificat;
+		return certificate;
 	};
 	
 	/**
@@ -305,8 +286,6 @@ function(require,Utils){
 			},
 			error: function(xhl,status){
 				errorMessage = xhl.responseText;
-				console.log(xhl.responseText);
-				console.log(status);
 			},
 			complete: function(){}
 		});
@@ -335,12 +314,6 @@ function(require,Utils){
 			url : "/native/api/user/"+username+"/cookie",
 			success: function(answer,status){
 				isSuccessful = true;
-			},
-			error: function(status,thrown){
-				console.log(status);
-				console.log(thrown);
-			},
-			complete: function(){
 			},
 		});
 		
@@ -411,7 +384,6 @@ function(require,Utils){
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
 			},
 			statusCode:{			
 				200: function(){
@@ -440,14 +412,12 @@ function(require,Utils){
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
 			},
 			statusCode:{			
 				200: function(){		
 					afterDeleteFunction();
 				}
 			},
-			complete: function(){}
 		});
 		
 		return message;
@@ -460,23 +430,14 @@ function(require,Utils){
 			type: "GET",
 			async: false,
 			url: "/native/api/user/",
-			beforeSend: function(xhr){
-				
-			},
 			success: function(users,status,xhr){
 				$.each(users, function(i, user) {
 					user.username = user.username.split("@")[0];
 				});
 				usersFromServer = users;				
 			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
-			},
 			statusCode:{			
 				403: function(){
-					console.log("Unathorized access. To be signed out");	
 					require('mainPage').signOut();
 				}
 			},	
@@ -492,19 +453,11 @@ function(require,Utils){
 			type: "POST",
 			async: false,
 			url: "/native/api/user/"+username+'/role/'+role,
-			beforeSend: function(xhr){
-				
-			},
 			success: function(data,status){
 				message = status;
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
-			},
-			statusCode:{			
-				200: function(){
-				}
 			},
 		});
 		
@@ -524,9 +477,6 @@ function(require,Utils){
 			success: function(data,status){
 				id = data;
 			},
-			error: function(xhl,status){
-				console.log(Utils.createErrorMessage(xhl.responseText));
-			},
 		});
 		
 		return id;
@@ -544,14 +494,12 @@ function(require,Utils){
 			},
 			error: function(xhl,status){
 				message = Utils.createErrorMessage(xhl.responseText);
-				console.log(status);
 			},
 			statusCode:{			
 				200: function(){		
 					afterDeleteFunction();
 				}
 			},
-			complete: function(){}
 		});
 		
 		return message;
@@ -567,9 +515,6 @@ function(require,Utils){
 			success: function(data,status){
 				message = status;
 			},
-			error: function(xhl,status){
-				console.log(xhl.responseText);
-			},
 		});
 		return message;
 	};
@@ -583,9 +528,6 @@ function(require,Utils){
 			url: "/native/api/user/"+username+"/class/"+id,
 			success: function(data,status){
 				message = status;
-			},
-			error: function(xhl,status){
-				console.log(xhl.responseText);
 			},
 		});
 		return message;
@@ -609,11 +551,6 @@ function(require,Utils){
 				Utils.setJoinedClasses(classes);
 				classesFromServer = classes;				
 			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
-			},
 		});
 		
 		return classesFromServer;
@@ -635,11 +572,6 @@ function(require,Utils){
 					});
 				});
 				classesFromServer = classes;				
-			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
 			},
 		});
 		
@@ -664,11 +596,6 @@ function(require,Utils){
 				Utils.setAllClasses(classes);
 				classesFromServer = classes;	
 			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
-			},
 		});
 		
 		return classesFromServer;
@@ -687,11 +614,6 @@ function(require,Utils){
 				Utils.setAllNodes(nodes);
 				nodesFromServer = nodes;
 			},
-			error: function(xhr,status,thrown){
-				console.log("Response " + xhr.responseText);
-				console.log(status);
-				console.log(thrown);
-			},
 		});
 		
 		return nodesFromServer;
@@ -709,9 +631,6 @@ function(require,Utils){
 			contentType: "application/json",
 			success: function(data,status){
 				id = data;
-			},
-			error: function(xhl,status){
-				console.log(Utils.createErrorMessage(xhl.responseText));
 			},
 		});
 		

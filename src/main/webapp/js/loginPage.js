@@ -1,8 +1,8 @@
 var Login;
-define([ 'require', 'validation', 'registration', 'utils', 'messages',
+define(['validation', 'registration', 'utils', 'messages',
 		'history', 'ajaxify', 'prettyCheckable' ],
 
-function(require, Validation, Registration, Utils, Messages) {
+function(Validation, Registration, Utils, Messages) {
 
 	/**
 	 * The Login class contains functions required for initialization of the

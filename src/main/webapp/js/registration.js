@@ -1,5 +1,5 @@
 var Registration;
-define(['validation','utils','messages','server'],
+define(['validation', 'utils', 'messages', 'server'],
 function(Validation, Utils, Messages, Server){
 
 	Registration = {};
