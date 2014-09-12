@@ -144,6 +144,13 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 							var table = $("<div>").append($("<table>").attr("id","classesList"+node.id).append(header));
 							var nodeClassesTab = $("<div>").attr("id","classes"+node.id).addClass("row-fluid tab-pane").append(title, description, $("<hr>"), table);
 							$("#desktop").append(nodeClassesTab);
+							
+							if(node.name == "TU Berlin"){
+								$("#tubClassesMapLink").attr("href", "#classes"+node.id);
+							}
+							if(node.name == "UCT"){
+								$("#uctClassesMapLink").attr("href", "#classes"+node.id);
+							}
 						});
 						home = "#home_student";
 						initMainPage();
