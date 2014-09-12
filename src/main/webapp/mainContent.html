@@ -17,13 +17,18 @@
 	   <div>
       <h3>Create Task</h3>
     </div>
-		<div id="taskdescription">
-			<label class="span2" for="inputDescription">Description</label> <input
-				class="span10" type="text" id="inputDescription"
-				placeholder="Describe the task here.">
+		<div id="taskname">
+			<label class="span2" for="inputTaskName">Name</label> <input
+				class="span10" type="text" id="inputTaskName"
+				placeholder="Give the task an appropriate name.">
 		</div>
+		<div id="taskdescription">
+      <label class="span2" for="inputTaskDescription">Description</label> <input
+        class="span10" type="text" id="inputTaskDescription"
+        placeholder="Describe the task here.">
+    </div>
 		<br>
-		<button class="btn pull-left span3 nomargin">
+		<button id="createTaskBtn" class="btn pull-left span3 nomargin">
 			<i class="fa fa-check"></i>Create Task
 		</button>
 	</div>

@@ -12,6 +12,7 @@ function(Utils, Server){
 		case "CLASSOWNER":
 			initClassownerClassesAside();
 			initCreateClassPage();
+			initCreateTaskPage();
 			break;
 		default:
 			initUserClassesAside();
@@ -22,6 +23,30 @@ function(Utils, Server){
 	initCreateClassPage = function(){
 		initNodeDropdown();
 		initCreateBtn();
+	};
+	
+	var currentClassId = 0;
+	
+	initCreateTaskPage = function(){
+		$("#createTaskBtn").on("click",function(){
+			var newTask = new Object();
+			//TODO: check inputs
+			newTask.name = $("#inputTaskName").val();
+			newTask.description = $("#inputTaskDescription").val();
+			
+			newTask.id = Server.addTask(currentClassId, newTask);
+			
+			var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+newTask.id).append($("<i>").addClass("fa fa-minus fa-li"), newTask.name).on("click",function(e){
+				e.preventDefault();
+				openDesktopTab("#classownerTask"+newTask.id);
+				//TODO: create this task page
+			}));
+			
+			$("#"+currentClassId+"TaskList").prepend(taskLink);
+			
+			$("#inputTaskName").val('');
+			$("#inputTaskDescription").val('');
+		});
 	};
 	
 	initNodeDropdown = function(){
@@ -156,9 +181,20 @@ function(Utils, Server){
 		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(tasksHeaderLink);
 		var createTaskLink = $("<li>").append($("<a>").attr("href","#createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
 			e.preventDefault();
+			currentClassId = newClass.id;
 			openDesktopTab("#createtask");
 		}));
-		var tasks = $("<ul>").addClass("navigationLink fa-ul").append(createTaskLink);
+		
+		var tasks = $("<ul>").addClass("navigationLink fa-ul").attr("id",newClass.id+"TaskList").append(createTaskLink);
+		
+		$.each(newClass.tasks, function(i, task) {		
+			var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+task.id).append($("<i>").addClass("fa fa-minus fa-li"), task.name).on("click",function(e){
+				e.preventDefault();
+				openDesktopTab("#classownerTask"+task.id);
+				//TODO: create this task page
+			}));
+			tasks.prepend(taskLink);
+		});
 		var tasksList =  $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasks);
 		var tasksToggle = $("<li>").append(tasksHeader,tasksList);
 		

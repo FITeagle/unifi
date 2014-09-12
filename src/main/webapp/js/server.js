@@ -26,7 +26,6 @@ function(Utils){
 	*/
 	Server.loginUser = function(username,password,rememberMe){		
 		var msg=null;
-		var signInBtn = $('#login');
 		setCookie = "";
 		if(rememberMe){
 			setCookie="setCookie=true";
@@ -499,6 +498,22 @@ function(Utils){
 		});
 		
 		return message;
+	};
+	
+	Server.addTask = function(id, task){	
+		var newId=0;
+		$.ajax({
+			cache: false,
+			type: "POST",
+			async: false,
+			data: JSON.stringify(task),
+			contentType: "application/json",
+			url: "/native/api/class/"+id+"/task",
+			success: function(data,status){
+				newId = data;
+			},
+		});
+		return newId;
 	};
 	
 	Server.addParticipant = function(id, username){	
