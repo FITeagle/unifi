@@ -156,10 +156,7 @@ function(Utils, Server){
 		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(tasksHeaderLink);
 		var createTaskLink = $("<li>").append($("<a>").attr("href","#createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
 			e.preventDefault();
-			$("#homeAside").fadeOut(200, function(){
-				$("#taskAsides").fadeIn(200);
-				openDesktopTab("#createtask");
-			});
+			openDesktopTab("#createtask");
 		}));
 		var tasks = $("<ul>").addClass("navigationLink fa-ul").append(createTaskLink);
 		var tasksList =  $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasks);
@@ -186,10 +183,7 @@ function(Utils, Server){
 		
 		var taskLink1 = $("<li>").append($("<a>").attr("href","#task").append($("<i>").addClass("fa fa-minus fa-li"),"First Task").on("click",function(e){
 			e.preventDefault();
-			$("#homeAside").fadeOut(200, function(){
-				$("#taskAsides").fadeIn(200);
-				openDesktopTab("#task");
-			});
+			openDesktopTab("#task");
 		}));
 		var tasksList = $("<ul>").addClass("navigationLink fa-ul").append(taskLink1);
 		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasksList);

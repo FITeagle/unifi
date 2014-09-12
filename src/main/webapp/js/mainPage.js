@@ -87,20 +87,7 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 		navLinks.not('#signOut, #tasksToggle').on('click',function(e){
 			e.preventDefault();
 			var hash = $(this).attr('href');
-			if(hash == "#task" || hash == "#createtask"){
-				$("#homeAside").fadeOut(200, function(){
-					$("#taskAsides").fadeIn(200);
-				});
-			}
 			openDesktopTab(hash, true);
-		});
-		
-		$(".toHomeAsideLink").on('click',function(e){
-			e.preventDefault();
-			$("#taskAsides").fadeOut(200, function(){
-				$("#homeAside").fadeIn(200);
-				openDesktopTab(home, true);
-			});
 		});
 	};
 	
