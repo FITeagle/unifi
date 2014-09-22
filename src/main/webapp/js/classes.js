@@ -15,8 +15,10 @@ function(Utils, Server){
 			initCreateTaskPage();
 			break;
 		default:
-			initUserClassesAside();
-			initJoinClass(false);
+			createStudentJoinClassPages();
+			createStudentTaskPages();
+			initStudentClassesAside();
+			initStudentJoinClass(false);
 		}
 	};
 	
@@ -213,22 +215,6 @@ function(Utils, Server){
 		$("#tbownerClasses").prepend(classElement);
 	};
 	
-	createUserClassForAsideList = function(newClass){
-		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
-		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(name);
-		
-		var taskLink1 = $("<li>").append($("<a>").attr("href","#task").append($("<i>").addClass("fa fa-minus fa-li"),"First Task").on("click",function(e){
-			e.preventDefault();
-			openDesktopTab("#task");
-		}));
-		var tasksList = $("<ul>").addClass("navigationLink fa-ul").append(taskLink1);
-		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasksList);
-		
-		var classElement = $("<li>").append(header, tasks);
-		$("#userClasses").prepend(classElement);
-	};
-	
-	
 	initClassownerClassesAside = function(){
 		var list = $("<ul>").attr("id","tbownerClasses").addClass("fa-ul");
 		
@@ -244,7 +230,53 @@ function(Utils, Server){
 		createAllClassownerClassesAsides();
 	};
 	
-	initUserClassesAside = function(){
+	createAllClassownerClassesAsides = function(){
+		var allClasses = Server.getAllClassesOwnedByUser(Utils.getCurrentUser().username);
+		if(allClasses != null){
+			$.each(allClasses, function(i, newClass) {
+				createClassownerClassForAsideList(newClass);
+				createClassParticipantsPage(newClass);
+				createClassResourcesPage(newClass);
+			});
+		}
+	};
+	
+	createStudentTaskPages = function(){
+		$.each(Utils.getJoinedClasses(), function(i, targetClass) {		
+			$.each(targetClass.tasks, function(i, task) {		
+				var title = $("<div>").append($("<h3>").html(task.name+" ("+targetClass.name+")"));
+				var description = $("<div>").html("Description: "+task.description);
+				var labwiki = $("<div>").html("Open a new tab with Labwiki to do the task:");
+				var labwikiButton = $("<a>").attr("href", "http://federation.av.tu-berlin.de:4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
+				var labwikiLink = $("<div>").addClass("span3 nomargin").append(labwikiButton);
+				var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, $("<br>"), labwiki, labwikiLink);
+				$("#desktop").append(taskTab);
+			});
+		});
+	};
+	
+	createStudentJoinClassPages = function(){
+		$.each(Utils.getAllNodes(), function(i, node) {		
+			var title = $("<div>").append($("<h3>").html(node.name+" classes"));
+			var description = $("<div>").append($("<h4>").html("Chose a class you want to sign up for"));
+			var nameHeader = $("<th>").addClass("span3").html("Name");
+			var descriptionHeader = $("<th>").addClass("span7").html("Description");
+			var btnHeader = $("<th>").addClass("span2");
+			var header = $("<tr>").append(nameHeader, descriptionHeader, btnHeader);
+			var table = $("<div>").append($("<table>").attr("id","classesList"+node.id).append(header));
+			var nodeClassesTab = $("<div>").attr("id","classes"+node.id).addClass("row-fluid tab-pane").append(title, description, $("<hr>"), table);
+			$("#desktop").append(nodeClassesTab);
+			
+			if(node.name == "TU Berlin"){
+				$("#tubClassesMapLink").attr("href", "#classes"+node.id);
+			}
+			if(node.name == "UCT"){
+				$("#uctClassesMapLink").attr("href", "#classes"+node.id);
+			}
+		});
+	};
+	
+	initStudentClassesAside = function(){
 		var myClassesList = $("<ul>").attr("id","userClasses").addClass("fa-ul");
 		
 		var myClassesHeader = "<h4><i class='fa fa-group fa-lg'></i>My classes</h4>";
@@ -259,30 +291,37 @@ function(Utils, Server){
 		});
 		
 		$("#homeAside").append($("<div>").append(myClassesHeader,myClassesList,allClassesHeader,allClassesList));
-		createAllUserClassesAsides();
+		createAllStudentClassesAsides();
 	};
 	
-	createAllClassownerClassesAsides = function(){
-		var allClasses = Server.getAllClassesOwnedByUser(Utils.getCurrentUser().username);
-		if(allClasses != null){
-			$.each(allClasses, function(i, newClass) {
-				createClassownerClassForAsideList(newClass);
-				createClassParticipantsPage(newClass);
-				createClassResourcesPage(newClass);
-			});
-		}
+	createStudentClassForAsideList = function(newClass){
+		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
+		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(name);
+		
+		var tasksList = $("<ul>").addClass("navigationLink fa-ul");
+		$.each(newClass.tasks, function(i, task) {
+			var taskLink = $("<li>").append($("<a>").attr("href","#task"+task.id).append($("<i>").addClass("fa fa-minus fa-li"),task.name).on("click",function(e){
+				e.preventDefault();
+				openDesktopTab("#task"+task.id);
+			}));
+			tasksList.append(taskLink);
+		});
+		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasksList);
+		
+		var classElement = $("<li>").append(header, tasks);
+		$("#userClasses").prepend(classElement);
 	};
 	
-	createAllUserClassesAsides = function(){
+	createAllStudentClassesAsides = function(){
 		var joinedClasses = Utils.getJoinedClasses();
 		if(joinedClasses != null){
 			$.each(joinedClasses, function(i, newClass) {
-				createUserClassForAsideList(newClass);
+				createStudentClassForAsideList(newClass);
 			});
 		}
 	};
 	
-	initJoinClass = function(updateToo){
+	initStudentJoinClass = function(updateToo){
 		$.each(Utils.getAllNodes(), function(i, node) {	
 			$("#classesList"+node.id).empty();
 		});
@@ -306,9 +345,9 @@ function(Utils, Server){
 			if(alreadyJoined == 0){
 				var signUpBtn = $("<td>").append($("<a>").addClass("margin3 btn").html("Sign up").on("click",function(e){
 					e.preventDefault();
-					createUserClassForAsideList(newClass);
+					createStudentClassForAsideList(newClass);
 					Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
-					initJoinClass(true);
+					initStudentJoinClass(true);
 					initCollapseHeaders();
 				}));
 				var classElement = $("<tr>").append("<td>"+newClass.name+"</td>","<td>"+newClass.description+"</td>",signUpBtn);
