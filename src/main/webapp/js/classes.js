@@ -16,7 +16,7 @@ function(Utils, Server){
 			break;
 		default:
 			createStudentJoinClassPages();
-			createStudentTaskPages();
+			createAllStudentTaskPages();
 			initStudentClassesAside();
 			initStudentJoinClass(false);
 		}
@@ -243,17 +243,21 @@ function(Utils, Server){
 		}
 	};
 	
-	createStudentTaskPages = function(){
+	createAllStudentTaskPages = function(){
 		$.each(Utils.getJoinedClasses(), function(i, targetClass) {		
-			$.each(targetClass.tasks, function(i, task) {		
-				var title = $("<div>").append($("<h3>").html(task.name+" ("+targetClass.name+")"));
-				var description = $("<div>").html("Description: "+task.description);
-				var labwiki = $("<div>").html("Open a new tab with Labwiki to do the task:");
-				var labwikiButton = $("<a>").attr("href", "http://federation.av.tu-berlin.de:4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
-				var labwikiLink = $("<div>").addClass("span3 nomargin").append(labwikiButton);
-				var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, $("<br>"), labwiki, labwikiLink);
-				$("#desktop").append(taskTab);
-			});
+			createStudentTaskPagesForClass(targetClass);
+		});
+	};
+	
+	createStudentTaskPagesForClass = function(targetClass){
+		$.each(targetClass.tasks, function(i, task) {		
+			var title = $("<div>").append($("<h3>").html(task.name+" ("+targetClass.name+")"));
+			var description = $("<div>").html("Description: "+task.description);
+			var labwiki = $("<div>").html("Open a new tab with Labwiki to do the task:");
+			var labwikiButton = $("<a>").attr("href", "http://federation.av.tu-berlin.de:4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
+			var labwikiLink = $("<div>").addClass("span3 nomargin").append(labwikiButton);
+			var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, $("<br>"), labwiki, labwikiLink);
+			$("#desktop").append(taskTab);
 		});
 	};
 	
@@ -349,6 +353,7 @@ function(Utils, Server){
 					e.preventDefault();
 					createStudentClassForAsideList(newClass);
 					Server.addParticipant(newClass.id, Utils.getCurrentUser().username);
+					createStudentTaskPagesForClass(newClass);
 					initStudentJoinClass(true);
 					initCollapseHeaders();
 				}));
