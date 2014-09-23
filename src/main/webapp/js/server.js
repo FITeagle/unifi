@@ -429,6 +429,7 @@ function(Utils){
 				$.each(users, function(i, user) {
 					user.username = user.username.split("@")[0];
 				});
+				Utils.setAllUsers(users);
 				usersFromServer = users;				
 			},
 			statusCode:{			

@@ -112,7 +112,7 @@ function(Utils, Server){
 			});
 		}
 		var currentlyChosenUser = null;
-		var allUsers = Server.getAllUsers();
+		var allUsers = Utils.getAllUsers();
 		$.each(allUsers, function(i, user) {
 			if(user.role == "STUDENT" && ($.inArray(user.username, participantsUsernames) == -1)){
 				var userdropdownOption = $("<li>").append($('<a>').attr("tabindex",-1).html(user.username).on('click',function(){

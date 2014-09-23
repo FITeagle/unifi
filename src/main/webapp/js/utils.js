@@ -163,6 +163,11 @@ function(){
 		sessionStorage.classes = classesJSON;
 	};
 	
+	Utils.setAllUsers = function(allUsers){
+		var usersJSON = JSON.stringify(allUsers);
+		sessionStorage.users = usersJSON;
+	};
+	
 	Utils.setJoinedClasses = function(joinedClasses){
 		var classesJSON = JSON.stringify(joinedClasses);
 		sessionStorage.joinedclasses = classesJSON;
@@ -215,6 +220,15 @@ function(){
 		}
 		else{
 			return Server.getAllNodes();
+		}
+	};
+	
+	Utils.getAllUsers = function(){		
+		if (sessionStorage.users != undefined){
+			return JSON.parse(sessionStorage.users);
+		}
+		else{
+			return Server.getAllUsers();
 		}
 	};
 	
