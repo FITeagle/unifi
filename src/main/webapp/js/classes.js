@@ -262,7 +262,7 @@ function(Utils, Server){
 			var title = $("<div>").append($("<h3>").html(task.name+" ("+targetClass.name+")"));
 			var description = $("<div>").html("Description: "+task.description);
 			var labwiki = $("<div>").html("Open a new tab with Labwiki to do the task:");
-			var labwikiButton = $("<a>").attr("href", "http://federation.av.tu-berlin.de:4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
+			var labwikiButton = $("<a>").attr("href", "http://"+window.location.hostname+":4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
 			var labwikiLink = $("<div>").addClass("span3 nomargin").append(labwikiButton);
 			var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, $("<br>"), labwiki, labwikiLink);
 			$("#desktop").append(taskTab);
