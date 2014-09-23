@@ -189,14 +189,16 @@ function(Utils, Server){
 		
 		var tasks = $("<ul>").addClass("navigationLink fa-ul").attr("id",newClass.id+"TaskList").append(createTaskLink);
 		
-		$.each(newClass.tasks, function(i, task) {		
-			var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+task.id).append($("<i>").addClass("fa fa-minus fa-li"), task.name).on("click",function(e){
-				e.preventDefault();
-				openDesktopTab("#classownerTask"+task.id);
-				//TODO: create this task page
-			}));
-			tasks.prepend(taskLink);
-		});
+		if(newClass.tasks != null){
+			$.each(newClass.tasks, function(i, task) {		
+				var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+task.id).append($("<i>").addClass("fa fa-minus fa-li"), task.name).on("click",function(e){
+					e.preventDefault();
+					openDesktopTab("#classownerTask"+task.id);
+					//TODO: create this task page
+				}));
+				tasks.prepend(taskLink);
+			});
+		}
 		var tasksList =  $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasks);
 		var tasksToggle = $("<li>").append(tasksHeader,tasksList);
 		
