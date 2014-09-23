@@ -209,7 +209,6 @@ function(Validation, Utils, Messages, Server){
 				var response = Server.generatePublicKeyAndCertificate(passphrase);
 				var keyAndCertificate = response[0];
 				var errorMessage = response[1];				
-				console.log(errorMessage);
 				if(!errorMessage){			
 					addKeyAndCertificateTextarea(keyAndCertificate);
 					require('publicKeys').updateExistingPublicKeyForm();
