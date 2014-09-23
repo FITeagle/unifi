@@ -32,16 +32,24 @@ function(Utils, Server){
 	initCreateTaskPage = function(){
 		$("#createTaskBtn").on("click",function(){
 			var newTask = new Object();
-			//TODO: check inputs
 			newTask.name = $("#inputTaskName").val();
 			newTask.description = $("#inputTaskDescription").val();
+			
+			if(newTask.name == null || newTask.name.length < 1){
+				alert("Please enter a task name!");
+				return;
+			}
+			if(newTask.description == null || newTask.description.length < 1){
+				alert("Please enter a task description!");
+				return;
+			}
 			
 			newTask.id = Server.addTask(currentClassId, newTask);
 			
 			var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+newTask.id).append($("<i>").addClass("fa fa-minus fa-li"), newTask.name).on("click",function(e){
 				e.preventDefault();
 				openDesktopTab("#classownerTask"+newTask.id);
-				//TODO: create this task page
+				//TODO: create this classowner task page
 			}));
 			
 			$("#"+currentClassId+"TaskList").prepend(taskLink);
@@ -194,7 +202,7 @@ function(Utils, Server){
 				var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+task.id).append($("<i>").addClass("fa fa-minus fa-li"), task.name).on("click",function(e){
 					e.preventDefault();
 					openDesktopTab("#classownerTask"+task.id);
-					//TODO: create this task page
+					//TODO: create this classowner task page
 				}));
 				tasks.prepend(taskLink);
 			});
