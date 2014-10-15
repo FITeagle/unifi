@@ -674,7 +674,25 @@ function(Utils){
 		
 		return id;
 	};
+	
+	Server.getAllOpenstackVMs = function(){		
 		
+		$.ajax({
+			cache: false,
+			type: "GET",
+			async: false,
+			url: "/native/api/resources/OpenstackAdapter1",
+			success: function(data,status){
+				var instances = Utils.getAllInstancesOfType(data, "OpenstackVM");
+			},
+		});
+		
+		return;
+	};
+		
+	
+	
+	
 	return Server;
 
 });
