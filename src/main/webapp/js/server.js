@@ -648,6 +648,32 @@ function(Utils){
 		
 		return id;
 	};
+	
+	Server.createOpenstackVM = function(vmName){
+		
+		var requestTTL = "@prefix fiteagle: <http://fiteagle.org/ontology#> . " +
+				"@prefix openstack: <http://fiteagle.org/ontology/adapter/openstack#> ." +
+				"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ." +
+				"@prefix : <http://fiteagleinternal#> ." +
+				":OpenstackAdapter1 rdf:type openstack:OpenstackAdapter ." +
+				":"+vmName+" rdf:type openstack:OpenstackVM ."
+		
+		var id=0;
+		$.ajax({
+			cache: false,
+			type: "PUT",
+			async: false,
+			url: "/native/api/resources/OpenstackAdapter1",
+			data: requestTTL,
+			success: function(data,status){
+				console.log(data);
+				console.log(status);
+				id = data;
+			},
+		});
+		
+		return id;
+	};
 		
 	return Server;
 
