@@ -649,7 +649,7 @@ function(Utils){
 		return id;
 	};
 	
-	Server.createOpenstackVM = function(vmName){
+	Server.createOpenstackVM = function(vmName, classID, callback){
 		
 		var requestTTL = "@prefix fiteagle: <http://fiteagle.org/ontology#> . " +
 				"@prefix openstack: <http://fiteagle.org/ontology/adapter/openstack#> ." +
@@ -666,16 +666,14 @@ function(Utils){
 			url: "/native/api/resources/OpenstackAdapter1",
 			data: requestTTL,
 			success: function(data,status){
-				console.log(data);
-				console.log(status);
-				id = data;
+//				callback(data, classID);
 			},
 		});
 		
 		return id;
 	};
 	
-	Server.getAllOpenstackVMs = function(){		
+	Server.getAllOpenstackVMs = function(classID, callback){		
 		
 		$.ajax({
 			cache: false,
@@ -683,15 +681,12 @@ function(Utils){
 			async: false,
 			url: "/native/api/resources/OpenstackAdapter1",
 			success: function(data,status){
-				var instances = Utils.getAllInstancesOfType(data, "OpenstackVM");
+				callback(data, classID);
 			},
 		});
 		
 		return;
 	};
-		
-	
-	
 	
 	return Server;
 

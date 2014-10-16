@@ -510,27 +510,6 @@ function(){
 	Utils.hideModal = function(selector){
 		$(selector).modal('hide');
 	};
-
-	
-	Utils.getAllInstancesOfType = function(ttldata, instanceType, callback){
-		var instances = [];
-		var parser = N3.Parser();
-		parser.parse(ttldata, function(error, triple, prefixes) {
-			if (triple) {
-				if(triple.predicate === "http://www.w3.org/1999/02/22-rdf-syntax-ns#type" &&
-					triple.object === "http://fiteagle.org/ontology/adapter/openstack#"+instanceType){
-					var posPrefixSubj = triple.subject.indexOf("#");
-					var subject = triple.subject.slice(posPrefixSubj+1, triple.subject.size)
-					console.log(subject);
-					instances.push(subject);
-				}
-			}
-			else{
-				console.log(instances);
-			}
-		});
-		return instances;
-	}
 	
 	return Utils;
 });

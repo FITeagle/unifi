@@ -166,12 +166,66 @@ function(Utils, Server){
 		$("#class"+classid+"ParticipantsTable").append(row);
 	};
 	
+	parseOpenstackInstances = function(ttldata, classID){
+		var instances = [];
+		var parser = N3.Parser();
+		parser.parse(ttldata, function(error, triple, prefixes) {
+			if(triple) {
+				if(triple.predicate === "http://fiteagle.org/ontology/adapter/openstack#id"){
+					var posPrefixSubj = triple.subject.indexOf("#");
+					var instance = new Object();
+					instance.name = triple.subject.slice(posPrefixSubj+1, triple.subject.size);
+					instance.id = triple.object.split("\"")[1];
+					instances.push(instance);
+				}
+			}
+			else{
+				processOpenstackInstances(instances, classID);
+			}
+		});
+		return instances;
+	}
+
+	processOpenstackInstances = function(instances, classID){
+		var nameHeader = $("<th>").addClass("span2").html("Name");
+		var idHeader = $("<th>").addClass("span7").html("ID");
+		var btnHeader = $("<th>").addClass("span3");
+		var tableHeader = $("<tr>").append(nameHeader, idHeader, btnHeader);
+		var tableHead = $("<thead>").append(tableHeader);
+		var table = $("<table>").addClass("span12").attr("id","resourcesList"+classID).append(tableHead);
+		
+		var tableBody = $("<tbody>");
+		$.each(instances, function(i, instance) {
+			var name = $("<td>").html(instance.name);
+			var id = $("<td>").html(instance.id);
+			var tableRow = $("<tr>").append(name, id);
+			tableBody.append(tableRow);
+		});
+		
+		var name = $("<td>").append($("<input>").attr("id", "newInstanceName"));
+		var id = $("<td>");
+		var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
+			var name = $("#newInstanceName").val();
+			if(name.length > 0){
+				Server.createOpenstackVM(name, classID);
+			}
+			$("#newInstanceName").val("");
+		}));
+		var createRow = $("<tr>").append(name, id, button);
+		tableBody.append(createRow);
+		
+		table.append(tableBody);
+		$("#class"+classID+"_resources").append($("<div>").append(table));
+	}
+	
 	createClassResourcesPage = function(newClass){
 		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
 		var header = $("<h4>").html("Topology of the resources");
 		
-		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title,header);
+		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title, header, $("<br>"));
 		$("#desktop").append(page);
+		
+		Server.getAllOpenstackVMs(newClass.id, parseOpenstackInstances);
 	};
 	
 	createClassownerClassForAsideList = function(newClass){
