@@ -666,7 +666,7 @@ function(Utils){
 			url: "/native/api/resources/OpenstackAdapter1",
 			data: requestTTL,
 			success: function(data,status){
-//				callback(data, classID);
+				callback(data, classID);
 			},
 		});
 		

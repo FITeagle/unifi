@@ -186,43 +186,48 @@ function(Utils, Server){
 		return instances;
 	}
 
-	processOpenstackInstances = function(instances, classID){
-		var nameHeader = $("<th>").addClass("span2").html("Name");
-		var idHeader = $("<th>").addClass("span7").html("ID");
-		var btnHeader = $("<th>").addClass("span3");
-		var tableHeader = $("<tr>").append(nameHeader, idHeader, btnHeader);
-		var tableHead = $("<thead>").append(tableHeader);
-		var table = $("<table>").addClass("span12").attr("id","resourcesList"+classID).append(tableHead);
-		
-		var tableBody = $("<tbody>");
-		$.each(instances, function(i, instance) {
-			var name = $("<td>").html(instance.name);
-			var id = $("<td>").html(instance.id);
-			var tableRow = $("<tr>").append(name, id);
-			tableBody.append(tableRow);
-		});
-		
-		var name = $("<td>").append($("<input>").attr("id", "newInstanceName"));
-		var id = $("<td>");
-		var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
-			var name = $("#newInstanceName").val();
-			if(name.length > 0){
-				Server.createOpenstackVM(name, classID);
-			}
-			$("#newInstanceName").val("");
-		}));
-		var createRow = $("<tr>").append(name, id, button);
-		tableBody.append(createRow);
-		
-		table.append(tableBody);
-		$("#class"+classID+"_resources").append($("<div>").append(table));
+	addOpenstackInstanceToTable = function(instance, classID){
+		var name = $("<td>").html(instance.name);
+		var id = $("<td>").html(instance.id);
+		var tableRow = $("<tr>").append(name, id);
+		$("#resourcesList"+classID).prepend(tableRow);
 	}
+	
+	processOpenstackInstances = function(instances, classID){
+		$.each(instances, function(i, instance) {
+			addOpenstackInstanceToTable(instance, classID);
+		});
+	}
+	
 	
 	createClassResourcesPage = function(newClass){
 		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
 		var header = $("<h4>").html("Topology of the resources");
 		
-		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title, header, $("<br>"));
+		var nameHeader = $("<th>").addClass("span2").html("Name");
+		var idHeader = $("<th>").addClass("span7").html("ID");
+		var btnHeader = $("<th>").addClass("span3");
+		var tableHeader = $("<tr>").append(nameHeader, idHeader, btnHeader);
+		var tableHead = $("<thead>").append(tableHeader);
+		var table = $("<table>").addClass("span12").append(tableHead);
+		
+		var tableBody = $("<tbody>").attr("id","resourcesList"+newClass.id);
+		
+		var inputName = $("<td>").append($("<input>").attr("id", "newInstanceName").attr("placeholder","Enter a name for a new instance"));
+		var emptyID = $("<td>");
+		var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
+			var name = $("#newInstanceName").val();
+			if(name.length > 0){
+				Server.createOpenstackVM(name, newClass.id, parseOpenstackInstances);
+			}
+			$("#newInstanceName").val("");
+		}));
+		var createRow = $("<tr>").append(inputName, emptyID, button);
+		tableBody.append(createRow);
+		
+		table.append(tableBody);
+		
+		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title, header, $("<br>"), $("<div>").append(table));
 		$("#desktop").append(page);
 		
 		Server.getAllOpenstackVMs(newClass.id, parseOpenstackInstances);
