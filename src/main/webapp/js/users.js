@@ -7,11 +7,11 @@ function(Utils, Server, Classes){
 		switch(Utils.getCurrentUser().role){
 		case "FEDERATION_ADMIN":
 			initUsersAside("All");
-			initUserFieldsFedAdmin();
+			createUsersPageFedAdmin();
 			break;
 		case "NODE_ADMIN":
 			initUsersAside(Utils.getCurrentUser().node.name);
-			initUserFieldsNodeAdmin(Utils.getCurrentUser().node);
+			createUsersPageNodeAdmin(Utils.getCurrentUser().node);
 			break;
 		}
 	};
@@ -23,7 +23,12 @@ function(Utils, Server, Classes){
 		$("#homeAside").append($("<div>").append(usersHeader, users));
 	};
 	
-	initUserFieldsFedAdmin = function(){
+	createUsersPageFedAdmin = function(){
+		var header = $("<div>").append($("<h3>").html("Mange All Users"));
+		var subheader = $("<div>").append($("<h4>").html("View all existing users, edit their roles or delete them"));
+		
+		var table = $("<table>").attr("id", "allusersusers");
+		
 		var users = Server.getAllUsers();
 		
 		$.each(users, function(i, user) {
@@ -83,12 +88,24 @@ function(Utils, Server, Classes){
 				userRow.append($('<td>').append(dropdown));
 			}
 			
-			$("#allusersusers").append(userRow);
+			table.append(userRow);
 			
 		});
+		
+		var tableDiv = $("<table>").attr("style", "margin-bottom:120px").append(table);
+		
+		var usersPage = $("<div>").attr("id", "allusers").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), tableDiv);
+		$("#desktop").append(usersPage);
+		
+		
 	};
 	
-	initUserFieldsNodeAdmin = function(node){
+	createUsersPageNodeAdmin = function(node){
+		var header = $("<div>").append($("<h3>").html("Mange All Users"));
+		var subheader = $("<div>").append($("<h4>").html("View all existing users, edit their roles or delete them"));
+		
+		var table = $("<table>").attr("id", "allusersusers");
+		
 		var users = Server.getAllUsers();
 		
 		$.each(users, function(i, user) {
@@ -143,10 +160,15 @@ function(Utils, Server, Classes){
 					userRow.append($('<td>').append(dropdown));
 				}
 			
-				$("#allusersusers").append(userRow);
+				table.append(userRow);
 			}
 			
 		});
+		
+		var tableDiv = $("<table>").attr("style", "margin-bottom:120px").append(table);
+		
+		var usersPage = $("<div>").attr("id", "allusers").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), tableDiv);
+		$("#desktop").append(usersPage);
 	};
 
 
