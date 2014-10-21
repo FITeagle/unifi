@@ -291,7 +291,6 @@ function(Utils){
 	/**
 	* Sends an AJAX request to the FITeagle REST API for session invalidation on the server side. It is required for signing out a user,
 	* that is remembered before by sending the corresponding request to the API.
-	* @param {String} username is the name of the user to invalidate the session for.
 	* @return {Boolean} true if the session invalidation was successful on the server side, false otherwise
 	* @see Server#loginUser for remember me option
 	* @see FITeagle REST API
@@ -299,8 +298,13 @@ function(Utils){
 	* @name Server#invalidateCookie
 	* @function
 	*/
-	Server.invalidateCookie = function(username){
-		if(!username)username = Utils.getCurrentUser().username;
+	Server.invalidateCookie = function(){
+		var user = Utils.getCurrentUser();
+		if(!user){
+			return false;
+		}
+		var username = Utils.getCurrentUser().username;
+		
 		isSuccessful = false;
 		$.ajax({
 			cache: false,

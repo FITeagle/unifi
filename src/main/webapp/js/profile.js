@@ -22,6 +22,7 @@ function(Utils,Server){
 		Utils.showSuccessModal(Messages.userDeleted,'userDeletedBtn');
 		$('#userDeletedBtn').on('click',function(){
 			Utils.hideModal('#deleteUserProfileModal');
+			Utils.clearSessionStorage();
 			require('mainPage').signOut();
 		});
 	};
