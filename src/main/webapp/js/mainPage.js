@@ -92,7 +92,10 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	};
 	
 	
-	var home = "";
+	var welcome_message = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner.";
+	var welcome_message_user = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner. " +
+			"Classes, lectures and	virtualized testbeds from each partner university can be reached through the links on the map;";
+	
 	/**
 	* Loads HTML for the FITeagle main page dynamically and triggers the page initialization after the loading is successfully completed.
 	* @public
@@ -104,8 +107,8 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "FEDERATION_ADMIN":
-					home = "#home_federationadmin";
-					$("<div>").load("mainContent.html #home_federationadmin,#allusers,#nodes,#addnode",function(){
+					$("<div>").load("mainContent.html #allusers,#nodes,#addnode",function(){
+						$("#welcome_content").append(welcome_message);
 						$("#desktop").append(this.childNodes);
 						Users.init();
 						Nodes.init();
@@ -114,8 +117,8 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				case "NODE_ADMIN":
-					home = "#home_nodeadmin";
-					$("<div>").load("mainContent.html #home_nodeadmin,#manage_node,#allusers",function(){
+					$("<div>").load("mainContent.html #manage_node,#allusers",function(){
+						$("#welcome_content").append(welcome_message);
 						$("#desktop").append(this.childNodes);
 						Users.init();
 						Nodes.init();
@@ -124,16 +127,18 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				case "CLASSOWNER":
-					home = "#home_classowner";
-					$("<div>").load("mainContent.html #home_classowner,#createclass,#createtask",function(){
+					$("<div>").load("mainContent.html #createclass,#createtask",function(){
+						$("#welcome_content").append(welcome_message);
 						$("#desktop").append(this.childNodes);
 						initMainPage();
 					});
 					break;
 					
 				default:
-					home = "#home_student";
-					$("<div>").load("mainContent.html #home_student,#task",function(){
+					$("<div>").load("mainContent.html #task",function(){
+						var img = $("<img>").attr("id", "unifiMap").attr("src", "img/map_unifi.png").attr("usemap", "#unifimap");
+						var map = "<map name='unifimap'> <area id='tubClassesMapLink' shape='rect' coords='319,60,387,81' href='#classes1'>	<area shape='rect' coords='319,82,387,101' href='#tublectures' onclick='return false;'>	<area shape='rect' coords='319,102,387,123' href='#tubtestbeds'	onclick='return false;'> <area id='uctClassesMapLink' shape='rect' coords='353,279,420,299' href='#classes2'><area shape='rect' coords='353,300,420,320' href='#uctlectures' onclick='return false;'> <area shape='rect' coords='353,321,420,341' href='#ucttestbeds' onclick='return false;'> </map>"
+						$("#welcome_content").append(welcome_message_user, img, map);
 						$("#desktop").append(this.childNodes);
 						initMainPage();
 					});
@@ -142,17 +147,8 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 		);
 	};
 	
-	/**
-	* Opens the appropriate tab from the user info dropdown menu on the main page according to the
-	* hash tag entered in the browser's url field. The function searches within a "user info dropdown" menu
-	* for a link with the reference showing to the specified container.
-	* If no tab is found for a hash tag then the home tab is opened per default.
-	* @see Twitter Bootstrap tab documentation for more information.
-	* @param {String} hash - tag to opening a form for.
-	* @example openTab('#keys') tries to open a tab identified by a "#keys" selector
-	* @private
-	* @memberOf Main#
-	*/
+	var home = "#home";
+	
 	openDesktopTab = function(hash, pushToHistory){
 		if(hash != null){
 			var navLinks = $(".navigationLink li");
