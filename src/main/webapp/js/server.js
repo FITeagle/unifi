@@ -621,10 +621,12 @@ function(Utils){
 			async: false,
 			url: "/native/api/node/",
 			beforeSend: function(xhr){
+				Utils.unhideElement('#loadingNodesSpinner');
 			},
 			success: function(nodes,status,xhr){
 				Utils.setAllNodes(nodes);
 				nodesFromServer = nodes;
+				Utils.hideElement('#loadingNodesSpinner');
 			},
 		});
 		
