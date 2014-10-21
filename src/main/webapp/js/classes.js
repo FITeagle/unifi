@@ -50,7 +50,7 @@ function(Utils, Server){
 		var createBtn = $("<a>").attr("id", "createClassBtn").addClass("btn").html("Create");
 		var createDiv = $("<div>").addClass("row-fluid").append(createBtn);
 		
-		var outerDiv = $("<div>").attr("style","min-height: 70%").append(inputNameDiv, inputDescriptionDiv, nodesDiv, createDiv);
+		var outerDiv = $("<div>").attr("style","min-height: 50%").append(inputNameDiv, inputDescriptionDiv, nodesDiv, createDiv);
 		
 		var createClass_page = $("<div>").attr("id", "createclass").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), outerDiv);
 		
