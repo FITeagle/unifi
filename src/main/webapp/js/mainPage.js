@@ -104,9 +104,9 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "FEDERATION_ADMIN":
+					home = "#home_federationadmin";
 					$("<div>").load("mainContent.html #home_federationadmin,#allusers,#nodes,#addnode",function(){
 						$("#desktop").append(this.childNodes);
-						home = "#home_federationadmin";
 						Users.init();
 						Nodes.init();
 						initMainPage();
@@ -114,9 +114,9 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				case "NODE_ADMIN":
+					home = "#home_nodeadmin";
 					$("<div>").load("mainContent.html #home_nodeadmin,#manage_node,#allusers",function(){
 						$("#desktop").append(this.childNodes);
-						home = "#home_nodeadmin";
 						Users.init();
 						Nodes.init();
 						initMainPage();
@@ -124,17 +124,17 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				case "CLASSOWNER":
+					home = "#home_classowner";
 					$("<div>").load("mainContent.html #home_classowner,#createclass,#createtask",function(){
 						$("#desktop").append(this.childNodes);
-						home = "#home_classowner";
 						initMainPage();
 					});
 					break;
 					
 				default:
+					home = "#home_student";
 					$("<div>").load("mainContent.html #home_student,#task",function(){
 						$("#desktop").append(this.childNodes);
-						home = "#home_student";
 						initMainPage();
 					});
 				}
