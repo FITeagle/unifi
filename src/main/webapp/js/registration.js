@@ -286,7 +286,6 @@ function(Validation, Utils, Messages, Server){
 		Utils.changeFocusOnEnterClick('#inputLastName','#inputEmail');
 		Utils.changeFocusOnEnterClick('#inputEmail','#inputAffiliation');
 		Utils.changeFocusOnEnterClick('#inputAffiliation','#inputNode');
-		Utils.changeFocusOnEnterClick('#inputNode','#inputPassword');
 		Utils.changeFocusOnEnterClick('#inputPassword','#inputConfirmPassword');
 		Utils.addOnEnterClickEvent('#inputConfirmPassword',"#registerBtn");	
 		$(window).resize(function() {
