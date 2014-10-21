@@ -266,7 +266,7 @@ function(Utils, Server){
 				tasks.prepend(taskLink);
 			});
 		}
-		var tasksList =  $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasks);
+		var tasksList =  $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse").append(tasks);
 		var tasksToggle = $("<li>").append(tasksHeader,tasksList);
 		
 		var deleteLink = $("<li>").append($("<a>").append($("<i>").addClass("fa fa-trash-o fa-li"),"Delete class").on("click",function(e){
@@ -278,7 +278,7 @@ function(Utils, Server){
 		}));
 		
 		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,resourcesLink,tasksToggle,deleteLink);
-		var options = $("<div>").attr("id",newClass.id+"Options").addClass("row-fluid collapse out").append(optionList);
+		var options = $("<div>").attr("id",newClass.id+"Options").addClass("row-fluid collapse").append(optionList);
 		
 		var classElement = $("<li>").append(header, options);
 		$("#tbownerClasses").prepend(classElement);
@@ -379,7 +379,7 @@ function(Utils, Server){
 			}));
 			tasksList.append(taskLink);
 		});
-		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse out").append(tasksList);
+		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse").append(tasksList);
 		
 		var classElement = $("<li>").append(header, tasks);
 		$("#userClasses").prepend(classElement);
