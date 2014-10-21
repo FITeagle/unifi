@@ -670,12 +670,12 @@ function(Utils){
 	
 	Server.createOpenstackVM = function(vmName, classID, callback){
 		
-		var requestTTL = "@prefix fiteagle: <http://fiteagle.org/ontology#> . " +
-				"@prefix openstack: <http://fiteagle.org/ontology/adapter/openstack#> ." +
+		var requestTTL = "@prefix omn: <http://open-multinet.info/ontology#> . " +
+				"@prefix omnr: <http://open-multinet.info/ontology/resources#> ." +
 				"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ." +
-				"@prefix : <http://fiteagleinternal#> ." +
-				":OpenstackAdapter1 rdf:type openstack:OpenstackAdapter ." +
-				":"+vmName+" rdf:type openstack:OpenstackVM ."
+				"@prefix av: <http://federation.av.tu-berlin.de/about#> ." +
+				"av:OpenstackAdapter1 rdf:type omnr:OpenstackAdapter ." +
+				":"+vmName+" rdf:type omnr:OpenstackVM ."
 		
 		var id=0;
 		$.ajax({

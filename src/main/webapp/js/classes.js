@@ -247,7 +247,7 @@ function(Utils, Server){
 		var parser = N3.Parser();
 		parser.parse(ttldata, function(error, triple, prefixes) {
 			if(triple) {
-				if(triple.predicate === "http://fiteagle.org/ontology/adapter/openstack#id"){
+				if(triple.predicate === "http://open-multinet.info/ontology/resources#id"){
 					var posPrefixSubj = triple.subject.indexOf("#");
 					var instance = new Object();
 					instance.name = triple.subject.slice(posPrefixSubj+1, triple.subject.size);
