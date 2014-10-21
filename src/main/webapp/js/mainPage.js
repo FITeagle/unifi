@@ -94,7 +94,7 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	
 	var welcome_message = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner.";
 	var welcome_message_user = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner. " +
-			"Classes, lectures and	virtualized testbeds from each partner university can be reached through the links on the map;";
+			"Classes, lectures and	virtualized testbeds from each partner university can be reached through the links on the map";
 	
 	/**
 	* Loads HTML for the FITeagle main page dynamically and triggers the page initialization after the loading is successfully completed.
