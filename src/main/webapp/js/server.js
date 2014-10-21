@@ -63,6 +63,10 @@ function(Utils){
 				},
 				401 : function(){
 					msg = Messages.wrongUsernameOrPassword;
+				},
+				403 : function(){
+					msg = Messages.wrongUsernameOrPassword;
+					Server.invalidateCookie();
 				}
 			}
 		});
