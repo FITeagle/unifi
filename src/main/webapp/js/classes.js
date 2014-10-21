@@ -10,6 +10,8 @@ function(Utils, Server){
 		case "NODE_ADMIN":
 			break;
 		case "CLASSOWNER":
+			createCreateClassPage();
+			createCreateTaskPage();
 			initClassownerClassesAside();
 			initCreateClassPage();
 			initCreateTaskPage();
@@ -21,6 +23,80 @@ function(Utils, Server){
 			initStudentJoinClass(false);
 		}
 	};
+
+	createCreateClassPage = function(){
+		var header = $("<div>").append($("<h3>").html("Create Class"));
+		var subheader = $("<div>").append($("<h4>").html("Create a new class where users can join"));
+		
+		var labelName = $("<label>").addClass("span2").attr("for", "className").html("Name");
+		var inputName = $("<input>").addClass("span8").attr("id", "className").attr("type" ,"text").attr("placeholder", "Chose any name for your class");
+		var inputNameDiv = $("<div>").addClass("row-fluid").append(labelName, inputName);
+		
+		var labelDescription = $("<label>").addClass("span2").attr("for", "classDescription").html("Description");
+		var inputDescription = $("<input>").addClass("span8").attr("id", "classDescription").attr("type" ,"text").attr("placeholder", "Write some description e.g. what the aims of the class are");
+		var inputDescriptionDiv = $("<div>").addClass("row-fluid").append(labelDescription, inputDescription);
+		
+		var labelNodes = $("<label>").addClass("span2").attr("for", "addedNodes").html("Nodes");
+		var addedNodes = $("<div>").attr("id", "addedNodes").addClass("span4 nomargin");
+		
+		var span = $("<span>").addClass("caret");
+		var button = $("<button>").addClass("nomargin btn dropdown-toggle sr-only").attr("type", "button").attr("data-toggle", "dropdown").html("Available Nodes").prepend(span);
+		var list = $("<ul>").attr("id", "availableNodes").addClass("dropdown-menu");
+		var availableNodes = $("<div>").addClass("dropdown pull-right").append(button, list);
+		var availableNodesDiv = $("<div>").addClass("span4").append(availableNodes);
+		
+		var nodesDiv = $("<div>").addClass("row-fluid").append(labelNodes, addedNodes, availableNodesDiv);
+		
+		var createBtn = $("<a>").attr("id", "createClassBtn").addClass("btn").html("Create");
+		var createDiv = $("<div>").addClass("row-fluid").append(createBtn);
+		
+		var outerDiv = $("<div>").attr("style","min-height: 70%").append(inputNameDiv, inputDescriptionDiv, nodesDiv, createDiv);
+		
+		var createClass_page = $("<div>").attr("id", "createclass").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), outerDiv);
+		
+		$("#desktop").append(createClass_page);
+	}
+	
+	
+	createCreateTaskPage = function(){
+		var header = $("<div>").append($("<h3>").html("Create Task"));
+		var subheader = $("<div>").append($("<h4>").html("Create a new task for this class"));
+		
+		var labelName = $("<label>").addClass("span2").attr("for", "inputTaskName").html("Name");
+		var inputName = $("<input>").addClass("span8").attr("id", "inputTaskName").attr("type" ,"text").attr("placeholder", "Give the task an appropriate name");
+		var inputNameDiv = $("<div>").addClass("row-fluid").append(labelName, inputName);
+		
+		var labelDescription = $("<label>").addClass("span2").attr("for", "inputTaskDescription").html("Description");
+		var inputDescription = $("<input>").addClass("span8").attr("id", "inputTaskDescription").attr("type" ,"text").attr("placeholder", "Describe the task here");
+		var inputDescriptionDiv = $("<div>").addClass("row-fluid").append(labelDescription, inputDescription);
+		
+		var icon = $("<i>").addClass("fa fa-check");
+		var button = $("<button>").addClass("btn pull-left span3 nomargin").attr("id", "createTaskBtn").html("Create Task").prepend(icon);
+		
+		var createTask_page = $("<div>").attr("id", "createtask").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), inputNameDiv, inputDescriptionDiv, $("<br>"), button);
+		
+		$("#desktop").append(createTask_page);
+	}
+	
+	
+//	
+//	<div id="createtask" class="row-fluid tab-pane">
+//	<div id="taskname">
+//		<label class="span2" for="inputTaskName">Name</label> <input
+//			class="span10" type="text" id="inputTaskName"
+//			placeholder="Give the task an appropriate name.">
+//	</div>
+//	<div id="taskdescription">
+//		<label class="span2" for="inputTaskDescription">Description</label> <input
+//			class="span10" type="text" id="inputTaskDescription"
+//			placeholder="Describe the task here.">
+//	</div>
+//	<br>
+//	<button id="createTaskBtn" class="btn pull-left span3 nomargin">
+//		<i class="fa fa-check"></i>Create Task
+//	</button>
+//</div>
+//	
 	
 	initCreateClassPage = function(){
 		initNodeDropdown();

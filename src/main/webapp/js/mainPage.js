@@ -121,11 +121,8 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				case "CLASSOWNER":
-					$("<div>").load("mainContent.html #createclass,#createtask",function(){
-						$("#welcome_content").append(welcome_message);
-						$("#desktop").append(this.childNodes);
-						initMainPage();
-					});
+					$("#welcome_content").append(welcome_message);
+					initMainPage();
 					break;
 					
 				default:
