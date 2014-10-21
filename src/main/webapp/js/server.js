@@ -66,7 +66,7 @@ function(Utils){
 				},
 				403 : function(){
 					msg = Messages.wrongUsernameOrPassword;
-					Server.invalidateCookie();
+					Server.invalidateSession();
 				}
 			}
 		});
@@ -321,6 +321,19 @@ function(Utils){
 		});
 		
 		return isSuccessful;
+	};
+	
+	Server.invalidateSession = function(){
+		$.ajax({
+			cache: false,
+			type: "DELETE",
+			async: false,
+			url : "/native/api/user/session",
+			success: function(answer,status){
+			},
+		});
+		
+		return;
 	};
 	
 	/**
