@@ -117,7 +117,7 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				case "NODE_ADMIN":
-					$("<div>").load("mainContent.html #manage_node,#allusers",function(){
+					$("<div>").load("mainContent.html #allusers",function(){
 						$("#welcome_content").append(welcome_message);
 						$("#desktop").append(this.childNodes);
 						Users.init();
@@ -135,13 +135,10 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					break;
 					
 				default:
-					$("<div>").load("mainContent.html #task",function(){
-						var img = $("<img>").attr("id", "unifiMap").attr("src", "img/map_unifi.png").attr("usemap", "#unifimap");
-						var map = "<map name='unifimap'> <area id='tubClassesMapLink' shape='rect' coords='319,60,387,81' href='#classes1'>	<area shape='rect' coords='319,82,387,101' href='#tublectures' onclick='return false;'>	<area shape='rect' coords='319,102,387,123' href='#tubtestbeds'	onclick='return false;'> <area id='uctClassesMapLink' shape='rect' coords='353,279,420,299' href='#classes2'><area shape='rect' coords='353,300,420,320' href='#uctlectures' onclick='return false;'> <area shape='rect' coords='353,321,420,341' href='#ucttestbeds' onclick='return false;'> </map>"
-						$("#welcome_content").append(welcome_message_user, img, map);
-						$("#desktop").append(this.childNodes);
-						initMainPage();
-					});
+					var img = $("<img>").attr("id", "unifiMap").attr("src", "img/map_unifi.png").attr("usemap", "#unifimap");
+					var map = "<map name='unifimap'> <area id='tubClassesMapLink' shape='rect' coords='319,60,387,81' href='#classes1'>	<area shape='rect' coords='319,82,387,101' href='#tublectures' onclick='return false;'>	<area shape='rect' coords='319,102,387,123' href='#tubtestbeds'	onclick='return false;'> <area id='uctClassesMapLink' shape='rect' coords='353,279,420,299' href='#classes2'><area shape='rect' coords='353,300,420,320' href='#uctlectures' onclick='return false;'> <area shape='rect' coords='353,321,420,341' href='#ucttestbeds' onclick='return false;'> </map>"
+					$("#welcome_content").append(welcome_message_user, img, map);
+					initMainPage();
 				}
 			}
 		);
