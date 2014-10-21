@@ -301,6 +301,7 @@ function(Validation, Utils, Messages, Server){
 	Registration.initNodeDropdown = function(){
 		$("#inputNode").click(function(){
 			if(nodeDropDownIsInitialized == false){
+				Utils.unhideElement('#loadingNodesSpinner');
 				var nodes = Utils.getAllNodes();
 				$.each(nodes, function(i, node) {
 					var nodeLink = $('<a>').attr("tabindex", "-1").html(node.name).click(function(){
@@ -310,6 +311,7 @@ function(Validation, Utils, Messages, Server){
 					
 					$("#registrationNodeDropwdown").append($("<li>").append(nodeLink));
 					nodeDropDownIsInitialized = true;
+					Utils.hideElement('#loadingNodesSpinner');
 				});
 			}
 		});
