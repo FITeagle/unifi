@@ -283,9 +283,10 @@ function(Validation, Utils, Messages, Server){
 	Registration.initRegistrationForm = function(){
 		Utils.changeFocusOnEnterClick("#inputUsername",'#inputFirstName');
 		Utils.changeFocusOnEnterClick("#inputFirstName",'#inputLastName');
-		Utils.changeFocusOnEnterClick('#inputLastName','#inputAffiliation');
-		Utils.changeFocusOnEnterClick('#inputAffiliation','#inputEmail');
-		Utils.changeFocusOnEnterClick('#inputEmail','#inputPassword');
+		Utils.changeFocusOnEnterClick('#inputLastName','#inputEmail');
+		Utils.changeFocusOnEnterClick('#inputEmail','#inputAffiliation');
+		Utils.changeFocusOnEnterClick('#inputAffiliation','#inputNode');
+		Utils.changeFocusOnEnterClick('#inputNode','#inputPassword');
 		Utils.changeFocusOnEnterClick('#inputPassword','#inputConfirmPassword');
 		Utils.addOnEnterClickEvent('#inputConfirmPassword',"#registerBtn");	
 		$(window).resize(function() {
@@ -296,16 +297,22 @@ function(Validation, Utils, Messages, Server){
 		Registration.initNodeDropdown();
 	};
 	
+	var nodeDropDownIsInitialized = false;
+	
 	Registration.initNodeDropdown = function(){
-		var nodes = Utils.getAllNodes();
-		
-		$.each(nodes, function(i, node) {
-			var nodeLink = $('<a>').attr("tabindex", "-1").html(node.name).click(function(){
-				$("#inputNode").html(node.name);
-				$("#inputNode").val(node.id);
-			});
-			
-			$("#registrationNodeDropwdown").append($("<li>").append(nodeLink));
+		$("#inputNode").click(function(){
+			if(nodeDropDownIsInitialized == false){
+				var nodes = Utils.getAllNodes();
+				$.each(nodes, function(i, node) {
+					var nodeLink = $('<a>').attr("tabindex", "-1").html(node.name).click(function(){
+						$("#inputNode").html(node.name);
+						$("#inputNode").val(node.id);
+					});
+					
+					$("#registrationNodeDropwdown").append($("<li>").append(nodeLink));
+					nodeDropDownIsInitialized = true;
+				});
+			}
 		});
 	};
 	
