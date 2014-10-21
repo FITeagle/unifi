@@ -6,6 +6,8 @@ function(Utils, Server){
 	Nodes.init = function(){
 		switch(Utils.getCurrentUser().role){
 		case "FEDERATION_ADMIN":
+			createAllNodesPage();
+			createAddNodePage();
 			initAllNodesAside();
 			initAllNodes(false);
 			createAddNodePage();
@@ -37,6 +39,19 @@ function(Utils, Server){
 		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#manage_node'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
 		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
+	
+	createAllNodesPage = function(){
+		var header = $("<div>").append($("<h3>").html("Manage Unifi Nodes"));
+		var subheader = $("<div>").append($("<h4>").html("View the status of all connected nodes."));
+		
+		var tableHeader = $("<tr>").append($("<th>").html("Name"), $("<th>").html("Status"), $("<th>"));
+		var table = $("<table>").attr("id", "allnodes").append(tableHeader)
+		var tableDiv = $("<div>").append(table);
+		
+		var manage_node_page = $("<div>").attr("id", "nodes").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), tableDiv);
+		
+		$("#desktop").append(manage_node_page);
+	}
 	
 	initAllNodes = function(updateToo){
 		$("#allnodes").empty();
