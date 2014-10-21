@@ -296,11 +296,10 @@ function(Validation, Utils, Messages, Server){
 		Registration.initNodeDropdown();
 	};
 	
-	var nodeDropDownIsInitialized = false;
-	
 	Registration.initNodeDropdown = function(){
 		$("#inputNode").click(function(){
-			if(nodeDropDownIsInitialized == false){
+			var a = $("#registrationNodeDropwdown");
+			if(!$("#registrationNodeDropwdown").childNodes){
 				Utils.unhideElement('#loadingNodesSpinner');
 				var nodes = Utils.getAllNodes();
 				$.each(nodes, function(i, node) {
@@ -308,11 +307,9 @@ function(Validation, Utils, Messages, Server){
 						$("#inputNode").html(node.name);
 						$("#inputNode").val(node.id);
 					});
-					
 					$("#registrationNodeDropwdown").append($("<li>").append(nodeLink));
-					nodeDropDownIsInitialized = true;
-					Utils.hideElement('#loadingNodesSpinner');
 				});
+				Utils.hideElement('#loadingNodesSpinner');
 			}
 		});
 	};
