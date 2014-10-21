@@ -24,7 +24,6 @@ function(Utils,Server){
 			Utils.hideModal('#deleteUserProfileModal');
 			require('mainPage').signOut();
 		});
-		modalFooter.append(okBtn);
 	};
 	
 	/**
