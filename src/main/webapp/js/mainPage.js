@@ -107,7 +107,7 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "FEDERATION_ADMIN":
-					$("<div>").load("mainContent.html #allusers,#nodes,#addnode",function(){
+					$("<div>").load("mainContent.html #allusers,#nodes",function(){
 						$("#welcome_content").append(welcome_message);
 						$("#desktop").append(this.childNodes);
 						Users.init();

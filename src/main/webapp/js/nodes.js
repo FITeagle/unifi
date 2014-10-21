@@ -8,7 +8,7 @@ function(Utils, Server){
 		case "FEDERATION_ADMIN":
 			initAllNodesAside();
 			initAllNodes(false);
-			initAddNode();
+			createAddNodePage();
 			break;
 		case "NODE_ADMIN":
 			createManageNodePage(Utils.getCurrentUser().node.name);
@@ -59,7 +59,32 @@ function(Utils, Server){
 		});
 	};
 	
-	initAddNode = function(){
+	createAddNodePage = function(){
+		var header = $("<div>").append($("<h3>").html("Add node"));
+		var subheader = $("<div>").append($("<h4>").html("Set up connection to a new node"));
+		
+		var label = $("<label>").addClass("span2").attr("for", "nodeName").html("Name");
+		var input = $("<input>").addClass("span8").attr("id", "nodeName").attr("type" ,"text").attr("placeholder", "The name of the node");
+		var inputDiv = $("<div>").addClass("row-fluid").append(label, input);
+		
+		var button = $("<a>").addClass("btn").html("Add").on("click",function(){
+			var node = new Object();
+			node.name = $("#nodeName").val();
+			node.id = Server.addNode(node);
+			
+			initAllNodes(true);
+			$("#nodeName").val('');
+			openDesktopTab("#nodes");
+		});
+		var buttonDiv = $("<div>").addClass("row-fluid").append(button);
+
+		
+		
+		
+		var add_node_page = $("<div>").attr("id", "addnode").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), inputDiv, buttonDiv);
+		
+		$("#desktop").append(add_node_page);
+		
 		$("#addNodeBtn").on("click",function(){
 			var node = new Object();
 			node.name = $("#nodeName").val();
