@@ -11,6 +11,7 @@ function(Utils, Server){
 			initAddNode();
 			break;
 		case "NODE_ADMIN":
+			createManageNodePage(Utils.getCurrentUser().node.name);
 			initNodeAside(Utils.getCurrentUser().node.name);
 			break;
 		}
@@ -23,10 +24,17 @@ function(Utils, Server){
 		$("#homeAside").append($("<div>").append(nodesHeader,nodes));
 	};
 	
+	createManageNodePage = function(nodename){
+		var header = $("<div>").append($("<h3>").html(nodename));
+		var subheader = $("<div>").append($("<h4>").html("Manage your node here"));
+		var manage_node_page = $("<div>").attr("id", "manage_node").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"));
+		
+		$("#desktop").append(manage_node_page);
+	}
+	
 	initNodeAside = function(nodeName){
 		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
 		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#manage_node'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
-		$("#nodeName").html(nodeName);
 		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
 	
