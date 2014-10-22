@@ -671,7 +671,7 @@ function(Utils){
 	Server.createOpenstackVM = function(vmName, classID, callback){
 		
 		var requestTTL = "@prefix omn: <http://open-multinet.info/ontology#> . " +
-				"@prefix omnr: <http://open-multinet.info/ontology/resources#> ." +
+				"@prefix omnr: <http://open-multinet.info/ontology/resource#> ." +
 				"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ." +
 				"@prefix av: <http://federation.av.tu-berlin.de/about#> ." +
 				"av:Openstack1 rdf:type omnr:Openstack ." +
