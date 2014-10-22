@@ -674,15 +674,15 @@ function(Utils){
 				"@prefix omnr: <http://open-multinet.info/ontology/resources#> ." +
 				"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ." +
 				"@prefix av: <http://federation.av.tu-berlin.de/about#> ." +
-				"av:OpenstackAdapter1 rdf:type omnr:OpenstackAdapter ." +
-				":"+vmName+" rdf:type omnr:OpenstackVM ."
+				"av:Openstack1 rdf:type omnr:Openstack ." +
+				"av:"+vmName+" rdf:type omnr:OpenstackVM ."
 		
 		var id=0;
 		$.ajax({
 			cache: false,
 			type: "PUT",
 			async: false,
-			url: "/native/api/resources/OpenstackAdapter1",
+			url: "/native/api/resources/Openstack1",
 			data: requestTTL,
 			success: function(data,status){
 				callback(data, classID);
@@ -698,7 +698,7 @@ function(Utils){
 			cache: false,
 			type: "GET",
 			async: false,
-			url: "/native/api/resources/OpenstackAdapter1",
+			url: "/native/api/resources/Openstack1",
 			success: function(data,status){
 				callback(data, classID);
 			},

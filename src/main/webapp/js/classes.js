@@ -78,26 +78,6 @@ function(Utils, Server){
 		$("#desktop").append(createTask_page);
 	}
 	
-	
-//	
-//	<div id="createtask" class="row-fluid tab-pane">
-//	<div id="taskname">
-//		<label class="span2" for="inputTaskName">Name</label> <input
-//			class="span10" type="text" id="inputTaskName"
-//			placeholder="Give the task an appropriate name.">
-//	</div>
-//	<div id="taskdescription">
-//		<label class="span2" for="inputTaskDescription">Description</label> <input
-//			class="span10" type="text" id="inputTaskDescription"
-//			placeholder="Describe the task here.">
-//	</div>
-//	<br>
-//	<button id="createTaskBtn" class="btn pull-left span3 nomargin">
-//		<i class="fa fa-check"></i>Create Task
-//	</button>
-//</div>
-//	
-	
 	initCreateClassPage = function(){
 		initNodeDropdown();
 		initCreateBtn();
