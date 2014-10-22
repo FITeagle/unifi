@@ -670,19 +670,20 @@ function(Utils){
 	
 	Server.createOpenstackVM = function(vmName, classID, callback){
 		
-		var requestTTL = "@prefix omn: <http://open-multinet.info/ontology#> . " +
-				"@prefix omnr: <http://open-multinet.info/ontology/resource#> ." +
+		var requestTTL = "@prefix omn: <http://open-multinet.info/ontology/omn#> . " +
+				"@prefix os: <http://open-multinet.info/ontology/resource/openstack#> ." +
+				"@prefix osvm: <http://open-multinet.info/ontology/resource/openstackvm#> ." +
 				"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ." +
 				"@prefix av: <http://federation.av.tu-berlin.de/about#> ." +
-				"av:Openstack1 rdf:type omnr:Openstack ." +
-				"av:"+vmName+" rdf:type omnr:OpenstackVM ."
+				"av:Openstack-1 rdf:type os:Openstack ." +
+				"av:"+vmName+" rdf:type osvm:OpenstackVM ."
 		
 		var id=0;
 		$.ajax({
 			cache: false,
 			type: "PUT",
 			async: false,
-			url: "/native/api/resources/Openstack1",
+			url: "/native/api/resources/Openstack-1",
 			data: requestTTL,
 			success: function(data,status){
 				callback(data, classID);
@@ -698,7 +699,7 @@ function(Utils){
 			cache: false,
 			type: "GET",
 			async: false,
-			url: "/native/api/resources/Openstack1",
+			url: "/native/api/resources/Openstack-1",
 			success: function(data,status){
 				callback(data, classID);
 			},
