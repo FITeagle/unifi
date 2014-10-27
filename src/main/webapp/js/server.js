@@ -668,16 +668,19 @@ function(Utils){
 		return id;
 	};
 	
-	Server.createOpenstackVM = function(vmName, classID, callback){
+	Server.createOpenstackVM = function(vmName, keypairname, imageid, classID, callback){
 		
 		var requestTTL = "@prefix omn: <http://open-multinet.info/ontology/omn#> . " +
-				"@prefix os: <http://open-multinet.info/ontology/resource/openstack#> ." +
-				"@prefix osvm: <http://open-multinet.info/ontology/resource/openstackvm#> ." +
+				"@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> . " +
+				"@prefix openstack: <http://open-multinet.info/ontology/resource/openstack#> ." +
+				"@prefix openstackvm: <http://open-multinet.info/ontology/resource/openstackvm#> ." +
 				"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ." +
 				"@prefix av: <http://federation.av.tu-berlin.de/about#> ." +
-				"av:Openstack-1 rdf:type os:Openstack ." +
-				"av:"+vmName+" rdf:type osvm:OpenstackVM ."
-		
+				"av:Openstack-1 rdf:type openstack:Openstack ." +
+				"av:"+vmName+" rdf:type openstackvm:OpenstackVM ." +
+				"av:"+vmName+" openstackvm:keypairname \""+keypairname+"\"^^xsd:string ." +
+				"av:"+vmName+" openstackvm:imageid \""+imageid+"\"^^xsd:string ."
+				
 		var id=0;
 		$.ajax({
 			cache: false,

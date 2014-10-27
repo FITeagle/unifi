@@ -255,7 +255,6 @@ function(Utils, Server){
 		});
 	}
 	
-	
 	createClassResourcesPage = function(newClass){
 		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
 		var header = $("<h4>").html("Topology of the resources");
@@ -274,7 +273,9 @@ function(Utils, Server){
 		var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
 			var name = $("#newInstanceName").val();
 			if(name.length > 0){
-				Server.createOpenstackVM(name, newClass.id, parseOpenstackInstances);
+				var keypairname = "mitja_tub";
+				var imageid = "7bef2175-b4cd-4302-be23-dbeb35b41702";
+				Server.createOpenstackVM(name, keypairname, imageid, newClass.id, parseOpenstackInstances);
 			}
 			$("#newInstanceName").val("");
 		}));
