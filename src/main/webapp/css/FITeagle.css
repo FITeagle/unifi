@@ -21,7 +21,7 @@ body{
 	margin-right: auto;
 	padding-bottom: 2%;
 	background: white;
-	max-width: 1000px;
+	max-width: 1200px;
 }
 
 html, body {
@@ -58,6 +58,10 @@ html, body {
 
 .btn {
 	color: white;
+}
+
+.alignleft{
+	text-align: left;
 }
 
 ul li a{

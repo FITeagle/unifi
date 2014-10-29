@@ -642,6 +642,13 @@ function(Utils){
 			async: false,
 			url: "/native/api/node/",
 			success: function(nodes,status,xhr){
+				//TODO: remove this hack
+				$.each(nodes, function(i, node) {
+					if(node.name === "TU Berlin"){
+						node.namespace = "http://federation.av.tu-berlin.de/about"; 
+					}
+				});
+				
 				Utils.setAllNodes(nodes);
 				nodesFromServer = nodes;
 			},
@@ -668,7 +675,7 @@ function(Utils){
 		return id;
 	};
 	
-	Server.createOpenstackVM = function(vmName, keypairname, imageid, classID, callback){
+	Server.createOpenstackVM = function(vmName, keypairname, image, classID, callback){
 		
 		var requestTTL = "@prefix omn: <http://open-multinet.info/ontology/omn#> . " +
 				"@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> . " +
@@ -679,7 +686,7 @@ function(Utils){
 				"av:Openstack-1 rdf:type openstack:Openstack ." +
 				"av:"+vmName+" rdf:type openstackvm:OpenstackVM ." +
 				"av:"+vmName+" openstackvm:keypairname \""+keypairname+"\"^^xsd:string ." +
-				"av:"+vmName+" openstackvm:imageid \""+imageid+"\"^^xsd:string ."
+				"av:"+vmName+" openstackvm:image av:"+image+" ."
 				
 		var id=0;
 		$.ajax({

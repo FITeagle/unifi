@@ -511,6 +511,14 @@ function(){
 		$(selector).modal('hide');
 	};
 	
+	Utils.getLocalName = function(uri){
+		return uri.slice(uri.indexOf("#")+1, uri.size);
+	}
+	
+	Utils.getNameSpace = function(uri){
+		return uri.slice(0, uri.indexOf("#"));
+	}
+	
 	return Utils;
 });
 
