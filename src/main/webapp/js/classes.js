@@ -448,6 +448,12 @@ function(Utils, Server){
 		var image = $("<td>").html(instance.image.name);
 		var node = $("<td>").html(instance.node.name);
 		var status = $("<td>").html(instance.status);
+		if(instance.status === "ACTIVE"){
+			status.attr("style", "color:green");
+		}
+		else{
+			status.attr("style", "color:red");
+		}
 		var tableRow = $("<tr>").append(name, image, node, status);
 		$("#resourcesList"+classID).prepend(tableRow);
 	}
