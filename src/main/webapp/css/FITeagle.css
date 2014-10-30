@@ -1,4 +1,6 @@
-a{cursor: pointer}
+a{
+	cursor: pointer;
+}
 
 table {
   font-size: 14px;
@@ -62,6 +64,10 @@ html, body {
 
 .alignleft{
 	text-align: left;
+}
+
+.pointer{
+	cursor: pointer;
 }
 
 ul li a{
@@ -291,162 +297,5 @@ h4{margin-bottom:5px !important}
     color: #373737;
     border-radius:0.2em;
 }
-
-#resources ._jsPlumb_overlay {
-	font-size:0.8em;
-}
-
-#resources i {
-	padding-left: 2px;
-}
-
-#resources .collapse {
-	font-size: 12px;
-}
-
-#resources path, ._jsPlumb_endpoint .dropdown{
-	cursor:pointer;
-}
-
-#courseName a:hover{
-  color: #f09030;
-}
-
-#resources div::selection{
-	background: transparent;
-}
-
-#resources .fa-cogs{
-	float: right;
-	padding-left: 15px;
-}
-
-#resources .fa-trash-o{
-  float: right;
-}
-
-#resources .resourceType{
-	font-weight: bold;
-}
-
-#resources .nameInput{
-	font-size: 10px;
-	margin-left: 3px;
-	width: 120px;
-}
-
-#resources .nameInputLabel{
-  font-size: 12px;
-  float: left;
-}
-
-#task {
-	margin-top: 10px;
-}
-
-#createtask {
-  margin-top: 10px;
-}
-
-
-#task .pull-right{
-    cursor: pointer;
-    margin-right: 20px;
-}
-
-#newtask {
-  margin-top: 10px;
-}
-
-#newtask .pull-right{
-    cursor: pointer;
-    margin-right: 20px;
-}
-
-
-@media (max-width:979px){
-    #navs ul {margin-bottom: 20px}
-    
-    #aside{height:auto}
-    
-    h2{font-size:20}
-    h3{font-size:18}
-    
-    .collapseHeader h3{margin-left:0%;}
-}
-
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-  #logoImg{ 
-    margin-top:18px;
-  }
-  #logoTxt{
-    padding-left:10px;
-    margin-left: 0px !important;
-  } 
-  #project_title{
-    font-size: 26px;
-  }
-  #project_tagline {
-    font-size: 15px;
-    margin-top: -10px;
-  }
-  
-  #navs ul li.span3{ width: 100%;}
-  #navs ul {margin-left:0 !important}
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
-  
-  .alert{text-align:center !important}
-    
-  #publicKeysList .publicKey{margin-top:20px}
-
-  .wrapper{padding: 0 20px 20px 20px}
-  
-  
-  .thumbnail{margin-bottom:20px}
-  .thumbnail.last{margin-bottom:0px}
-
-  #main{
-    overflow-x: hidden;
-    margin-left: 4%;
-    width:92%
-  }
-  #aside{border-right: none;}
-  
-  #loginForm {margin-top:10px;}
-  label{margin:0;}
-  
-  .radio{ margin-bottom:20px}
-  .radio:last-child{ margin-bottom:0px}
-  #logoImg img{ 
-    margin-left:20px;
-    padding-bottom:10px;
-  }
-  #navs{
-    margin-left:3%; 
-    width: 94%;
-  }
-  #navs ul li{ margin-right:0px !important}
-  #logoTxt{ 
-    padding-left: 90px;
-    margin-top: -85px;
-    width: 95%;
-    margin-left: 0px !important;
-  }   
-  #project_title{
-    font-size: 25px;
-  }
-  #project_tagline {
-    line-height: 1.5;
-    font-size: 14px;
-    margin-top: 3px;
-  } 
-}
- 
-/* Landscape phones and down */
-@media (max-width: 480px) { 
 
 }

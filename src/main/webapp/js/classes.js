@@ -288,6 +288,14 @@ function(Utils, Server){
 		createAllClassownerClassesAsides();
 	};
 	
+	createClassResourcesPage = function(newClass){
+		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
+		var header = $("<h4>").html("Topology of the resources");
+		
+		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title, header, $("<br>"));
+		$("#desktop").append(page);
+	};
+	
 	createAllClassownerClassesAsides = function(){
 		var allClasses = Server.getAllClassesOwnedByUser(Utils.getCurrentUser().username);
 		if(allClasses != null){
@@ -311,40 +319,46 @@ function(Utils, Server){
 			var title = $("<div>").append($("<h3>").html(task.name+" ("+targetClass.name+")"));
 			var description = $("<div>").html("Description: "+task.description);
 			
-			var openstackResourcesHeader = $("<div>").append($("<h4>").html("Openstack Resources"));
-			
 			var nameHeader = $("<th>").addClass("span2 alignleft").html("Name");
 			var imageHeader = $("<th>").addClass("span3 alignleft").html("Image");
 			var nodeHeader = $("<th>").addClass("span2 alignleft").html("Node");
 			var statusHeader = $("<th>").addClass("span1 alignleft").html("Status");
 			var btnHeader = $("<th>").addClass("span2");
 			var tableHeader = $("<tr>").append(nameHeader, imageHeader, nodeHeader, statusHeader, btnHeader);
-			var tableHead = $("<thead>").append(tableHeader);
-			var table = $("<table>").append(tableHead);
+			var provisiontable = $("<table>").attr("id","resourcesList"+task.id).append(tableHeader);
 			
-			var tableBody = $("<tbody>").attr("id","resourcesList"+task.id);
+//			var inputName = $("<td>").append($("<input>").attr("id", "newInstanceName").attr("placeholder","Enter a name for a new instance"));
+//			var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
+//				var name = $("#newInstanceName").val();
+//				if(name.length > 0){
+//					//TODO: make dynamic
+//					var keypairname = "mitja_tub";
+//					var image = "ubuntu-14.04.1-server-amd64";
+//					Server.createOpenstackVM(name, keypairname, image, task.id, parseOpenstackInstances);
+//				}
+//				$("#newInstanceName").val("");
+//			}));
+//			var createRow = $("<tr>").append(inputName, $("<td>"), $("<td>"), $("<td>"), button);
+//			provisiontable.append(createRow);
 			
-			var inputName = $("<td>").append($("<input>").attr("id", "newInstanceName").attr("placeholder","Enter a name for a new instance"));
-			var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
-				var name = $("#newInstanceName").val();
-				if(name.length > 0){
-					//TODO: make dynamic
-					var keypairname = "mitja_tub";
-					var image = "ubuntu-14.04.1-server-amd64";
-					Server.createOpenstackVM(name, keypairname, image, task.id, parseOpenstackInstances);
-				}
-				$("#newInstanceName").val("");
-			}));
-			var createRow = $("<tr>").append(inputName, $("<td>"), $("<td>"), $("<td>"), button);
-			tableBody.append(createRow);
 			
-			table.append(tableBody);
+			var provisionContent = $("<div>").attr("id","provision"+task.id).addClass("collapse in").append(provisiontable)
+			var provisionHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#provision"+task.id).addClass("pointer").append($("<h4>").html("Provision"));
+
 			
-			var labwiki = $("<div>").html("Open a new tab with Labwiki to do the task:");
+			var configureHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#configure"+task.id).addClass("pointer").append($("<h4>").html("Configure"));
+			var configureContent = $("<div>").attr("id","configure"+task.id).addClass("collapse").append($("<h5>").html("configure here"));
+			
+			
+			var labwikiHeader = $("<div>").html("Open a new tab with Labwiki to do the task:");
 			var labwikiButton = $("<a>").attr("href", "http://"+window.location.hostname+":4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
 			var labwikiLink = $("<div>").addClass("span3 nomargin").append(labwikiButton);
 			
-			var content = $("<div>").append($("<hr>"), openstackResourcesHeader, table, $("<hr>"), labwiki, labwikiLink)
+			var runHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#run"+task.id).addClass("pointer").append($("<h4>").html("Run experiment"));
+			var runContent = $("<div>").attr("id","run"+task.id).addClass("collapse").append(labwikiHeader, labwikiLink);
+			
+			
+			var content = $("<div>").append($("<hr>"), provisionHeader, $("<hr>"), provisionContent, configureHeader, $("<hr>"), configureContent, runHeader, $("<hr>"), runContent);
 			var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, content);
 			$("#desktop").append(taskTab);
 			
@@ -455,7 +469,7 @@ function(Utils, Server){
 			status.attr("style", "color:red");
 		}
 		var tableRow = $("<tr>").append(name, image, node, status);
-		$("#resourcesList"+classID).prepend(tableRow);
+		$("#resourcesList"+classID).append(tableRow);
 	}
 	
 	processOpenstackInstances = function(instances, classID){
@@ -463,14 +477,6 @@ function(Utils, Server){
 			addOpenstackInstanceToTable(instance, classID);
 		});
 	}
-	
-	createClassResourcesPage = function(newClass){
-		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
-		var header = $("<h4>").html("Topology of the resources");
-		
-		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title, header, $("<br>"));
-		$("#desktop").append(page);
-	};
 	
 	createStudentClassForAsideList = function(newClass){
 		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
