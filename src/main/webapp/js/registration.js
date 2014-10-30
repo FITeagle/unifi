@@ -298,8 +298,7 @@ function(Validation, Utils, Messages, Server){
 	
 	Registration.initNodeDropdown = function(){
 		$("#inputNode").click(function(){
-			var a = $("#registrationNodeDropwdown");
-			if(!$("#registrationNodeDropwdown").childNodes){
+			if($("#registrationNodeDropwdown").children().length == 0){
 				Utils.unhideElement('#loadingNodesSpinner');
 				var nodes = Utils.getAllNodes();
 				$.each(nodes, function(i, node) {
