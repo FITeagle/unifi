@@ -186,6 +186,7 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	**/
 	Main.signOut = function(){
 		Server.invalidateCookie();
+		Server.invalidateSession();
 		Utils.clearSessionStorage();
 		history.pushState('', "page ", "/unifi/"); 
 		require('loginPage').load();
