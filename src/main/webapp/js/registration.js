@@ -298,7 +298,7 @@ function(Validation, Utils, Messages, Server){
 	
 	Registration.initNodeDropdown = function(){
 		$("#inputNode").click(function(){
-			if($("#registrationNodeDropwdown").children().length == 0){
+			if($("#registrationNodeDropdown").children().length == 0){
 				Utils.unhideElement('#loadingNodesSpinner');
 				var nodes = Utils.getAllNodes();
 				$.each(nodes, function(i, node) {
@@ -306,7 +306,7 @@ function(Validation, Utils, Messages, Server){
 						$("#inputNode").html(node.name);
 						$("#inputNode").val(node.id);
 					});
-					$("#registrationNodeDropwdown").append($("<li>").append(nodeLink));
+					$("#registrationNodeDropdown").append($("<li>").append(nodeLink));
 				});
 				Utils.hideElement('#loadingNodesSpinner');
 			}
