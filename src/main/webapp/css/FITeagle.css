@@ -39,6 +39,20 @@ html, body {
   height:60%;
 }
 
+#aside a {
+    color: #373737;
+    border-radius:0.2em;
+}
+
+#desktopContainer {
+	border-left: 1px solid #d1d1d1;
+}
+
+#desktop a{
+  color:#373737;
+}
+
+
 #marginTop{
 	height: 2%;
 }
@@ -161,7 +175,7 @@ h4{margin-bottom:5px !important}
 
 #userInfoPanel{padding: 10px 0px 5px 0}
 
-#aside{border-right: 1px solid #d1d1d1;}
+
 
 #header{
 	height: 120px;
@@ -280,10 +294,6 @@ h4{margin-bottom:5px !important}
   left:5%;
 }
 
-#desktop a{
-	color:#373737;
-}
-
 #resources a {
     border-radius:0.2em;
 }
@@ -293,9 +303,6 @@ h4{margin-bottom:5px !important}
     border-radius:0.2em;
 }
 
-#aside a {
-    color: #373737;
-    border-radius:0.2em;
-}
+
 
 }
