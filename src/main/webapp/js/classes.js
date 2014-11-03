@@ -367,33 +367,31 @@ function(Utils, Server){
 			var title = $("<h3>").html(task.name+" ("+targetClass.name+")");
 			var description = "Description: "+task.description;
 			
-//			var inputName = $("<td>").append($("<input>").attr("id", "newInstanceName").attr("placeholder","Enter a name for a new instance"));
-//			var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
-//				var name = $("#newInstanceName").val();
-//				if(name.length > 0){
-//					//TODO: make dynamic
-//					var keypairname = "mitja_tub";
-//					var image = "ubuntu-14.04.1-server-amd64";
-//					Server.createOpenstackVM(name, keypairname, image, task.id, parseOpenstackInstances);
-//				}
-//				$("#newInstanceName").val("");
-//			}));
-//			var createRow = $("<tr>").append(inputName, $("<td>"), $("<td>"), $("<td>"), button);
-//			provisiontable.append(createRow);
-			
-			
 			var provisionContent = $("<div>").attr("id","provision"+task.id).addClass("collapse in");
 			$.each(targetClass.nodes, function(i, node) {
 				provisionContent.append($("<h5>").html(node.name+" resources").addClass("span7 left0"));
 				provisionContent.append(createProvisionResourcesTable(node, task));
 			});
-			provisionContent.append($("<div>").addClass("span12").append($("<br>"), $("<br>"), $("<br>"), $("<br>")));
 			
+			var provisionButton = $("<a>").addClass("btn margin3").html("Provision").on("click",function(e){
+				provisionContent.collapse('hide');
+				configureContent.collapse('show');
+			});
+			
+			provisionContent.append($("<div>").addClass("span12 nomargin").append($("<br>"), $("<br>"), $("<br>"), $("<br>"), provisionButton));
+			 
 			var provisionHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#provision"+task.id).addClass("pointer").append($("<h4>").html("Provision"));
 
 			
 			var configureHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#configure"+task.id).addClass("pointer").append($("<h4>").html("Configure"));
-			var configureContent = $("<div>").attr("id","configure"+task.id).addClass("collapse").append($("<h5>").html("configure here"));
+			
+			var configureButton = $("<a>").addClass("btn margin3").html("Configure").on("click",function(e){
+				provisionContent.collapse('hide');
+				configureContent.collapse('hide');
+				runContent.collapse('show');
+			});
+			
+			var configureContent = $("<div>").attr("id","configure"+task.id).addClass("collapse").append($("<h5>").html("configure here"), configureButton);
 			
 			
 			var labwikiHeader = $("<div>").html("Open a new tab with Labwiki to do the task:");
@@ -408,7 +406,7 @@ function(Utils, Server){
 			var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, content);
 			$("#desktop").append(taskTab);
 			
-			Server.getAllOpenstackVMs(task.id, parseOpenstackInstances);
+//			Server.getAllOpenstackVMs(task.id, parseOpenstackInstances);
 		});
 	};
 	
@@ -504,10 +502,10 @@ function(Utils, Server){
 	}
 
 	addOpenstackInstanceToTable = function(instance, classID){
-//		var type = $("<td>").html(Utils.getLocalName(instance.type));
-//		var amount = $("<td>");
-//		var tableRow = $("<tr>").append(type, amount);
-//		$("#resourcesList"+classID).append(tableRow);
+		var type = $("<td>").html(Utils.getLocalName(instance.type));
+		var amount = $("<td>");
+		var tableRow = $("<tr>").append(type, amount);
+		$("#resourcesList"+classID).append(tableRow);
 	}
 	
 	processOpenstackInstances = function(instances, classID){
