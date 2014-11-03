@@ -313,19 +313,59 @@ function(Utils, Server){
 		});
 	};
 	
+	createProvisionResourcesTable = function(node, task){
+		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
+		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
+		var tableHeader = $("<tr>").append(typeHeader, amountHeader);
+		var provisionTable = $("<table>").attr("id","resourcesList"+task.id).addClass("span7").append(tableHeader);
+		
+		if(node.name === "TU Berlin"){
+			var type = $("<td>").html("robot");
+			
+			var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));
+			var amountOption0 = $("<li>").append($('<a>').attr("tabindex",-1).html("0").on('click',function(){
+				amountButton.html("0");
+			}));
+			var amountOption1 = $("<li>").append($('<a>').attr("tabindex",-1).html("1").on('click',function(){
+				amountButton.html("1");
+			}));
+			var amountOption2 = $("<li>").append($('<a>').attr("tabindex",-1).html("2").on('click',function(){
+				amountButton.html("2");
+			}));
+			var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu").append(amountOption0, amountOption1, amountOption2);
+			var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
+			
+			var tableRow = $("<tr>").append(type, amount);
+			provisionTable.append(tableRow);
+		}
+		if(node.name === "UCT"){
+			var type = $("<td>").html("OpenMTC-as-a-Service");
+			
+			var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));
+			var amountOption0 = $("<li>").append($('<a>').attr("tabindex",-1).html("0").on('click',function(){
+				amountButton.html("0");
+			}));
+			var amountOption1 = $("<li>").append($('<a>').attr("tabindex",-1).html("1").on('click',function(){
+				amountButton.html("1");
+			}));
+			var amountOption2 = $("<li>").append($('<a>').attr("tabindex",-1).html("2").on('click',function(){
+				amountButton.html("2");
+			}));
+			var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu").append(amountOption0, amountOption1, amountOption2);
+			var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
+			
+			var tableRow = $("<tr>").append(type, amount);
+			provisionTable.append(tableRow);
+		}
+		
+		return provisionTable;
+	}
+	
 	createStudentTaskPagesForClass = function(targetClass){
 		$.each(targetClass.tasks, function(i, task) {
 			
-			var title = $("<div>").append($("<h3>").html(task.name+" ("+targetClass.name+")"));
-			var description = $("<div>").html("Description: "+task.description);
-			
-			var nameHeader = $("<th>").addClass("span2 alignleft").html("Name");
-			var imageHeader = $("<th>").addClass("span3 alignleft").html("Image");
-			var nodeHeader = $("<th>").addClass("span2 alignleft").html("Node");
-			var statusHeader = $("<th>").addClass("span1 alignleft").html("Status");
-			var btnHeader = $("<th>").addClass("span2");
-			var tableHeader = $("<tr>").append(nameHeader, imageHeader, nodeHeader, statusHeader, btnHeader);
-			var provisiontable = $("<table>").attr("id","resourcesList"+task.id).append(tableHeader);
+			var title = $("<h3>").html(task.name+" ("+targetClass.name+")");
+			var description = "Description: "+task.description;
 			
 //			var inputName = $("<td>").append($("<input>").attr("id", "newInstanceName").attr("placeholder","Enter a name for a new instance"));
 //			var button = $("<td>").append($("<a>").addClass("btn margin3").html("Create").on("click",function(e){
@@ -342,7 +382,13 @@ function(Utils, Server){
 //			provisiontable.append(createRow);
 			
 			
-			var provisionContent = $("<div>").attr("id","provision"+task.id).addClass("collapse in").append(provisiontable)
+			var provisionContent = $("<div>").attr("id","provision"+task.id).addClass("collapse in");
+			$.each(targetClass.nodes, function(i, node) {
+				provisionContent.append($("<h5>").html(node.name+" resources").addClass("span7 left0"));
+				provisionContent.append(createProvisionResourcesTable(node, task));
+			});
+			provisionContent.append($("<div>").addClass("span12").append($("<br>"), $("<br>"), $("<br>"), $("<br>")));
+			
 			var provisionHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#provision"+task.id).addClass("pointer").append($("<h4>").html("Provision"));
 
 			
@@ -358,7 +404,7 @@ function(Utils, Server){
 			var runContent = $("<div>").attr("id","run"+task.id).addClass("collapse").append(labwikiHeader, labwikiLink);
 			
 			
-			var content = $("<div>").append($("<hr>"), provisionHeader, $("<hr>"), provisionContent, configureHeader, $("<hr>"), configureContent, runHeader, $("<hr>"), runContent);
+			var content = $("<div>").append($("<hr>"), provisionHeader, $("<hr>"), provisionContent, $("<br>"), configureHeader, $("<hr>"), configureContent, $("<br>"), runHeader, $("<hr>"), runContent);
 			var taskTab = $("<div>").attr("id","task"+task.id).addClass("row-fluid tab-pane").append(title, description, content);
 			$("#desktop").append(taskTab);
 			
@@ -458,18 +504,10 @@ function(Utils, Server){
 	}
 
 	addOpenstackInstanceToTable = function(instance, classID){
-		var name = $("<td>").html(instance.name);
-		var image = $("<td>").html(instance.image.name);
-		var node = $("<td>").html(instance.node.name);
-		var status = $("<td>").html(instance.status);
-		if(instance.status === "ACTIVE"){
-			status.attr("style", "color:green");
-		}
-		else{
-			status.attr("style", "color:red");
-		}
-		var tableRow = $("<tr>").append(name, image, node, status);
-		$("#resourcesList"+classID).append(tableRow);
+//		var type = $("<td>").html(Utils.getLocalName(instance.type));
+//		var amount = $("<td>");
+//		var tableRow = $("<tr>").append(type, amount);
+//		$("#resourcesList"+classID).append(tableRow);
 	}
 	
 	processOpenstackInstances = function(instances, classID){

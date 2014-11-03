@@ -35,10 +35,6 @@ html, body {
   min-height: 100%;
 }
 
-#aside{
-  height:60%;
-}
-
 #aside a {
     color: #373737;
     border-radius:0.2em;
@@ -46,6 +42,7 @@ html, body {
 
 #desktopContainer {
 	border-left: 1px solid #d1d1d1;
+	min-height: 60%;
 }
 
 #desktop a{
@@ -93,6 +90,7 @@ h4{margin-bottom:5px !important}
 
 .fa {padding-right:5px;}
 
+.left0{margin-left: 0 !important}
 .left20{margin-left: 20px}
 .left40{margin-left: 40px !important}
 .top10{margin-top:10px}
