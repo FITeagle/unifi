@@ -573,15 +573,24 @@ function(Utils, Server){
 		var name = $("<a>").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),newClass.name);
 		var header = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(name);
 		
-		var tasksList = $("<ul>").addClass("navigationLink fa-ul");
+		var classOptions = $("<ul>").addClass("navigationLink fa-ul");
 		$.each(newClass.tasks, function(i, task) {
 			var taskLink = $("<li>").append($("<a>").attr("href","#task"+task.id).append($("<i>").addClass("fa fa-minus fa-li"),task.name).on("click",function(e){
 				e.preventDefault();
 				openDesktopTab("#task"+task.id);
 			}));
-			tasksList.append(taskLink);
+			classOptions.append(taskLink);
 		});
-		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse").append(tasksList);
+		
+		var leaveClassLink = $("<li>").append($("<a>").append($("<i>").addClass("fa fa-trash-o fa-li"), "Leave class").on("click",function(e){
+			e.preventDefault();
+			Server.deleteParticipant(newClass.id, Utils.getCurrentUser().username);
+			Server.getAllClassesFromUser(Utils.getCurrentUser().username);
+			classElement.remove();
+		}));
+		classOptions.append(leaveClassLink);
+		
+		var tasks = $("<div>").attr("id",newClass.id+"Tasks").addClass("row-fluid collapse").append(classOptions);
 		
 		var classElement = $("<li>").append(header, tasks);
 		$("#userClasses").prepend(classElement);
