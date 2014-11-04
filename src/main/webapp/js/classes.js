@@ -20,7 +20,7 @@ function(Utils, Server){
 			createStudentJoinClassPages();
 			createAllStudentTaskPages();
 			initStudentClassesAside();
-			initStudentJoinClass(false);
+			initStudentJoinClass(true);
 		}
 	};
 
@@ -135,7 +135,7 @@ function(Utils, Server){
 		$("#createClassBtn").on("click",function(){
 			var newClass = new Object();
 			newClass.name = $("#className").val();
-			newClass.description = $("#classDescripion").val();
+			newClass.description = $("#classDescription").val();
 			newClass.owner = Utils.getCurrentUser();
 			newClass.nodes = [];
 			$.each($("#addedNodes").children(), function(i, nodeItem) {
