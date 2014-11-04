@@ -163,7 +163,12 @@ function(Utils, Server){
 	createClassParticipantsPage = function(newClass){
 		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
 		var header = $("<h4>").html("Participants");
-		var tableheader = $("<tr>").append($("<td>"),$("<td>"),$("<td>"),$("<td>").html("Task 1"),$("<td>").html("Task 2"),$("<td>").html("Task 3"));
+		var tableheader = $("<tr>").append($("<td>"),$("<td>"),$("<td>"));
+		
+		$.each(newClass.tasks, function(i, task) {
+			tableheader.append($("<td>").html(task.name));
+		});
+		
 		var participants = $("<div>").append($("<table>").attr("id","class"+newClass.id+"ParticipantsTable").append(tableheader));
 		
 		var addheader = $("<h4>").html("Add participant");
@@ -218,7 +223,14 @@ function(Utils, Server){
 			Utils.showUserModal(Server.getUser(user.username));			
 		}));
 		
-		var row = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")</td>",detailsBtn,deleteUserBtn,"<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>","<td class='centered'><i class='fa fa-square-o fa-lg'></i></td>");
+		var row = $("<tr>").append("<td><b>"+user.username+"</b> ("+user.firstName+" "+user.lastName+")</td>",detailsBtn,deleteUserBtn);
+		
+		$.each($("#class"+classid+"ParticipantsTable")[0].rows[0].cells, function(i, task) {
+			if(i>2){
+				row.append($("<td>").addClass("centered").append($("<i>").addClass("fa fa-square-o fa-lg")));
+			}
+		});
+		
 		$("#class"+classid+"ParticipantsTable").append(row);
 	};
 	
