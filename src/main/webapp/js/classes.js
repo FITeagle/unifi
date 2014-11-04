@@ -383,10 +383,7 @@ function(Utils, Server){
 			var label1 = $("<td>").addClass("span4").html("MTC URL");
 			var input1 = $("<td>").addClass("span7").append($("<input>").addClass("nomargin").attr("type" ,"text").attr("placeholder", "The url of the controlling mtc"));
 			var row1 = $("<tr>").append(label1, input1);
-			var label2 = $("<td>").addClass("span4").html("Name");
-			var input2 = $("<td>").addClass("span7").append($("<input>").addClass("nomargin").attr("type" ,"text").attr("placeholder", "The name of the robot"));
-			var row2 = $("<tr>").append(label2, input2);
-			var configureOptions = $("<div>").attr("id","configureResource412").addClass("collapse").append($("<table>").append(row1, row2));
+			var configureOptions = $("<div>").attr("id","configureResource412").addClass("collapse").append($("<table>").append(row1));
 			var configure = $("<td>").addClass("dropdown").append(configureButton, configureOptions);
 			
 			
@@ -398,10 +395,13 @@ function(Utils, Server){
 			
 			var configureButton = $("<button>").addClass("btn").attr("data-toggle","collapse").attr("data-target","#configureResource323").append("Configure", $("<span>").addClass("caret"));
 			
-			var label2 = $("<td>").addClass("span4").html("Name");
-			var input2 = $("<td>").addClass("span7").append($("<input>").addClass("nomargin").attr("type" ,"text").attr("placeholder", "The name of the mtc instance"));
+			var label1 = $("<td>").addClass("span4").html("Username");
+			var input1 = $("<td>").addClass("span7").append($("<input>").addClass("nomargin").attr("type" ,"text").attr("placeholder", "The username for the mtc instance"));
+			var row1 = $("<tr>").append(label1, input1);
+			var label2 = $("<td>").addClass("span4").html("Password");
+			var input2 = $("<td>").addClass("span7").append($("<input>").addClass("nomargin").attr("type" ,"password").attr("placeholder", "The password for the mtc instance"));
 			var row2 = $("<tr>").append(label2, input2);
-			var configureOptions = $("<div>").attr("id","configureResource323").addClass("collapse").append($("<table>").append(row2));
+			var configureOptions = $("<div>").attr("id","configureResource323").addClass("collapse").append($("<table>").append(row1, row2));
 			var configure = $("<td>").addClass("dropdown").append(configureButton, configureOptions);
 			
 			var tableRow = $("<tr>").append(type, configure);
