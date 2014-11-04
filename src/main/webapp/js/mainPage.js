@@ -128,13 +128,13 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 				default:
 					var img = $("<img>").attr("id", "unifiMap").attr("src", "img/map_unifi.png").attr("usemap", "#unifimap");
 					
-					var tubAreaClasses = $("<area>").attr("shape", "rect").attr("id", "tubClassesMapLink").attr("coords", "319,60,387,81").attr("href","#classes1");
-					var tubAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "319,82,387,101").attr("href","#tublectures").attr("onclick", "return false;");
-					var tubAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "319,102,387,123").attr("href","#tubtestbeds").attr("onclick", "return false;");
+					var tubAreaClasses = $("<area>").attr("shape", "rect").attr("coords", "374,73,452,94").attr("id", "tubClassesMapLink").attr("href","#classes1");
+					var tubAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "374,95,452,118").attr("href","#tublectures").attr("onclick", "return false;");
+					var tubAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "374,119,452,142").attr("href","#tubtestbeds").attr("onclick", "return false;");
 					
-					var uctAreaClasses = $("<area>").attr("shape", "rect").attr("id", "uctClassesMapLink").attr("coords", "353,279,420,299").attr("href","#classes2");
-					var uctAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "353,300,420,320").attr("href","#uctlectures").attr("onclick", "return false;");
-					var uctAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "353,321,420,341").attr("href","#ucttestbeds").attr("onclick", "return false;");
+					var uctAreaClasses = $("<area>").attr("shape", "rect").attr("coords", "415,328,492,349").attr("id", "uctClassesMapLink").attr("href","#classes2");
+					var uctAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "415,350,492,374").attr("href","#uctlectures").attr("onclick", "return false;");
+					var uctAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "415,375,492,398").attr("href","#ucttestbeds").attr("onclick", "return false;");
 					var map = $("<map>").attr("name", "unifimap").append(tubAreaClasses, tubAreaLectures, tubAreaTestbeds, uctAreaClasses, uctAreaLectures, uctAreaTestbeds);
 					$("#welcome_content").append(welcome_message_user, img, map);
 					initMainPage();
