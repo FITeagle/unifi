@@ -107,7 +107,7 @@ function(Utils, Server){
 			inputName.val('');
 			inputDescription.val('');
 			createClassOwnerTaskPage(targetClass, newTask);
-			taskLink.click();
+			openDesktopTab("#class"+targetClass.id+"_task"+newTask.id);
 		});
 		
 		createTask_page.append($("<div>").addClass("span12 nomargin").append($("<br>"), $("<br>"), $("<br>"), $("<br>"), button));
