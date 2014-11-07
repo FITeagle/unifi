@@ -385,7 +385,7 @@ function(Utils, Server){
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
-			var type = $("<td>").html("robot(0135-2135-2436-2416)");
+			var type = $("<td>").html("robot (0135-2135-2436-2416)");
 			
 			var configureButton = $("<button>").addClass("btn").attr("data-toggle","collapse").attr("data-target","#configureResource412").append("Configure", $("<span>").addClass("caret"));
 			
@@ -400,7 +400,7 @@ function(Utils, Server){
 			provisionTable.append(tableRow);
 		}
 		if(node.name === "UCT"){
-			var type = $("<td>").html("OpenMTC-as-a-Service(5335-3547-2352-5356)");
+			var type = $("<td>").html("OpenMTC-as-a-Service (5335-3547-2352-5356)");
 			
 			var configureButton = $("<button>").addClass("btn").attr("data-toggle","collapse").attr("data-target","#configureResource323").append("Configure", $("<span>").addClass("caret"));
 			
