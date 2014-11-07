@@ -156,12 +156,14 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 					history.pushState(hash, "page "+hash, hash+"_page");
 				}
 				a.tab('show');
+				window.scrollTo(0,0);
 			}
 			else{
 				if(pushToHistory){
 					history.pushState(home, "page "+home, home+"_page");
 				}
 				$('[href$='+home+']').tab('show'); 
+				window.scrollTo(0,0);
 			}
 		}
 	};
