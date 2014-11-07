@@ -11,10 +11,8 @@ function(Utils, Server){
 			break;
 		case "CLASSOWNER":
 			createCreateClassPage();
-			createCreateTaskPage();
 			initClassownerClassesAside();
 			initCreateClassPage();
-			initCreateTaskPage();
 			break;
 		default:
 			createStudentJoinClassPages();
@@ -58,9 +56,9 @@ function(Utils, Server){
 	}
 	
 	
-	createCreateTaskPage = function(){
+	createCreateTaskPage = function(targetClass){
 		var header = $("<div>").append($("<h3>").html("Create Task"));
-		var subheader = $("<div>").append($("<h4>").html("Create a new task for this class"));
+		var subheader = $("<div>").append($("<h4>").html("Create a new task for the class "+targetClass.name));
 		
 		var labelName = $("<label>").addClass("span2").attr("for", "inputTaskName").html("Name");
 		var inputName = $("<input>").addClass("span8").attr("id", "inputTaskName").attr("type" ,"text").attr("placeholder", "Give the task an appropriate name");
@@ -71,25 +69,10 @@ function(Utils, Server){
 		var inputDescriptionDiv = $("<div>").addClass("row-fluid").append(labelDescription, inputDescription);
 		
 		var icon = $("<i>").addClass("fa fa-check");
-		var button = $("<button>").addClass("btn pull-left span3 nomargin").attr("id", "createTaskBtn").html("Create Task").prepend(icon);
-		
-		var createTask_page = $("<div>").attr("id", "createtask").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), inputNameDiv, inputDescriptionDiv, $("<br>"), button);
-		
-		$("#desktop").append(createTask_page);
-	}
-	
-	initCreateClassPage = function(){
-		initNodeDropdown();
-		initCreateBtn();
-	};
-	
-	var currentClassId = 0;
-	
-	initCreateTaskPage = function(){
-		$("#createTaskBtn").on("click",function(){
+		var button = $("<button>").addClass("btn pull-left span3 nomargin").attr("id", "createTaskBtn").html("Create Task").prepend(icon).on("click",function(){
 			var newTask = new Object();
-			newTask.name = $("#inputTaskName").val();
-			newTask.description = $("#inputTaskDescription").val();
+			newTask.name = inputName.val();
+			newTask.description = inputDescription.val();
 			
 			if(newTask.name == null || newTask.name.length < 1){
 				alert("Please enter a task name!");
@@ -100,7 +83,7 @@ function(Utils, Server){
 				return;
 			}
 			
-			newTask.id = Server.addTask(currentClassId, newTask);
+			newTask.id = Server.addTask(targetClass.id, newTask);
 			
 			var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+newTask.id).append($("<i>").addClass("fa fa-minus fa-li"), newTask.name).on("click",function(e){
 				e.preventDefault();
@@ -108,11 +91,20 @@ function(Utils, Server){
 				//TODO: create this classowner task page
 			}));
 			
-			$("#"+currentClassId+"TaskList").prepend(taskLink);
+			$("#"+targetClass.id+"TaskList").prepend(taskLink);
 			
-			$("#inputTaskName").val('');
-			$("#inputTaskDescription").val('');
+			inputName.val('');
+			inputDescription.val('');
 		});
+		
+		var createTask_page = $("<div>").attr("id", "class"+targetClass.id+"_createtask").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), inputNameDiv, inputDescriptionDiv, $("<br>"), button);
+		
+		$("#desktop").append(createTask_page);
+	}
+	
+	initCreateClassPage = function(){
+		initNodeDropdown();
+		initCreateBtn();
 	};
 	
 	initNodeDropdown = function(){
@@ -249,10 +241,9 @@ function(Utils, Server){
 		
 		var tasksHeaderLink = $("<a>").attr("id","tasksToggle").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),"Tasks");
 		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(tasksHeaderLink);
-		var createTaskLink = $("<li>").append($("<a>").attr("href","#createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
+		var createTaskLink = $("<li>").append($("<a>").attr("href","#class"+newClass.id+"_createtask").append($("<i>").addClass("fa fa-plus fa-li"),"Create task").on("click",function(e){
 			e.preventDefault();
-			currentClassId = newClass.id;
-			openDesktopTab("#createtask");
+			openDesktopTab("#class"+newClass.id+"_createtask");
 		}));
 		
 		var tasks = $("<ul>").addClass("navigationLink fa-ul").attr("id",newClass.id+"TaskList").append(createTaskLink);
@@ -315,6 +306,7 @@ function(Utils, Server){
 				createClassownerClassForAsideList(newClass);
 				createClassParticipantsPage(newClass);
 				createClassResourcesPage(newClass);
+				createCreateTaskPage(newClass);
 			});
 		}
 	};
