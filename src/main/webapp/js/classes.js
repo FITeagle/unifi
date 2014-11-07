@@ -57,8 +57,10 @@ function(Utils, Server){
 	
 	
 	createCreateTaskPage = function(targetClass){
-		var header = $("<div>").append($("<h3>").html("Create Task"));
-		var subheader = $("<div>").append($("<h4>").html("Create a new task for the class "+targetClass.name));
+		var createTask_page = $("<div>").attr("id", "class"+targetClass.id+"_createtask").addClass("row-fluid tab-pane");
+		
+		var header = $("<h3>").html("Create Task");
+		var subheader = $("<h4>").html("Create a new task for the class "+targetClass.name);
 		
 		var labelName = $("<label>").addClass("span2").attr("for", "inputTaskName").html("Name");
 		var inputName = $("<input>").addClass("span8").attr("id", "inputTaskName").attr("type" ,"text").attr("placeholder", "Give the task an appropriate name");
@@ -68,8 +70,18 @@ function(Utils, Server){
 		var inputDescription = $("<input>").addClass("span8").attr("id", "inputTaskDescription").attr("type" ,"text").attr("placeholder", "Describe the task here");
 		var inputDescriptionDiv = $("<div>").addClass("row-fluid").append(labelDescription, inputDescription);
 		
+		createTask_page.append(header, subheader, $("<hr>"), inputNameDiv, inputDescriptionDiv);
+		
+		var resourcesHeader = $("<h5>").html("Chose the resources which should be available for this task:");
+		createTask_page.append(resourcesHeader);
+		
+		$.each(targetClass.nodes, function(i, node) {
+			createTask_page.append($("<h5>").html(node.name+" resources").addClass("span7"));
+			createTask_page.append(createResourcesTable(node, null));
+		});
+		
 		var icon = $("<i>").addClass("fa fa-check");
-		var button = $("<button>").addClass("btn pull-left span3 nomargin").attr("id", "createTaskBtn").html("Create Task").prepend(icon).on("click",function(){
+		var button = $("<button>").addClass("btn pull-left span3 nomargin").html("Create Task").prepend(icon).on("click",function(){
 			var newTask = new Object();
 			newTask.name = inputName.val();
 			newTask.description = inputDescription.val();
@@ -97,7 +109,7 @@ function(Utils, Server){
 			inputDescription.val('');
 		});
 		
-		var createTask_page = $("<div>").attr("id", "class"+targetClass.id+"_createtask").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), inputNameDiv, inputDescriptionDiv, $("<br>"), button);
+		createTask_page.append($("<div>").addClass("span12 nomargin").append($("<br>"), $("<br>"), $("<br>"), $("<br>"), button));
 		
 		$("#desktop").append(createTask_page);
 	}
@@ -129,6 +141,7 @@ function(Utils, Server){
 			newClass.name = $("#className").val();
 			newClass.description = $("#classDescription").val();
 			newClass.owner = Utils.getCurrentUser();
+			newClass.tasks = [];
 			newClass.nodes = [];
 			$.each($("#addedNodes").children(), function(i, nodeItem) {
 				var node = new Object();
@@ -145,9 +158,10 @@ function(Utils, Server){
 			createClassResourcesPage(newClass);
 			
 			$("#className").val('');
-			$("#classDescripion").val('');
+			$("#classDescription").val('');
 			$("#addedNodes").empty();
 			initCollapseHeaders();
+			$("#"+newClass.id+"Options").collapse('show');
 			openDesktopTab("#class"+newClass.id+"_participants");
 		});
 	};
@@ -317,11 +331,14 @@ function(Utils, Server){
 		});
 	};
 	
-	createProvisionResourcesTable = function(node, task){
+	createResourcesTable = function(node, task){
 		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
 		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
 		var tableHeader = $("<tr>").append(typeHeader, amountHeader);
-		var provisionTable = $("<table>").attr("id","resourcesList"+task.id).addClass("span7").append(tableHeader);
+		var provisionTable = $("<table>").addClass("span7").append(tableHeader);
+		if(task != null){
+			provisionTable.attr("id","resourcesList"+task.id);
+		}
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
@@ -412,13 +429,13 @@ function(Utils, Server){
 			var provisionContent = $("<div>").attr("id","provision"+task.id).addClass("collapse in");
 			$.each(targetClass.nodes, function(i, node) {
 				provisionContent.append($("<h5>").html(node.name+" resources").addClass("span7 left0"));
-				provisionContent.append(createProvisionResourcesTable(node, task));
+				provisionContent.append(createResourcesTable(node, task));
 			});
 			
 			var provisionButton = $("<a>").addClass("btn margin3").html("Provision selected resources").on("click",function(e){
 				provisionContent.collapse('hide');
 				$.each(targetClass.nodes, function(i, node) {
-					configureContent.append($("<h5>").html(node.name+" resources").addClass("span12 left0"));
+					configureContent.append($("<h5>").html(node.name+" resources").addClass("span12"));
 					configureContent.append(createConfigureResourcesTable(node, task));
 				});
 				configureContent.append(configureButton);
