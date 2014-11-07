@@ -80,8 +80,10 @@ function(Utils, Server){
 			createTask_page.append(createResourcesTable(node, null));
 		});
 		
-		var icon = $("<i>").addClass("fa fa-check");
-		var button = $("<button>").addClass("btn pull-left span3 nomargin").html("Create Task").prepend(icon).on("click",function(){
+		var iconCheck = $("<i>").addClass("fa fa-check");
+		var iconSpinner = $("<i>").addClass("fa fa-spin fa-spinner fa-lg hidden").attr("id", "createTaskSpinner");
+		var button = $("<button>").addClass("btn pull-left span3 nomargin").html("Create Task").prepend(iconCheck).append(iconSpinner).on("click",function(){
+			Utils.unhideElement('#createTaskSpinner');
 			var newTask = new Object();
 			newTask.name = inputName.val();
 			newTask.description = inputDescription.val();
@@ -107,6 +109,7 @@ function(Utils, Server){
 			inputName.val('');
 			inputDescription.val('');
 			createClassOwnerTaskPage(targetClass, newTask);
+			Utils.hideElement('#createTaskSpinner');
 			openDesktopTab("#class"+targetClass.id+"_task"+newTask.id);
 		});
 		
