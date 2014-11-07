@@ -522,7 +522,7 @@ function(Utils){
 		return message;
 	};
 	
-	Server.addTask = function(id, task){	
+	Server.addTask = function(id, task, idOfSpinner){	
 		var newId=0;
 		$.ajax({
 			cache: false,
@@ -531,8 +531,16 @@ function(Utils){
 			data: JSON.stringify(task),
 			contentType: "application/json",
 			url: "/native/api/class/"+id+"/task",
+			beforeSend: function(xhr){
+				if(idOfSpinner != null){
+					Utils.unhideElement('#'+idOfSpinner);
+				}
+			},
 			success: function(data,status){
 				newId = data;
+				if(idOfSpinner != null){
+					Utils.hideElement('#'+idOfSpinner);
+				}
 			},
 		});
 		return newId;

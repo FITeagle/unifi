@@ -83,7 +83,6 @@ function(Utils, Server){
 		var iconCheck = $("<i>").addClass("fa fa-check");
 		var iconSpinner = $("<i>").addClass("fa fa-spin fa-spinner fa-lg hidden").attr("id", "createTaskSpinner");
 		var button = $("<button>").addClass("btn pull-left span3 nomargin").html("Create Task").prepend(iconCheck).append(iconSpinner).on("click",function(){
-			Utils.unhideElement('#createTaskSpinner');
 			var newTask = new Object();
 			newTask.name = inputName.val();
 			newTask.description = inputDescription.val();
@@ -97,7 +96,7 @@ function(Utils, Server){
 				return;
 			}
 			
-			newTask.id = Server.addTask(targetClass.id, newTask);
+			newTask.id = Server.addTask(targetClass.id, newTask, "createTaskSpinner");
 			
 			var taskLink = $("<li>").append($("<a>").attr("href","#class"+targetClass.id+"_task"+newTask.id).append($("<i>").addClass("fa fa-minus fa-li"), newTask.name).on("click",function(e){
 				e.preventDefault();
@@ -109,7 +108,7 @@ function(Utils, Server){
 			inputName.val('');
 			inputDescription.val('');
 			createClassOwnerTaskPage(targetClass, newTask);
-			Utils.hideElement('#createTaskSpinner');
+			
 			openDesktopTab("#class"+targetClass.id+"_task"+newTask.id);
 		});
 		
