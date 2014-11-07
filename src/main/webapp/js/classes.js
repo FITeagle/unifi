@@ -97,16 +97,17 @@ function(Utils, Server){
 			
 			newTask.id = Server.addTask(targetClass.id, newTask);
 			
-			var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+newTask.id).append($("<i>").addClass("fa fa-minus fa-li"), newTask.name).on("click",function(e){
+			var taskLink = $("<li>").append($("<a>").attr("href","#class"+targetClass.id+"_task"+newTask.id).append($("<i>").addClass("fa fa-minus fa-li"), newTask.name).on("click",function(e){
 				e.preventDefault();
-				openDesktopTab("#classownerTask"+newTask.id);
-				//TODO: create this classowner task page
+				openDesktopTab("#class"+targetClass.id+"_task"+newTask.id);
 			}));
 			
 			$("#"+targetClass.id+"TaskList").prepend(taskLink);
 			
 			inputName.val('');
 			inputDescription.val('');
+			createClassOwnerTaskPage(targetClass, newTask);
+			taskLink.click();
 		});
 		
 		createTask_page.append($("<div>").addClass("span12 nomargin").append($("<br>"), $("<br>"), $("<br>"), $("<br>"), button));
@@ -264,10 +265,9 @@ function(Utils, Server){
 		
 		if(newClass.tasks != null){
 			$.each(newClass.tasks, function(i, task) {		
-				var taskLink = $("<li>").append($("<a>").attr("href","#classownerTask"+task.id).append($("<i>").addClass("fa fa-minus fa-li"), task.name).on("click",function(e){
+				var taskLink = $("<li>").append($("<a>").attr("href","#class"+newClass.id+"_task"+task.id).append($("<i>").addClass("fa fa-minus fa-li"), task.name).on("click",function(e){
 					e.preventDefault();
-					openDesktopTab("#classownerTask"+task.id);
-					//TODO: create this classowner task page
+					openDesktopTab("#class"+newClass.id+"_task"+task.id);
 				}));
 				tasks.prepend(taskLink);
 			});
@@ -289,6 +289,41 @@ function(Utils, Server){
 		var classElement = $("<li>").append(header, options);
 		$("#tbownerClasses").prepend(classElement);
 	};
+	
+	createClassOwnerTaskPage = function(targetClass, task){
+		var taskPage = $("<div>").attr("id", "class"+targetClass.id+"_task"+task.id).addClass("row-fluid tab-pane");
+		
+		var header = $("<h3>").html(task.name);
+		var subheader = $("<h4>").html("Here you can view and edit the task");
+		
+		var labelName = $("<label>").addClass("span2").attr("for", "inputTaskName").html("Name");
+		var inputName = $("<input>").addClass("span8").attr("id", "inputTaskName").attr("type" ,"text").attr("placeholder", task.name);
+		var inputNameDiv = $("<div>").addClass("row-fluid").append(labelName, inputName);
+		
+		var labelDescription = $("<label>").addClass("span2").attr("for", "inputTaskDescription").html("Description");
+		var inputDescription = $("<input>").addClass("span8").attr("id", "inputTaskDescription").attr("type" ,"text").attr("placeholder", task.description);
+		var inputDescriptionDiv = $("<div>").addClass("row-fluid").append(labelDescription, inputDescription);
+		
+		taskPage.append(header, subheader, $("<hr>"), inputNameDiv, inputDescriptionDiv);
+		
+		var resourcesHeader = $("<h5>").html("These resources are currently available for this task:");
+		taskPage.append(resourcesHeader);
+		
+		$.each(targetClass.nodes, function(i, node) {
+			//TODO: add amounts
+			taskPage.append($("<h5>").html(node.name+" resources").addClass("span7"));
+			taskPage.append(createResourcesTable(node, null));
+		});
+		
+		var icon = $("<i>").addClass("fa fa-check");
+		var button = $("<button>").addClass("btn pull-left span3 nomargin").html("Update").prepend(icon).on("click",function(){
+			alert("Updating tasks not supported yet!")
+		});
+		
+		taskPage.append($("<div>").addClass("span12 nomargin").append($("<br>"), $("<br>"), $("<br>"), $("<br>"), button));
+		
+		$("#desktop").append(taskPage);
+	}
 	
 	initClassownerClassesAside = function(){
 		var list = $("<ul>").attr("id","tbownerClasses").addClass("fa-ul");
@@ -321,6 +356,9 @@ function(Utils, Server){
 				createClassParticipantsPage(newClass);
 				createClassResourcesPage(newClass);
 				createCreateTaskPage(newClass);
+				$.each(newClass.tasks, function(i, task) {		
+					createClassOwnerTaskPage(newClass, task);
+				});
 			});
 		}
 	};
