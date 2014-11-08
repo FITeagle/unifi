@@ -158,7 +158,6 @@ function(Utils, Server){
 			createClassownerClassForAsideList(newClass);
 			
 			createClassParticipantsPage(newClass);
-			createClassResourcesPage(newClass);
 			
 			$("#className").val('');
 			$("#classDescription").val('');
@@ -251,10 +250,6 @@ function(Utils, Server){
 			e.preventDefault();
 			openDesktopTab("#class"+newClass.id+"_participants");
 		}));
-		var resourcesLink = $("<li>").append($("<a>").attr("href","#class"+newClass.id+"_resources").append($("<i>").addClass("fa fa-minus fa-li"),"Resources").on("click",function(e){
-			e.preventDefault();
-			openDesktopTab("#class"+newClass.id+"_resources");
-		}));
 		
 		var tasksHeaderLink = $("<a>").attr("id","tasksToggle").append($("<i>").addClass("collapseSign fa fa-caret-right fa-li"),"Tasks");
 		var tasksHeader = $("<div>").addClass("collapseHeader").attr("data-toggle","collapse").attr("data-target","#"+newClass.id+"Tasks").append(tasksHeaderLink);
@@ -285,7 +280,7 @@ function(Utils, Server){
 			});
 		}));
 		
-		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,resourcesLink,tasksToggle,deleteLink);
+		var optionList = $("<ul>").addClass("navigationLink fa-ul").append(participantsLink,tasksToggle,deleteLink);
 		var options = $("<div>").attr("id",newClass.id+"Options").addClass("row-fluid collapse").append(optionList);
 		
 		var classElement = $("<li>").append(header, options);
@@ -342,21 +337,12 @@ function(Utils, Server){
 		createAllClassownerClassesAsides();
 	};
 	
-	createClassResourcesPage = function(newClass){
-		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
-		var header = $("<h4>").html("Topology of the resources");
-		
-		var page = $("<div>").attr("id","class"+newClass.id+"_resources").addClass("row-fluid tab-pane").append(title, header, $("<br>"));
-		$("#desktop").append(page);
-	};
-	
 	createAllClassownerClassesAsides = function(){
 		var allClasses = Server.getAllClassesOwnedByUser(Utils.getCurrentUser().username);
 		if(allClasses != null){
 			$.each(allClasses, function(i, newClass) {
 				createClassownerClassForAsideList(newClass);
 				createClassParticipantsPage(newClass);
-				createClassResourcesPage(newClass);
 				createCreateTaskPage(newClass);
 				$.each(newClass.tasks, function(i, task) {		
 					createClassOwnerTaskPage(newClass, task);
