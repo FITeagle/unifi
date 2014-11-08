@@ -536,11 +536,13 @@ function(Utils){
 					Utils.unhideElement('#'+idOfSpinner);
 				}
 			},
-			success: function(data,status){
-				newId = data;
+			complete: function(){
 				if(idOfSpinner != null){
 					Utils.hideElement('#'+idOfSpinner);
 				}
+			},
+			success: function(data,status){
+				newId = data;
 			},
 		});
 		return newId;
