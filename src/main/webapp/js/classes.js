@@ -12,7 +12,6 @@ function(Utils, Server){
 		case "CLASSOWNER":
 			createCreateClassPage();
 			initClassownerClassesAside();
-			initCreateClassPage();
 			break;
 		default:
 			createStudentJoinClassPages();
@@ -23,8 +22,8 @@ function(Utils, Server){
 	};
 
 	createCreateClassPage = function(){
-		var header = $("<div>").append($("<h3>").html("Create Class"));
-		var subheader = $("<div>").append($("<h4>").html("Create a new class where users can join"));
+		var header = $("<h3>").html("Create Class");
+		var subheader = $("<h4>").html("Create a new class where users can join");
 		
 		var labelName = $("<label>").addClass("span2").attr("for", "className").html("Name");
 		var inputName = $("<input>").addClass("span8").attr("id", "className").attr("type" ,"text").attr("placeholder", "Chose any name for your class");
@@ -53,8 +52,55 @@ function(Utils, Server){
 		var createClass_page = $("<div>").attr("id", "createclass").addClass("row-fluid tab-pane").append(header, subheader, $("<hr>"), outerDiv);
 		
 		$("#desktop").append(createClass_page);
+		initNodeDropdown();
+		initCreateClassBtn();
 	}
 	
+	initNodeDropdown = function(){
+		var nodes = Server.getAllNodes();
+		
+		$.each(nodes, function(i, node) {
+			var nodeItem = $("<li>").append($("<a>").attr("tabindex",-1).html(node.name).on("click",function(){
+				var nodeDiv = "";
+				var deleteBtn = $("<button>").addClass("btn span4").html("Delete").on("click",function(){
+					nodeDiv.remove();
+				});
+				nodeDiv = $("<div>").addClass("span12 nomargin").append("<span class='span8'>"+node.name+" </span>",deleteBtn).val(node.id);
+				$("#addedNodes").append(nodeDiv);
+			}));
+			$("#availableNodes").append(nodeItem);
+		});
+	};
+	
+	initCreateClassBtn = function(){
+		$("#createClassBtn").on("click",function(){
+			var newClass = new Object();
+			newClass.name = $("#className").val();
+			newClass.description = $("#classDescription").val();
+			newClass.owner = Utils.getCurrentUser();
+			newClass.tasks = [];
+			newClass.nodes = [];
+			$.each($("#addedNodes").children(), function(i, nodeItem) {
+				var node = new Object();
+				node.name = nodeItem.children[0].innerHTML;
+				node.id = nodeItem.value;
+				newClass.nodes.push(node);
+			});
+			
+			newClass.id = Server.createClass(newClass);
+			
+			createClassownerClassForAsideList(newClass);
+			
+			createClassParticipantsPage(newClass);
+			
+			$("#className").val('');
+			$("#classDescription").val('');
+			$("#addedNodes").empty();
+			initCollapseHeaders();
+			$("#"+newClass.id+"Options").collapse('show');
+			openDesktopTab("#class"+newClass.id+"_participants");
+		});
+	};
 	
 	createCreateTaskPage = function(targetClass){
 		var createTask_page = $("<div>").attr("id", "class"+targetClass.id+"_createtask").addClass("row-fluid tab-pane");
@@ -117,59 +163,8 @@ function(Utils, Server){
 		$("#desktop").append(createTask_page);
 	}
 	
-	initCreateClassPage = function(){
-		initNodeDropdown();
-		initCreateBtn();
-	};
-	
-	initNodeDropdown = function(){
-		var nodes = Server.getAllNodes();
-		
-		$.each(nodes, function(i, node) {
-			var nodeItem = $("<li>").append($("<a>").attr("tabindex",-1).html(node.name).on("click",function(){
-				var nodeDiv = "";
-				var deleteBtn = $("<button>").addClass("btn span4").html("Delete").on("click",function(){
-					nodeDiv.remove();
-				});
-				nodeDiv = $("<div>").addClass("span12 nomargin").append("<span class='span8'>"+node.name+" </span>",deleteBtn).val(node.id);
-				$("#addedNodes").append(nodeDiv);
-			}));
-			$("#availableNodes").append(nodeItem);
-		});
-	};
-	
-	initCreateBtn = function(){
-		$("#createClassBtn").on("click",function(){
-			var newClass = new Object();
-			newClass.name = $("#className").val();
-			newClass.description = $("#classDescription").val();
-			newClass.owner = Utils.getCurrentUser();
-			newClass.tasks = [];
-			newClass.nodes = [];
-			$.each($("#addedNodes").children(), function(i, nodeItem) {
-				var node = new Object();
-				node.name = nodeItem.children[0].innerHTML;
-				node.id = nodeItem.value;
-				newClass.nodes.push(node);
-			});
-			
-			newClass.id = Server.createClass(newClass);
-			
-			createClassownerClassForAsideList(newClass);
-			
-			createClassParticipantsPage(newClass);
-			
-			$("#className").val('');
-			$("#classDescription").val('');
-			$("#addedNodes").empty();
-			initCollapseHeaders();
-			$("#"+newClass.id+"Options").collapse('show');
-			openDesktopTab("#class"+newClass.id+"_participants");
-		});
-	};
-	
 	createClassParticipantsPage = function(newClass){
-		var title = $("<div>").append($("<h3>").html(newClass.name),"<hr/>");
+		var title = $("<h3>").html(newClass.name);
 		var header = $("<h4>").html("Participants");
 		var tableheader = $("<tr>").append($("<td>"),$("<td>"),$("<td>"));
 		
@@ -211,7 +206,7 @@ function(Utils, Server){
 		dropdown.append(ul,addBtn);
 		var addParticipant = $("<div>").append(addheader,dropdown);
 		
-		var page = $("<div>").attr("id","class"+newClass.id+"_participants").addClass("row-fluid tab-pane").append(title,header,participants,"<hr>",addParticipant);
+		var page = $("<div>").attr("id","class"+newClass.id+"_participants").addClass("row-fluid tab-pane").append(title,header, $("<hr>"),participants,"<hr>",addParticipant);
 		$("#desktop").append(page);
 		
 		if(newClass.participants != null){
