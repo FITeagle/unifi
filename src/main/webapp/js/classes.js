@@ -65,7 +65,7 @@ function(Utils, Server){
 				var deleteBtn = $("<button>").addClass("btn span4").html("Delete").on("click",function(){
 					nodeDiv.remove();
 				});
-				nodeDiv = $("<div>").addClass("span12 nomargin").append("<span class='span8'>"+node.name+" </span>",deleteBtn).val(node.id);
+				nodeDiv = $("<div>").addClass("span12 nomargin").append("<span class='span8'>"+node.name+"</span>",deleteBtn).val(node.id);
 				$("#addedNodes").append(nodeDiv);
 			}));
 			$("#availableNodes").append(nodeItem);
@@ -90,8 +90,8 @@ function(Utils, Server){
 			newClass.id = Server.createClass(newClass);
 			
 			createClassownerClassForAsideList(newClass);
-			
 			createClassParticipantsPage(newClass);
+			createCreateTaskPage(newClass)
 			
 			$("#className").val('');
 			$("#classDescription").val('');
@@ -123,7 +123,7 @@ function(Utils, Server){
 		
 		$.each(targetClass.nodes, function(i, node) {
 			createTask_page.append($("<h5>").html(node.name+" resources").addClass("span7"));
-			createTask_page.append(createResourcesTable(node, null));
+			createTask_page.append(createResourcesTableWithDummyData(node, targetClass));
 		});
 		
 		var iconCheck = $("<i>").addClass("fa fa-check");
@@ -141,6 +141,25 @@ function(Utils, Server){
 				alert("Please enter a task description!");
 				return;
 			}
+			
+			newTask.resources = [];
+			$.each(targetClass.nodes, function(i, node) {
+				var resourcesTable = $("#class"+targetClass.id+"_resourcesList"+node.id)[0];
+				$.each(resourcesTable.rows, function(i, row) {
+					if(i > 0){
+						if(row.cells[1].children[0].children.length == 0){
+							var resource = new Object();
+							resource.type = row.cells[0].innerHTML;
+							resource.amount = row.cells[1].children[0].innerHTML;
+							if(resource.amount > 0){
+								resource.node = node;
+								newTask.resources.push(resource);
+							}
+						}
+					}
+				});
+			});
+			
 			
 			newTask.id = Server.addTask(targetClass.id, newTask, "createTaskSpinner");
 			
@@ -304,7 +323,7 @@ function(Utils, Server){
 		$.each(targetClass.nodes, function(i, node) {
 			//TODO: add amounts
 			taskPage.append($("<h5>").html(node.name+" resources").addClass("span7"));
-			taskPage.append(createResourcesTable(node, null));
+			taskPage.append(createTaskResourcesTable(task, node, targetClass, false));
 		});
 		
 		var icon = $("<i>").addClass("fa fa-check");
@@ -352,14 +371,45 @@ function(Utils, Server){
 		});
 	};
 	
-	createResourcesTable = function(node, task){
+	createTaskResourcesTable = function(task, node, targetClass, defaultAmountIsNull){
 		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
 		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
 		var tableHeader = $("<tr>").append(typeHeader, amountHeader);
-		var provisionTable = $("<table>").addClass("span7").append(tableHeader);
-		if(task != null){
-			provisionTable.attr("id","resourcesList"+task.id);
-		}
+		var resourcesTable = $("<table>").addClass("span7").attr("id","class"+targetClass.id+"_task_"+task.id+"resourcesList"+node.id).append(tableHeader);
+		
+		$.each(task.resources, function(i, resource) {
+			if(resource.node.name === node.name){
+				var type = $("<td>").html(resource.type);
+				
+				var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append($("<span>").addClass("caret"));;
+				if(defaultAmountIsNull){
+					amountButton.prepend("0");
+				}
+				else{
+					amountButton.prepend(resource.amount);
+				}
+				var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu");
+				for(i = 0; i <= resource.amount; i++){
+					var amountOption = $("<li>").append($('<a>').attr("tabindex",-1).html(i).on('click',function(){
+						amountButton.html(this.innerHTML);
+					}));
+					amountOptions.append(amountOption);
+				}
+				var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
+				
+				var tableRow = $("<tr>").append(type, amount);
+				resourcesTable.append(tableRow);
+			}
+		});
+		
+		return resourcesTable;
+	}
+	
+	createResourcesTableWithDummyData = function(node, targetClass){
+		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
+		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
+		var tableHeader = $("<tr>").append(typeHeader, amountHeader);
+		var resourcesTable = $("<table>").addClass("span7").attr("id","class"+targetClass.id+"_resourcesList"+node.id).append(tableHeader);
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
@@ -367,42 +417,42 @@ function(Utils, Server){
 			
 			var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));
 			var amountOption0 = $("<li>").append($('<a>').attr("tabindex",-1).html("0").on('click',function(){
-				amountButton.html("0");
+				amountButton.html(this.innerHTML);
 			}));
 			var amountOption1 = $("<li>").append($('<a>').attr("tabindex",-1).html("1").on('click',function(){
-				amountButton.html("1");
+				amountButton.html(this.innerHTML);
 			}));
 			var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu").append(amountOption0, amountOption1);
 			var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
 			
 			var tableRow = $("<tr>").append(type, amount);
-			provisionTable.append(tableRow);
+			resourcesTable.append(tableRow);
 		}
 		if(node.name === "UCT"){
 			var type = $("<td>").html("OpenMTC-as-a-Service");
 			
 			var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));
 			var amountOption0 = $("<li>").append($('<a>').attr("tabindex",-1).html("0").on('click',function(){
-				amountButton.html("0");
+				amountButton.html(this.innerHTML);
 			}));
 			var amountOption1 = $("<li>").append($('<a>').attr("tabindex",-1).html("1").on('click',function(){
-				amountButton.html("1");
+				amountButton.html(this.innerHTML);
 			}));
 			var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu").append(amountOption0, amountOption1);
 			var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
 			
 			var tableRow = $("<tr>").append(type, amount);
-			provisionTable.append(tableRow);
+			resourcesTable.append(tableRow);
 		}
 		
-		return provisionTable;
+		return resourcesTable;
 	}
 	
 	createConfigureResourcesTable = function(node, task){
 		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
 		var configureHeader = $("<th>").addClass("span6 alignleft");
 		var tableHeader = $("<tr>").append(typeHeader, configureHeader);
-		var provisionTable = $("<table>").attr("id","resourcesList"+task.id).addClass("span12").append(tableHeader);
+		var resourcesTable = $("<table>").attr("id","resourcesList"+task.id).addClass("span12").append(tableHeader);
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
@@ -418,7 +468,7 @@ function(Utils, Server){
 			
 			
 			var tableRow = $("<tr>").append(type, configure);
-			provisionTable.append(tableRow);
+			resourcesTable.append(tableRow);
 		}
 		if(node.name === "UCT"){
 			var type = $("<td>").html("OpenMTC-as-a-Service (mtc-2)");
@@ -435,10 +485,10 @@ function(Utils, Server){
 			var configure = $("<td>").addClass("dropdown").append(configureButton, configureOptions);
 			
 			var tableRow = $("<tr>").append(type, configure);
-			provisionTable.append(tableRow);
+			resourcesTable.append(tableRow);
 		}
 		
-		return provisionTable;
+		return resourcesTable;
 	}
 	
 	createStudentTaskPagesForClass = function(targetClass){
@@ -450,7 +500,7 @@ function(Utils, Server){
 			var provisionContent = $("<div>").attr("id","provision"+task.id).addClass("collapse in");
 			$.each(targetClass.nodes, function(i, node) {
 				provisionContent.append($("<h5>").html(node.name+" resources").addClass("span7 left0"));
-				provisionContent.append(createResourcesTable(node, task));
+				provisionContent.append(createTaskResourcesTable(task, node, targetClass, true));
 			});
 			
 			var provisionButton = $("<a>").addClass("btn margin3").html("Provision selected resources").on("click",function(e){
@@ -590,7 +640,7 @@ function(Utils, Server){
 		var type = $("<td>").html(Utils.getLocalName(instance.type));
 		var amount = $("<td>");
 		var tableRow = $("<tr>").append(type, amount);
-		$("#resourcesList"+classID).append(tableRow);
+		$("#resourcesList"+nodeID).append(tableRow);
 	}
 	
 	processOpenstackInstances = function(instances, classID){
