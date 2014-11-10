@@ -72,6 +72,7 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	initMainPage = function(){
 		$("#unifiLogo").attr("href",home);
 		Classes.init();
+		Nodes.init();
 		initNavigationTabs();
 		Utils.updateUserInfoPanel();
 		initSignOutBtn();
@@ -109,14 +110,12 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 				case "FEDERATION_ADMIN":
 					$("#welcome_content").append(welcome_message);
 					Users.init();
-					Nodes.init();
 					initMainPage();
 					break;
 					
 				case "NODE_ADMIN":
 					$("#welcome_content").append(welcome_message);
 					Users.init();
-					Nodes.init();
 					initMainPage();
 					break;
 					

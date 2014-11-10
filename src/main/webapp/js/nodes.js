@@ -14,7 +14,16 @@ function(Utils, Server){
 			createManageNodePage(Utils.getCurrentUser().node.name);
 			createNodeAside(Utils.getCurrentUser().node.name);
 			break;
+		case "CLASSOWNER":
+			createClassownerNodesAside();
+			break;
 		}
+	};
+	
+	createNodeAside = function(nodeName){
+		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
+		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#manage_node'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
+		$("#homeAside").append($("<div>").append(nodesHeader,node));
 	};
 	
 	createManageNodePage = function(nodename){
@@ -24,12 +33,6 @@ function(Utils, Server){
 		
 		$("#desktop").append(manage_node_page);
 	}
-	
-	createNodeAside = function(nodeName){
-		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
-		var node = $("<div>").append($("<ul>").addClass("fa-ul navigationLink").append("<li><a href='#manage_node'><i class='fa fa-minus fa-li'></i>"+nodeName+"</a></li>"));
-		$("#homeAside").append($("<div>").append(nodesHeader,node));
-	};
 	
 	createAllNodesAside = function(){
 		var nodesHeader = "<h4><i class='fa fa-sitemap fa-lg'></i>Nodes</h4>";
@@ -106,6 +109,59 @@ function(Utils, Server){
 			openDesktopTab("#nodes");
 		});
 	};
+	
+	createResourcesTableWithDummyData = function(node){
+		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
+		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
+		var tableHeader = $("<tr>").append(typeHeader, amountHeader);
+		var resourcesTable = $("<table>").addClass("span7").attr("id","node"+node.id+"_resourcesTable").append(tableHeader);
+		
+		//TODO: make dynamic
+		if(node.name === "TU Berlin"){
+			var type = $("<td>").html("robot");
+			
+			var amount = $("<td>").append("1");
+			
+			var tableRow = $("<tr>").append(type, amount);
+			resourcesTable.append(tableRow);
+		}
+		if(node.name === "UCT"){
+			var type = $("<td>").html("OpenMTC-as-a-Service");
+			
+			var amount = $("<td>").append("1");
+			
+			var tableRow = $("<tr>").append(type, amount);
+			resourcesTable.append(tableRow);
+		}
+		
+		return resourcesTable;
+	}
+	
+	createClassownerNodePage = function(node){
+		var createNodePage = $("<div>").attr("id", "node"+node.id).addClass("row-fluid tab-pane");
+		
+		var header = $("<h3>").html(node.name);
+		var subheader = $("<h4>").html("Here you can see all available resources of the "+node.name+" node");
+		
+		createNodePage.append(header, subheader, $("<hr>"));
+
+		createNodePage.append(createResourcesTableWithDummyData(node));
+		
+		$("#desktop").append(createNodePage);
+	}
+	
+	createClassownerNodesAside = function(){
+		var nodesHeader = $("<h4>").append($("<i>").addClass("fa fa-sitemap fa-lg"), "Nodes");
+		
+		var nodesDiv = $("<ul>").addClass("fa-ul navigationLink");
+		var nodes = Utils.getAllNodes();
+		$.each(nodes, function(i, node) {
+			nodesDiv.append($("<li>").append($("<a>").attr("href","#node"+node.id).append($("<i>").addClass("fa fa-minus fa-li"), node.name)));
+			createClassownerNodePage(node);
+		});
+		
+		$("#homeAside").append($("<div>").append(nodesHeader,nodesDiv));
+	}
 	
 	return Nodes;
 
