@@ -110,7 +110,17 @@ function(Utils, Server){
 		});
 	};
 	
-	createResourcesTableWithDummyData = function(node){
+	createNodeResourceRow = function(type, amount){
+		var typeCell = $("<td>").html(type);
+		var amountCell = $("<td>");
+		if(amount != null){
+			amountCell.append(amount);
+		}
+		var row = $("<tr>").append(typeCell, amountCell);
+		return row;
+	}
+	
+	createNodeResourcesTableWithDummyData = function(node){
 		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
 		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
 		var tableHeader = $("<tr>").append(typeHeader, amountHeader);
@@ -118,20 +128,23 @@ function(Utils, Server){
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
-			var type = $("<td>").html("robot");
-			
-			var amount = $("<td>").append("1");
-			
-			var tableRow = $("<tr>").append(type, amount);
-			resourcesTable.append(tableRow);
+			resourcesTable.append(createNodeResourceRow("OpenMTC_as_a_Service",null));
+			resourcesTable.append(createNodeResourceRow("OpenIMS_as_a_Service",null));
+			resourcesTable.append(createNodeResourceRow("OpenEPC_as_a_Service",null));
+			resourcesTable.append(createNodeResourceRow("Openstack_Virtual_Machine",10));
+			resourcesTable.append(createNodeResourceRow("Robot",1));
 		}
 		if(node.name === "UCT"){
-			var type = $("<td>").html("OpenMTC-as-a-Service");
-			
-			var amount = $("<td>").append("1");
-			
-			var tableRow = $("<tr>").append(type, amount);
-			resourcesTable.append(tableRow);
+			resourcesTable.append(createNodeResourceRow("OpenMTC_as_a_Service",null));
+			resourcesTable.append(createNodeResourceRow("OpenEPC_as_a_Service",null));
+		}
+		
+		if(node.name === "Chula"){
+			resourcesTable.append(createNodeResourceRow("OpenMTC_as_a_Service",null));
+			resourcesTable.append(createNodeResourceRow("Openstack_Virtual_Machine",15));
+			resourcesTable.append(createNodeResourceRow("AmbientSensor@Room145",1));
+			resourcesTable.append(createNodeResourceRow("AmbientSensor@Room146",1));
+			resourcesTable.append(createNodeResourceRow("AmbientSensor@Room148",1));
 		}
 		
 		return resourcesTable;
@@ -145,7 +158,7 @@ function(Utils, Server){
 		
 		createNodePage.append(header, subheader, $("<hr>"));
 
-		createNodePage.append(createResourcesTableWithDummyData(node));
+		createNodePage.append(createNodeResourcesTableWithDummyData(node));
 		
 		$("#desktop").append(createNodePage);
 	}

@@ -405,6 +405,27 @@ function(Utils, Server){
 		return resourcesTable;
 	}
 	
+	createResourceRow = function(type, amount){
+		var typeCell = $("<td>").html(type);
+		var amountCell = $("<td>");
+		if(amount == null){
+			amount = 20;
+		}
+		var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));;
+		var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu");
+		for(i = 0; i <= amount; i++){
+			var amountOption = $("<li>").append($('<a>').attr("tabindex",-1).html(i).on('click',function(){
+				amountButton.html(this.innerHTML);
+			}));
+			amountOptions.append(amountOption);
+		}
+		var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
+		amountCell.append(amount);
+		var row = $("<tr>").append(typeCell, amountCell);
+		return row;
+	}
+	
+	
 	createResourcesTableWithDummyData = function(node, targetClass){
 		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
 		var amountHeader = $("<th>").addClass("span1 alignleft").html("Amount");
@@ -413,36 +434,23 @@ function(Utils, Server){
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
-			var type = $("<td>").html("robot");
-			
-			var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));
-			var amountOption0 = $("<li>").append($('<a>').attr("tabindex",-1).html("0").on('click',function(){
-				amountButton.html(this.innerHTML);
-			}));
-			var amountOption1 = $("<li>").append($('<a>').attr("tabindex",-1).html("1").on('click',function(){
-				amountButton.html(this.innerHTML);
-			}));
-			var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu").append(amountOption0, amountOption1);
-			var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
-			
-			var tableRow = $("<tr>").append(type, amount);
-			resourcesTable.append(tableRow);
+			resourcesTable.append(createResourceRow("OpenMTC_as_a_Service",null));
+			resourcesTable.append(createResourceRow("OpenIMS_as_a_Service",null));
+			resourcesTable.append(createResourceRow("OpenEPC_as_a_Service",null));
+			resourcesTable.append(createResourceRow("Openstack_Virtual_Machine",10));
+			resourcesTable.append(createResourceRow("Robot",1));
 		}
 		if(node.name === "UCT"){
-			var type = $("<td>").html("OpenMTC-as-a-Service");
-			
-			var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));
-			var amountOption0 = $("<li>").append($('<a>').attr("tabindex",-1).html("0").on('click',function(){
-				amountButton.html(this.innerHTML);
-			}));
-			var amountOption1 = $("<li>").append($('<a>').attr("tabindex",-1).html("1").on('click',function(){
-				amountButton.html(this.innerHTML);
-			}));
-			var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu").append(amountOption0, amountOption1);
-			var amount = $("<td>").addClass("dropdown").append(amountButton, amountOptions);
-			
-			var tableRow = $("<tr>").append(type, amount);
-			resourcesTable.append(tableRow);
+			resourcesTable.append(createResourceRow("OpenMTC_as_a_Service",null));
+			resourcesTable.append(createResourceRow("OpenEPC_as_a_Service",null));
+		}
+		
+		if(node.name === "Chula"){
+			resourcesTable.append(createResourceRow("OpenMTC_as_a_Service",null));
+			resourcesTable.append(createResourceRow("Openstack_Virtual_Machine",15));
+			resourcesTable.append(createResourceRow("AmbientSensor@Room145",1));
+			resourcesTable.append(createResourceRow("AmbientSensor@Room146",1));
+			resourcesTable.append(createResourceRow("AmbientSensor@Room148",1));
 		}
 		
 		return resourcesTable;
@@ -456,7 +464,7 @@ function(Utils, Server){
 		
 		//TODO: make dynamic
 		if(node.name === "TU Berlin"){
-			var type = $("<td>").html("robot (EV3GIP_ROBOT_1)");
+			var type = $("<td>").html("Robot (EV3GIP_ROBOT_1)");
 			
 			var configureButton = $("<button>").addClass("btn").attr("data-toggle","collapse").attr("data-target","#configureResource412").append("Configure", $("<span>").addClass("caret"));
 			
@@ -471,7 +479,7 @@ function(Utils, Server){
 			resourcesTable.append(tableRow);
 		}
 		if(node.name === "UCT"){
-			var type = $("<td>").html("OpenMTC-as-a-Service (uctMTC)");
+			var type = $("<td>").html("OpenMTC_as_a_Service (uctMTC)");
 			
 			var configureButton = $("<button>").addClass("btn").attr("data-toggle","collapse").attr("data-target","#configureResource323").append("Configure", $("<span>").addClass("caret"));
 			
