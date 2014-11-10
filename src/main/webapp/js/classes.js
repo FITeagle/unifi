@@ -471,7 +471,7 @@ function(Utils, Server){
 			resourcesTable.append(tableRow);
 		}
 		if(node.name === "UCT"){
-			var type = $("<td>").html("OpenMTC-as-a-Service (mtc-2)");
+			var type = $("<td>").html("OpenMTC-as-a-Service (uctMTC)");
 			
 			var configureButton = $("<button>").addClass("btn").attr("data-toggle","collapse").attr("data-target","#configureResource323").append("Configure", $("<span>").addClass("caret"));
 			
