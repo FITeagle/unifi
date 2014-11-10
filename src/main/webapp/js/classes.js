@@ -530,7 +530,7 @@ function(Utils, Server){
 			
 			
 			var labwikiHeader = $("<div>").html("Open a new tab with Labwiki to do the task:");
-			var labwikiButton = $("<a>").attr("href", "http://"+window.location.hostname+":4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
+			var labwikiButton = $("<a>").attr("href", "http://federation.av.tu-berlin.de:4000").attr("target","_blank").append($("<button>").addClass("btn pull-left").html("Labwiki"));
 			var labwikiLink = $("<div>").addClass("span3 nomargin").append(labwikiButton);
 			
 			var runHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#run"+task.id).addClass("pointer").append($("<h4>").html("Run experiment"));
