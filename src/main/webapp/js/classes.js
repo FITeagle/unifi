@@ -512,6 +512,7 @@ function(Utils, Server){
 			
 			var provisionButton = $("<a>").addClass("btn margin3").html("Provision selected resources").on("click",function(e){
 				provisionContent.collapse('hide');
+				configureContent.empty();
 				$.each(targetClass.nodes, function(i, node) {
 					configureContent.append($("<h5>").html(node.name+" resources").addClass("span12"));
 					configureContent.append(createConfigureResourcesTable(node, task));
