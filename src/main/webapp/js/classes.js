@@ -413,7 +413,7 @@ function(Utils, Server){
 		}
 		var amountButton = $("<button>").addClass("btn dropdown-toggle").attr("data-toggle", "dropdown").append("0", $("<span>").addClass("caret"));;
 		var amountOptions = $("<ul>").attr("style", "min-width:0").addClass("dropdown-menu");
-		for(i = 0; i <= amount; i++){
+		for(var i = 0; i <= amount; i++){
 			var amountOption = $("<li>").append($('<a>').attr("tabindex",-1).html(i).on('click',function(){
 				amountButton.html(this.innerHTML);
 			}));
@@ -424,7 +424,6 @@ function(Utils, Server){
 		var row = $("<tr>").append(typeCell, amountCell);
 		return row;
 	}
-	
 	
 	createResourcesTableWithDummyData = function(node, targetClass){
 		var typeHeader = $("<th>").addClass("span6 alignleft").html("Type");
