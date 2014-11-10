@@ -147,10 +147,10 @@ function(Utils, Server){
 				var resourcesTable = $("#class"+targetClass.id+"_resourcesList"+node.id)[0];
 				$.each(resourcesTable.rows, function(i, row) {
 					if(i > 0){
-						if(row.cells[1].children[0].children.length == 0){
+						if(row.cells[1].children[0].children[0].length == null){
 							var resource = new Object();
 							resource.type = row.cells[0].innerHTML;
-							resource.amount = row.cells[1].children[0].innerHTML;
+							resource.amount = row.cells[1].children[0].children[0].innerHTML;
 							if(resource.amount > 0){
 								resource.node = node;
 								newTask.resources.push(resource);
