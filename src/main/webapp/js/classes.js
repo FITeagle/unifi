@@ -528,7 +528,7 @@ function(Utils, Server){
 			
 			var configureHeader = $("<div>").attr("data-toggle","collapse").attr("data-target","#configure"+task.id).addClass("pointer").append($("<h4>").html("Configure"));
 			
-			var configureButton = $("<a>").addClass("btn margin3").html("Configure").on("click",function(e){
+			var configureButton = $("<a>").addClass("btn margin3").html("Finish configure").on("click",function(e){
 				provisionContent.collapse('hide');
 				configureContent.collapse('hide');
 				runContent.collapse('show');
