@@ -301,6 +301,8 @@ function(Validation, Utils, Messages, Server){
 			if($("#registrationNodeDropdown").children().length == 0){
 				Utils.unhideElement('#loadingNodesSpinner');
 				var nodes = Utils.getAllNodes();
+				var minHeight = 25+nodes.length*1.5;
+				$("#registration").attr("style","min-height: "+minHeight+"em");
 				$.each(nodes, function(i, node) {
 					var nodeLink = $('<a>').attr("tabindex", "-1").html(node.name).click(function(){
 						$("#inputNode").html(node.name);
