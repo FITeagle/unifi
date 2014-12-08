@@ -70,7 +70,9 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	* @memberOf Main#
 	*/
 	initMainPage = function(){
+		$("#welcome_content").append(welcome_message);
 		$("#unifiLogo").attr("href",home);
+		Users.init();
 		Classes.init();
 		Nodes.init();
 		initNavigationTabs();
@@ -94,9 +96,6 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 	
 	
 	var welcome_message = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner.";
-	var welcome_message_user = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner. " +
-			"Classes, lectures and	virtualized testbeds from each partner university can be reached through the links on the map";
-	
 	/**
 	* Loads HTML for the FITeagle main page dynamically and triggers the page initialization after the loading is successfully completed.
 	* @public
@@ -108,39 +107,40 @@ function(Utils,Profile,PublicKeys,Certificates,Server,Users,Classes,Nodes){
 			function(){
 				switch(Utils.getCurrentUser().role){
 				case "FEDERATION_ADMIN":
-					$("#welcome_content").append(welcome_message);
-					Users.init();
 					initMainPage();
 					break;
 					
 				case "NODE_ADMIN":
-					$("#welcome_content").append(welcome_message);
-					Users.init();
 					initMainPage();
 					break;
 					
 				case "CLASSOWNER":
-					$("#welcome_content").append(welcome_message);
 					initMainPage();
 					break;
 					
 				default:
-					var img = $("<img>").attr("id", "unifiMap").attr("src", "img/map_unifi.png").attr("usemap", "#unifimap");
-					
-					var tubAreaClasses = $("<area>").attr("shape", "rect").attr("coords", "374,73,452,94").attr("id", "tubClassesMapLink").attr("href","#classes1");
-					var tubAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "374,95,452,118").attr("href","#tublectures").attr("onclick", "return false;");
-					var tubAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "374,119,452,142").attr("href","#tubtestbeds").attr("onclick", "return false;");
-					
-					var uctAreaClasses = $("<area>").attr("shape", "rect").attr("coords", "415,328,492,349").attr("id", "uctClassesMapLink").attr("href","#classes2");
-					var uctAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "415,350,492,374").attr("href","#uctlectures").attr("onclick", "return false;");
-					var uctAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "415,375,492,398").attr("href","#ucttestbeds").attr("onclick", "return false;");
-					var map = $("<map>").attr("name", "unifimap").append(tubAreaClasses, tubAreaLectures, tubAreaTestbeds, uctAreaClasses, uctAreaLectures, uctAreaTestbeds);
-					$("#welcome_content").append(welcome_message_user, img, map);
+					welcome_message = "Manage your personal data, public keys and certificates from the dropdown-menu in the upper right corner. " +
+					"Classes, lectures and	virtualized testbeds from each partner university can be reached through the links on the map";
 					initMainPage();
+					addMap();
 				}
 			}
 		);
 	};
+	
+	addMap = function(){
+		var img = $("<img>").attr("id", "unifiMap").attr("src", "img/map_unifi.png").attr("usemap", "#unifimap");
+		
+		var tubAreaClasses = $("<area>").attr("shape", "rect").attr("coords", "374,73,452,94").attr("id", "tubClassesMapLink").attr("href","#classes1");
+		var tubAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "374,95,452,118").attr("href","#tublectures").attr("onclick", "return false;");
+		var tubAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "374,119,452,142").attr("href","#tubtestbeds").attr("onclick", "return false;");
+		
+		var uctAreaClasses = $("<area>").attr("shape", "rect").attr("coords", "415,328,492,349").attr("id", "uctClassesMapLink").attr("href","#classes2");
+		var uctAreaLectures = $("<area>").attr("shape", "rect").attr("coords", "415,350,492,374").attr("href","#uctlectures").attr("onclick", "return false;");
+		var uctAreaTestbeds = $("<area>").attr("shape", "rect").attr("coords", "415,375,492,398").attr("href","#ucttestbeds").attr("onclick", "return false;");
+		var map = $("<map>").attr("name", "unifimap").append(tubAreaClasses, tubAreaLectures, tubAreaTestbeds, uctAreaClasses, uctAreaLectures, uctAreaTestbeds);
+		$("#welcome_content").append(img, map);
+	}
 	
 	var home = "#home";
 	
